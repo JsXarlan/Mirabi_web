@@ -1,0 +1,2276 @@
+{
+    "characters": [
+        {
+            "id": "kana-hiragana-a",
+            "symbol": "あ",
+            "romaji": "a",
+            "script": "HIRAGANA",
+            "group": "VOWELS",
+            "learningItemId": "kana-hiragana-a",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "あさ",
+                    "romaji": "asa",
+                    "meaning": "manana"
+                }
+            ]
+        },
+        {
+            "id": "kana-hiragana-i",
+            "symbol": "い",
+            "romaji": "i",
+            "script": "HIRAGANA",
+            "group": "VOWELS",
+            "learningItemId": "kana-hiragana-i",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "いいえ",
+                    "romaji": "iie",
+                    "meaning": "no"
+                }
+            ]
+        },
+        {
+            "id": "kana-hiragana-u",
+            "symbol": "う",
+            "romaji": "u",
+            "script": "HIRAGANA",
+            "group": "VOWELS",
+            "learningItemId": "kana-hiragana-u",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "うえ",
+                    "romaji": "ue",
+                    "meaning": "arriba"
+                }
+            ]
+        },
+        {
+            "id": "kana-hiragana-e",
+            "symbol": "え",
+            "romaji": "e",
+            "script": "HIRAGANA",
+            "group": "VOWELS",
+            "learningItemId": "kana-hiragana-e",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "えき",
+                    "romaji": "eki",
+                    "meaning": "estacion"
+                }
+            ]
+        },
+        {
+            "id": "kana-hiragana-o",
+            "symbol": "お",
+            "romaji": "o",
+            "script": "HIRAGANA",
+            "group": "VOWELS",
+            "learningItemId": "kana-hiragana-o",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "おはよう",
+                    "romaji": "ohayou",
+                    "meaning": "buenos dias"
+                }
+            ]
+        },
+        {
+            "id": "kana-hiragana-ka",
+            "symbol": "か",
+            "romaji": "ka",
+            "script": "HIRAGANA",
+            "group": "K",
+            "learningItemId": "kana-hiragana-ka",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "かき",
+                    "romaji": "kaki",
+                    "meaning": "caqui"
+                }
+            ]
+        },
+        {
+            "id": "kana-hiragana-ki",
+            "symbol": "き",
+            "romaji": "ki",
+            "script": "HIRAGANA",
+            "group": "K",
+            "learningItemId": "kana-hiragana-ki",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "すき",
+                    "romaji": "suki",
+                    "meaning": "me gusta"
+                }
+            ]
+        },
+        {
+            "id": "kana-hiragana-ku",
+            "symbol": "く",
+            "romaji": "ku",
+            "script": "HIRAGANA",
+            "group": "K",
+            "learningItemId": "kana-hiragana-ku",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "くも",
+                    "romaji": "kumo",
+                    "meaning": "nube"
+                }
+            ]
+        },
+        {
+            "id": "kana-hiragana-ke",
+            "symbol": "け",
+            "romaji": "ke",
+            "script": "HIRAGANA",
+            "group": "K",
+            "learningItemId": "kana-hiragana-ke",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "けさ",
+                    "romaji": "kesa",
+                    "meaning": "esta manana"
+                }
+            ]
+        },
+        {
+            "id": "kana-hiragana-ko",
+            "symbol": "こ",
+            "romaji": "ko",
+            "script": "HIRAGANA",
+            "group": "K",
+            "learningItemId": "kana-hiragana-ko",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "ここ",
+                    "romaji": "koko",
+                    "meaning": "aqui"
+                }
+            ]
+        },
+        {
+            "id": "kana-hiragana-sa",
+            "symbol": "さ",
+            "romaji": "sa",
+            "script": "HIRAGANA",
+            "group": "S",
+            "learningItemId": "kana-hiragana-sa",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "さけ",
+                    "romaji": "sake",
+                    "meaning": "salmon"
+                }
+            ]
+        },
+        {
+            "id": "kana-hiragana-shi",
+            "symbol": "し",
+            "romaji": "shi",
+            "script": "HIRAGANA",
+            "group": "S",
+            "learningItemId": "kana-hiragana-shi",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "しお",
+                    "romaji": "shio",
+                    "meaning": "sal"
+                }
+            ]
+        },
+        {
+            "id": "kana-hiragana-su",
+            "symbol": "す",
+            "romaji": "su",
+            "script": "HIRAGANA",
+            "group": "S",
+            "learningItemId": "kana-hiragana-su",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "です",
+                    "romaji": "desu",
+                    "meaning": "ser/estar cortes"
+                }
+            ]
+        },
+        {
+            "id": "kana-hiragana-se",
+            "symbol": "せ",
+            "romaji": "se",
+            "script": "HIRAGANA",
+            "group": "S",
+            "learningItemId": "kana-hiragana-se",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "せき",
+                    "romaji": "seki",
+                    "meaning": "asiento"
+                }
+            ]
+        },
+        {
+            "id": "kana-hiragana-so",
+            "symbol": "そ",
+            "romaji": "so",
+            "script": "HIRAGANA",
+            "group": "S",
+            "learningItemId": "kana-hiragana-so",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "そこ",
+                    "romaji": "soko",
+                    "meaning": "alli"
+                }
+            ]
+        },
+        {
+            "id": "kana-hiragana-ta",
+            "symbol": "た",
+            "romaji": "ta",
+            "script": "HIRAGANA",
+            "group": "T",
+            "learningItemId": "kana-hiragana-ta",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "たこ",
+                    "romaji": "tako",
+                    "meaning": "pulpo"
+                }
+            ]
+        },
+        {
+            "id": "kana-hiragana-chi",
+            "symbol": "ち",
+            "romaji": "chi",
+            "script": "HIRAGANA",
+            "group": "T",
+            "learningItemId": "kana-hiragana-chi",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "ちかてつ",
+                    "romaji": "chikatetsu",
+                    "meaning": "metro"
+                }
+            ]
+        },
+        {
+            "id": "kana-hiragana-tsu",
+            "symbol": "つ",
+            "romaji": "tsu",
+            "script": "HIRAGANA",
+            "group": "T",
+            "learningItemId": "kana-hiragana-tsu",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "つき",
+                    "romaji": "tsuki",
+                    "meaning": "luna"
+                }
+            ]
+        },
+        {
+            "id": "kana-hiragana-te",
+            "symbol": "て",
+            "romaji": "te",
+            "script": "HIRAGANA",
+            "group": "T",
+            "learningItemId": "kana-hiragana-te",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "て",
+                    "romaji": "te",
+                    "meaning": "mano"
+                }
+            ]
+        },
+        {
+            "id": "kana-hiragana-to",
+            "symbol": "と",
+            "romaji": "to",
+            "script": "HIRAGANA",
+            "group": "T",
+            "learningItemId": "kana-hiragana-to",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "とけい",
+                    "romaji": "tokei",
+                    "meaning": "reloj"
+                }
+            ]
+        },
+        {
+            "id": "kana-hiragana-na",
+            "symbol": "な",
+            "romaji": "na",
+            "script": "HIRAGANA",
+            "group": "N",
+            "learningItemId": "kana-hiragana-na",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "なまえ",
+                    "romaji": "namae",
+                    "meaning": "nombre"
+                }
+            ]
+        },
+        {
+            "id": "kana-hiragana-ni",
+            "symbol": "に",
+            "romaji": "ni",
+            "script": "HIRAGANA",
+            "group": "N",
+            "learningItemId": "kana-hiragana-ni",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "にほん",
+                    "romaji": "nihon",
+                    "meaning": "Japon"
+                }
+            ]
+        },
+        {
+            "id": "kana-hiragana-nu",
+            "symbol": "ぬ",
+            "romaji": "nu",
+            "script": "HIRAGANA",
+            "group": "N",
+            "learningItemId": "kana-hiragana-nu",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "ぬの",
+                    "romaji": "nuno",
+                    "meaning": "tela"
+                }
+            ]
+        },
+        {
+            "id": "kana-hiragana-ne",
+            "symbol": "ね",
+            "romaji": "ne",
+            "script": "HIRAGANA",
+            "group": "N",
+            "learningItemId": "kana-hiragana-ne",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "ねこ",
+                    "romaji": "neko",
+                    "meaning": "gato"
+                }
+            ]
+        },
+        {
+            "id": "kana-hiragana-no",
+            "symbol": "の",
+            "romaji": "no",
+            "script": "HIRAGANA",
+            "group": "N",
+            "learningItemId": "kana-hiragana-no",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "のむ",
+                    "romaji": "nomu",
+                    "meaning": "beber"
+                }
+            ]
+        },
+        {
+            "id": "kana-hiragana-ha",
+            "symbol": "は",
+            "romaji": "ha",
+            "script": "HIRAGANA",
+            "group": "H",
+            "learningItemId": "kana-hiragana-ha",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "はな",
+                    "romaji": "hana",
+                    "meaning": "flor"
+                }
+            ]
+        },
+        {
+            "id": "kana-hiragana-hi",
+            "symbol": "ひ",
+            "romaji": "hi",
+            "script": "HIRAGANA",
+            "group": "H",
+            "learningItemId": "kana-hiragana-hi",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "ひと",
+                    "romaji": "hito",
+                    "meaning": "persona"
+                }
+            ]
+        },
+        {
+            "id": "kana-hiragana-fu",
+            "symbol": "ふ",
+            "romaji": "fu",
+            "script": "HIRAGANA",
+            "group": "H",
+            "learningItemId": "kana-hiragana-fu",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "ふゆ",
+                    "romaji": "fuyu",
+                    "meaning": "invierno"
+                }
+            ]
+        },
+        {
+            "id": "kana-hiragana-he",
+            "symbol": "へ",
+            "romaji": "he",
+            "script": "HIRAGANA",
+            "group": "H",
+            "learningItemId": "kana-hiragana-he",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "へや",
+                    "romaji": "heya",
+                    "meaning": "habitacion"
+                }
+            ]
+        },
+        {
+            "id": "kana-hiragana-ho",
+            "symbol": "ほ",
+            "romaji": "ho",
+            "script": "HIRAGANA",
+            "group": "H",
+            "learningItemId": "kana-hiragana-ho",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "ほし",
+                    "romaji": "hoshi",
+                    "meaning": "estrella"
+                }
+            ]
+        },
+        {
+            "id": "kana-hiragana-ma",
+            "symbol": "ま",
+            "romaji": "ma",
+            "script": "HIRAGANA",
+            "group": "M",
+            "learningItemId": "kana-hiragana-ma",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "まち",
+                    "romaji": "machi",
+                    "meaning": "ciudad"
+                }
+            ]
+        },
+        {
+            "id": "kana-hiragana-mi",
+            "symbol": "み",
+            "romaji": "mi",
+            "script": "HIRAGANA",
+            "group": "M",
+            "learningItemId": "kana-hiragana-mi",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "みず",
+                    "romaji": "mizu",
+                    "meaning": "agua"
+                }
+            ]
+        },
+        {
+            "id": "kana-hiragana-mu",
+            "symbol": "む",
+            "romaji": "mu",
+            "script": "HIRAGANA",
+            "group": "M",
+            "learningItemId": "kana-hiragana-mu",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "むし",
+                    "romaji": "mushi",
+                    "meaning": "insecto"
+                }
+            ]
+        },
+        {
+            "id": "kana-hiragana-me",
+            "symbol": "め",
+            "romaji": "me",
+            "script": "HIRAGANA",
+            "group": "M",
+            "learningItemId": "kana-hiragana-me",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "め",
+                    "romaji": "me",
+                    "meaning": "ojo"
+                }
+            ]
+        },
+        {
+            "id": "kana-hiragana-mo",
+            "symbol": "も",
+            "romaji": "mo",
+            "script": "HIRAGANA",
+            "group": "M",
+            "learningItemId": "kana-hiragana-mo",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "もも",
+                    "romaji": "momo",
+                    "meaning": "durazno"
+                }
+            ]
+        },
+        {
+            "id": "kana-hiragana-ya",
+            "symbol": "や",
+            "romaji": "ya",
+            "script": "HIRAGANA",
+            "group": "Y",
+            "learningItemId": "kana-hiragana-ya",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "やま",
+                    "romaji": "yama",
+                    "meaning": "montana"
+                }
+            ]
+        },
+        {
+            "id": "kana-hiragana-yu",
+            "symbol": "ゆ",
+            "romaji": "yu",
+            "script": "HIRAGANA",
+            "group": "Y",
+            "learningItemId": "kana-hiragana-yu",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "ゆき",
+                    "romaji": "yuki",
+                    "meaning": "nieve"
+                }
+            ]
+        },
+        {
+            "id": "kana-hiragana-yo",
+            "symbol": "よ",
+            "romaji": "yo",
+            "script": "HIRAGANA",
+            "group": "Y",
+            "learningItemId": "kana-hiragana-yo",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "よる",
+                    "romaji": "yoru",
+                    "meaning": "noche"
+                }
+            ]
+        },
+        {
+            "id": "kana-hiragana-ra",
+            "symbol": "ら",
+            "romaji": "ra",
+            "script": "HIRAGANA",
+            "group": "R",
+            "learningItemId": "kana-hiragana-ra",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "らいねん",
+                    "romaji": "rainen",
+                    "meaning": "proximo ano"
+                }
+            ]
+        },
+        {
+            "id": "kana-hiragana-ri",
+            "symbol": "り",
+            "romaji": "ri",
+            "script": "HIRAGANA",
+            "group": "R",
+            "learningItemId": "kana-hiragana-ri",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "りんご",
+                    "romaji": "ringo",
+                    "meaning": "manzana"
+                }
+            ]
+        },
+        {
+            "id": "kana-hiragana-ru",
+            "symbol": "る",
+            "romaji": "ru",
+            "script": "HIRAGANA",
+            "group": "R",
+            "learningItemId": "kana-hiragana-ru",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "よる",
+                    "romaji": "yoru",
+                    "meaning": "noche"
+                }
+            ]
+        },
+        {
+            "id": "kana-hiragana-re",
+            "symbol": "れ",
+            "romaji": "re",
+            "script": "HIRAGANA",
+            "group": "R",
+            "learningItemId": "kana-hiragana-re",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "これ",
+                    "romaji": "kore",
+                    "meaning": "esto"
+                }
+            ]
+        },
+        {
+            "id": "kana-hiragana-ro",
+            "symbol": "ろ",
+            "romaji": "ro",
+            "script": "HIRAGANA",
+            "group": "R",
+            "learningItemId": "kana-hiragana-ro",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "ろく",
+                    "romaji": "roku",
+                    "meaning": "seis"
+                }
+            ]
+        },
+        {
+            "id": "kana-hiragana-wa",
+            "symbol": "わ",
+            "romaji": "wa",
+            "script": "HIRAGANA",
+            "group": "W",
+            "learningItemId": "kana-hiragana-wa",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "わたし",
+                    "romaji": "watashi",
+                    "meaning": "yo"
+                }
+            ]
+        },
+        {
+            "id": "kana-hiragana-wo",
+            "symbol": "を",
+            "romaji": "wo",
+            "script": "HIRAGANA",
+            "group": "W",
+            "learningItemId": "kana-hiragana-wo",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "みずをのむ",
+                    "romaji": "mizu o nomu",
+                    "meaning": "beber agua"
+                }
+            ]
+        },
+        {
+            "id": "kana-hiragana-n",
+            "symbol": "ん",
+            "romaji": "n",
+            "script": "HIRAGANA",
+            "group": "W",
+            "learningItemId": "kana-hiragana-n",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "にほん",
+                    "romaji": "nihon",
+                    "meaning": "Japon"
+                }
+            ]
+        },
+        {
+            "id": "kana-hiragana-ga",
+            "symbol": "が",
+            "romaji": "ga",
+            "script": "HIRAGANA",
+            "group": "DAKUTEN",
+            "learningItemId": "kana-hiragana-ga",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "がくせい",
+                    "romaji": "gakusei",
+                    "meaning": "estudiante"
+                }
+            ]
+        },
+        {
+            "id": "kana-hiragana-gi",
+            "symbol": "ぎ",
+            "romaji": "gi",
+            "script": "HIRAGANA",
+            "group": "DAKUTEN",
+            "learningItemId": "kana-hiragana-gi",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "ぎんこう",
+                    "romaji": "ginkou",
+                    "meaning": "banco"
+                }
+            ]
+        },
+        {
+            "id": "kana-hiragana-gu",
+            "symbol": "ぐ",
+            "romaji": "gu",
+            "script": "HIRAGANA",
+            "group": "DAKUTEN",
+            "learningItemId": "kana-hiragana-gu",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "ぐあい",
+                    "romaji": "guai",
+                    "meaning": "estado"
+                }
+            ]
+        },
+        {
+            "id": "kana-hiragana-ge",
+            "symbol": "げ",
+            "romaji": "ge",
+            "script": "HIRAGANA",
+            "group": "DAKUTEN",
+            "learningItemId": "kana-hiragana-ge",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "げんき",
+                    "romaji": "genki",
+                    "meaning": "saludable"
+                }
+            ]
+        },
+        {
+            "id": "kana-hiragana-go",
+            "symbol": "ご",
+            "romaji": "go",
+            "script": "HIRAGANA",
+            "group": "DAKUTEN",
+            "learningItemId": "kana-hiragana-go",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "ごはん",
+                    "romaji": "gohan",
+                    "meaning": "comida"
+                }
+            ]
+        },
+        {
+            "id": "kana-hiragana-za",
+            "symbol": "ざ",
+            "romaji": "za",
+            "script": "HIRAGANA",
+            "group": "DAKUTEN",
+            "learningItemId": "kana-hiragana-za",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "ざっし",
+                    "romaji": "zasshi",
+                    "meaning": "revista"
+                }
+            ]
+        },
+        {
+            "id": "kana-hiragana-ji",
+            "symbol": "じ",
+            "romaji": "ji",
+            "script": "HIRAGANA",
+            "group": "DAKUTEN",
+            "learningItemId": "kana-hiragana-ji",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "じかん",
+                    "romaji": "jikan",
+                    "meaning": "tiempo"
+                }
+            ]
+        },
+        {
+            "id": "kana-hiragana-zu",
+            "symbol": "ず",
+            "romaji": "zu",
+            "script": "HIRAGANA",
+            "group": "DAKUTEN",
+            "learningItemId": "kana-hiragana-zu",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "ずし",
+                    "romaji": "zushi",
+                    "meaning": "sushi prensado"
+                }
+            ]
+        },
+        {
+            "id": "kana-hiragana-ze",
+            "symbol": "ぜ",
+            "romaji": "ze",
+            "script": "HIRAGANA",
+            "group": "DAKUTEN",
+            "learningItemId": "kana-hiragana-ze",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "ぜろ",
+                    "romaji": "zero",
+                    "meaning": "cero"
+                }
+            ]
+        },
+        {
+            "id": "kana-hiragana-zo",
+            "symbol": "ぞ",
+            "romaji": "zo",
+            "script": "HIRAGANA",
+            "group": "DAKUTEN",
+            "learningItemId": "kana-hiragana-zo",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "ぞう",
+                    "romaji": "zou",
+                    "meaning": "elefante"
+                }
+            ]
+        },
+        {
+            "id": "kana-hiragana-da",
+            "symbol": "だ",
+            "romaji": "da",
+            "script": "HIRAGANA",
+            "group": "DAKUTEN",
+            "learningItemId": "kana-hiragana-da",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "だいがく",
+                    "romaji": "daigaku",
+                    "meaning": "universidad"
+                }
+            ]
+        },
+        {
+            "id": "kana-hiragana-di",
+            "symbol": "ぢ",
+            "romaji": "ji",
+            "script": "HIRAGANA",
+            "group": "DAKUTEN",
+            "learningItemId": "kana-hiragana-di",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "ちぢむ",
+                    "romaji": "chijimu",
+                    "meaning": "encogerse"
+                }
+            ]
+        },
+        {
+            "id": "kana-hiragana-du",
+            "symbol": "づ",
+            "romaji": "zu",
+            "script": "HIRAGANA",
+            "group": "DAKUTEN",
+            "learningItemId": "kana-hiragana-du",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "つづく",
+                    "romaji": "tsuzuku",
+                    "meaning": "continuar"
+                }
+            ]
+        },
+        {
+            "id": "kana-hiragana-de",
+            "symbol": "で",
+            "romaji": "de",
+            "script": "HIRAGANA",
+            "group": "DAKUTEN",
+            "learningItemId": "kana-hiragana-de",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "でんわ",
+                    "romaji": "denwa",
+                    "meaning": "telefono"
+                }
+            ]
+        },
+        {
+            "id": "kana-hiragana-do",
+            "symbol": "ど",
+            "romaji": "do",
+            "script": "HIRAGANA",
+            "group": "DAKUTEN",
+            "learningItemId": "kana-hiragana-do",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "どうぞ",
+                    "romaji": "douzo",
+                    "meaning": "adelante"
+                }
+            ]
+        },
+        {
+            "id": "kana-hiragana-ba",
+            "symbol": "ば",
+            "romaji": "ba",
+            "script": "HIRAGANA",
+            "group": "DAKUTEN",
+            "learningItemId": "kana-hiragana-ba",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "ばんごはん",
+                    "romaji": "bangohan",
+                    "meaning": "cena"
+                }
+            ]
+        },
+        {
+            "id": "kana-hiragana-bi",
+            "symbol": "び",
+            "romaji": "bi",
+            "script": "HIRAGANA",
+            "group": "DAKUTEN",
+            "learningItemId": "kana-hiragana-bi",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "びょうき",
+                    "romaji": "byouki",
+                    "meaning": "enfermedad"
+                }
+            ]
+        },
+        {
+            "id": "kana-hiragana-bu",
+            "symbol": "ぶ",
+            "romaji": "bu",
+            "script": "HIRAGANA",
+            "group": "DAKUTEN",
+            "learningItemId": "kana-hiragana-bu",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "ぶた",
+                    "romaji": "buta",
+                    "meaning": "cerdo"
+                }
+            ]
+        },
+        {
+            "id": "kana-hiragana-be",
+            "symbol": "べ",
+            "romaji": "be",
+            "script": "HIRAGANA",
+            "group": "DAKUTEN",
+            "learningItemId": "kana-hiragana-be",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "べんり",
+                    "romaji": "benri",
+                    "meaning": "conveniente"
+                }
+            ]
+        },
+        {
+            "id": "kana-hiragana-bo",
+            "symbol": "ぼ",
+            "romaji": "bo",
+            "script": "HIRAGANA",
+            "group": "DAKUTEN",
+            "learningItemId": "kana-hiragana-bo",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "ぼく",
+                    "romaji": "boku",
+                    "meaning": "yo masculino"
+                }
+            ]
+        },
+        {
+            "id": "kana-hiragana-pa",
+            "symbol": "ぱ",
+            "romaji": "pa",
+            "script": "HIRAGANA",
+            "group": "DAKUTEN",
+            "learningItemId": "kana-hiragana-pa",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "ぱん",
+                    "romaji": "pan",
+                    "meaning": "pan"
+                }
+            ]
+        },
+        {
+            "id": "kana-hiragana-pi",
+            "symbol": "ぴ",
+            "romaji": "pi",
+            "script": "HIRAGANA",
+            "group": "DAKUTEN",
+            "learningItemId": "kana-hiragana-pi",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "ぴかぴか",
+                    "romaji": "pikapika",
+                    "meaning": "brillante"
+                }
+            ]
+        },
+        {
+            "id": "kana-hiragana-pu",
+            "symbol": "ぷ",
+            "romaji": "pu",
+            "script": "HIRAGANA",
+            "group": "DAKUTEN",
+            "learningItemId": "kana-hiragana-pu",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "ぷろ",
+                    "romaji": "puro",
+                    "meaning": "profesional"
+                }
+            ]
+        },
+        {
+            "id": "kana-hiragana-pe",
+            "symbol": "ぺ",
+            "romaji": "pe",
+            "script": "HIRAGANA",
+            "group": "DAKUTEN",
+            "learningItemId": "kana-hiragana-pe",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "ぺん",
+                    "romaji": "pen",
+                    "meaning": "boligrafo"
+                }
+            ]
+        },
+        {
+            "id": "kana-hiragana-po",
+            "symbol": "ぽ",
+            "romaji": "po",
+            "script": "HIRAGANA",
+            "group": "DAKUTEN",
+            "learningItemId": "kana-hiragana-po",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "ぽけっと",
+                    "romaji": "poketto",
+                    "meaning": "bolsillo"
+                }
+            ]
+        },
+        {
+            "id": "kana-katakana-a",
+            "symbol": "ア",
+            "romaji": "a",
+            "script": "KATAKANA",
+            "group": "BASIC_KATAKANA",
+            "learningItemId": "kana-katakana-a",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "アイス",
+                    "romaji": "aisu",
+                    "meaning": "helado"
+                }
+            ]
+        },
+        {
+            "id": "kana-katakana-i",
+            "symbol": "イ",
+            "romaji": "i",
+            "script": "KATAKANA",
+            "group": "BASIC_KATAKANA",
+            "learningItemId": "kana-katakana-i",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "インク",
+                    "romaji": "inku",
+                    "meaning": "tinta"
+                }
+            ]
+        },
+        {
+            "id": "kana-katakana-u",
+            "symbol": "ウ",
+            "romaji": "u",
+            "script": "KATAKANA",
+            "group": "BASIC_KATAKANA",
+            "learningItemId": "kana-katakana-u",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "ウール",
+                    "romaji": "uuru",
+                    "meaning": "lana"
+                }
+            ]
+        },
+        {
+            "id": "kana-katakana-e",
+            "symbol": "エ",
+            "romaji": "e",
+            "script": "KATAKANA",
+            "group": "BASIC_KATAKANA",
+            "learningItemId": "kana-katakana-e",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "エアコン",
+                    "romaji": "eakon",
+                    "meaning": "aire acondicionado"
+                }
+            ]
+        },
+        {
+            "id": "kana-katakana-o",
+            "symbol": "オ",
+            "romaji": "o",
+            "script": "KATAKANA",
+            "group": "BASIC_KATAKANA",
+            "learningItemId": "kana-katakana-o",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "オレンジ",
+                    "romaji": "orenji",
+                    "meaning": "naranja"
+                }
+            ]
+        },
+        {
+            "id": "kana-katakana-ka",
+            "symbol": "カ",
+            "romaji": "ka",
+            "script": "KATAKANA",
+            "group": "BASIC_KATAKANA",
+            "learningItemId": "kana-katakana-ka",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "カード",
+                    "romaji": "kaado",
+                    "meaning": "tarjeta"
+                }
+            ]
+        },
+        {
+            "id": "kana-katakana-ki",
+            "symbol": "キ",
+            "romaji": "ki",
+            "script": "KATAKANA",
+            "group": "BASIC_KATAKANA",
+            "learningItemId": "kana-katakana-ki",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "キウイ",
+                    "romaji": "kiui",
+                    "meaning": "kiwi"
+                }
+            ]
+        },
+        {
+            "id": "kana-katakana-ku",
+            "symbol": "ク",
+            "romaji": "ku",
+            "script": "KATAKANA",
+            "group": "BASIC_KATAKANA",
+            "learningItemId": "kana-katakana-ku",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "クラス",
+                    "romaji": "kurasu",
+                    "meaning": "clase"
+                }
+            ]
+        },
+        {
+            "id": "kana-katakana-ke",
+            "symbol": "ケ",
+            "romaji": "ke",
+            "script": "KATAKANA",
+            "group": "BASIC_KATAKANA",
+            "learningItemId": "kana-katakana-ke",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "ケーキ",
+                    "romaji": "keeki",
+                    "meaning": "pastel"
+                }
+            ]
+        },
+        {
+            "id": "kana-katakana-ko",
+            "symbol": "コ",
+            "romaji": "ko",
+            "script": "KATAKANA",
+            "group": "BASIC_KATAKANA",
+            "learningItemId": "kana-katakana-ko",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "コーヒー",
+                    "romaji": "koohii",
+                    "meaning": "cafe"
+                }
+            ]
+        },
+        {
+            "id": "kana-katakana-sa",
+            "symbol": "サ",
+            "romaji": "sa",
+            "script": "KATAKANA",
+            "group": "BASIC_KATAKANA",
+            "learningItemId": "kana-katakana-sa",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "サイズ",
+                    "romaji": "saizu",
+                    "meaning": "tamano"
+                }
+            ]
+        },
+        {
+            "id": "kana-katakana-shi",
+            "symbol": "シ",
+            "romaji": "shi",
+            "script": "KATAKANA",
+            "group": "BASIC_KATAKANA",
+            "learningItemId": "kana-katakana-shi",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "シャツ",
+                    "romaji": "shatsu",
+                    "meaning": "camisa"
+                }
+            ]
+        },
+        {
+            "id": "kana-katakana-su",
+            "symbol": "ス",
+            "romaji": "su",
+            "script": "KATAKANA",
+            "group": "BASIC_KATAKANA",
+            "learningItemId": "kana-katakana-su",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "スープ",
+                    "romaji": "suupu",
+                    "meaning": "sopa"
+                }
+            ]
+        },
+        {
+            "id": "kana-katakana-se",
+            "symbol": "セ",
+            "romaji": "se",
+            "script": "KATAKANA",
+            "group": "BASIC_KATAKANA",
+            "learningItemId": "kana-katakana-se",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "セール",
+                    "romaji": "seeru",
+                    "meaning": "oferta"
+                }
+            ]
+        },
+        {
+            "id": "kana-katakana-so",
+            "symbol": "ソ",
+            "romaji": "so",
+            "script": "KATAKANA",
+            "group": "BASIC_KATAKANA",
+            "learningItemId": "kana-katakana-so",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "ソファ",
+                    "romaji": "sofa",
+                    "meaning": "sofa"
+                }
+            ]
+        },
+        {
+            "id": "kana-katakana-ta",
+            "symbol": "タ",
+            "romaji": "ta",
+            "script": "KATAKANA",
+            "group": "BASIC_KATAKANA",
+            "learningItemId": "kana-katakana-ta",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "タコ",
+                    "romaji": "tako",
+                    "meaning": "pulpo"
+                }
+            ]
+        },
+        {
+            "id": "kana-katakana-chi",
+            "symbol": "チ",
+            "romaji": "chi",
+            "script": "KATAKANA",
+            "group": "BASIC_KATAKANA",
+            "learningItemId": "kana-katakana-chi",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "チリ",
+                    "romaji": "chiri",
+                    "meaning": "chile"
+                }
+            ]
+        },
+        {
+            "id": "kana-katakana-tsu",
+            "symbol": "ツ",
+            "romaji": "tsu",
+            "script": "KATAKANA",
+            "group": "BASIC_KATAKANA",
+            "learningItemId": "kana-katakana-tsu",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "ツナ",
+                    "romaji": "tsuna",
+                    "meaning": "atun"
+                }
+            ]
+        },
+        {
+            "id": "kana-katakana-te",
+            "symbol": "テ",
+            "romaji": "te",
+            "script": "KATAKANA",
+            "group": "BASIC_KATAKANA",
+            "learningItemId": "kana-katakana-te",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "テニス",
+                    "romaji": "tenisu",
+                    "meaning": "tenis"
+                }
+            ]
+        },
+        {
+            "id": "kana-katakana-to",
+            "symbol": "ト",
+            "romaji": "to",
+            "script": "KATAKANA",
+            "group": "BASIC_KATAKANA",
+            "learningItemId": "kana-katakana-to",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "トマト",
+                    "romaji": "tomato",
+                    "meaning": "tomate"
+                }
+            ]
+        },
+        {
+            "id": "kana-katakana-na",
+            "symbol": "ナ",
+            "romaji": "na",
+            "script": "KATAKANA",
+            "group": "BASIC_KATAKANA",
+            "learningItemId": "kana-katakana-na",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "ナス",
+                    "romaji": "nasu",
+                    "meaning": "berenjena"
+                }
+            ]
+        },
+        {
+            "id": "kana-katakana-ni",
+            "symbol": "ニ",
+            "romaji": "ni",
+            "script": "KATAKANA",
+            "group": "BASIC_KATAKANA",
+            "learningItemId": "kana-katakana-ni",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "ニコ",
+                    "romaji": "niko",
+                    "meaning": "sonrisa"
+                }
+            ]
+        },
+        {
+            "id": "kana-katakana-nu",
+            "symbol": "ヌ",
+            "romaji": "nu",
+            "script": "KATAKANA",
+            "group": "BASIC_KATAKANA",
+            "learningItemId": "kana-katakana-nu",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "ヌノ",
+                    "romaji": "nuno",
+                    "meaning": "tela"
+                }
+            ]
+        },
+        {
+            "id": "kana-katakana-ne",
+            "symbol": "ネ",
+            "romaji": "ne",
+            "script": "KATAKANA",
+            "group": "BASIC_KATAKANA",
+            "learningItemId": "kana-katakana-ne",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "ネコ",
+                    "romaji": "neko",
+                    "meaning": "gato"
+                }
+            ]
+        },
+        {
+            "id": "kana-katakana-no",
+            "symbol": "ノ",
+            "romaji": "no",
+            "script": "KATAKANA",
+            "group": "BASIC_KATAKANA",
+            "learningItemId": "kana-katakana-no",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "ノート",
+                    "romaji": "nooto",
+                    "meaning": "cuaderno"
+                }
+            ]
+        },
+        {
+            "id": "kana-katakana-ha",
+            "symbol": "ハ",
+            "romaji": "ha",
+            "script": "KATAKANA",
+            "group": "BASIC_KATAKANA",
+            "learningItemId": "kana-katakana-ha",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "ハム",
+                    "romaji": "hamu",
+                    "meaning": "jamon"
+                }
+            ]
+        },
+        {
+            "id": "kana-katakana-hi",
+            "symbol": "ヒ",
+            "romaji": "hi",
+            "script": "KATAKANA",
+            "group": "BASIC_KATAKANA",
+            "learningItemId": "kana-katakana-hi",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "ヒント",
+                    "romaji": "hinto",
+                    "meaning": "pista"
+                }
+            ]
+        },
+        {
+            "id": "kana-katakana-fu",
+            "symbol": "フ",
+            "romaji": "fu",
+            "script": "KATAKANA",
+            "group": "BASIC_KATAKANA",
+            "learningItemId": "kana-katakana-fu",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "フユ",
+                    "romaji": "fuyu",
+                    "meaning": "invierno"
+                }
+            ]
+        },
+        {
+            "id": "kana-katakana-he",
+            "symbol": "ヘ",
+            "romaji": "he",
+            "script": "KATAKANA",
+            "group": "BASIC_KATAKANA",
+            "learningItemId": "kana-katakana-he",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "ヘヤ",
+                    "romaji": "heya",
+                    "meaning": "habitacion"
+                }
+            ]
+        },
+        {
+            "id": "kana-katakana-ho",
+            "symbol": "ホ",
+            "romaji": "ho",
+            "script": "KATAKANA",
+            "group": "BASIC_KATAKANA",
+            "learningItemId": "kana-katakana-ho",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "ホシ",
+                    "romaji": "hoshi",
+                    "meaning": "estrella"
+                }
+            ]
+        },
+        {
+            "id": "kana-katakana-ma",
+            "symbol": "マ",
+            "romaji": "ma",
+            "script": "KATAKANA",
+            "group": "BASIC_KATAKANA",
+            "learningItemId": "kana-katakana-ma",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "マメ",
+                    "romaji": "mame",
+                    "meaning": "frijol"
+                }
+            ]
+        },
+        {
+            "id": "kana-katakana-mi",
+            "symbol": "ミ",
+            "romaji": "mi",
+            "script": "KATAKANA",
+            "group": "BASIC_KATAKANA",
+            "learningItemId": "kana-katakana-mi",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "ミミ",
+                    "romaji": "mimi",
+                    "meaning": "oreja"
+                }
+            ]
+        },
+        {
+            "id": "kana-katakana-mu",
+            "symbol": "ム",
+            "romaji": "mu",
+            "script": "KATAKANA",
+            "group": "BASIC_KATAKANA",
+            "learningItemId": "kana-katakana-mu",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "ムシ",
+                    "romaji": "mushi",
+                    "meaning": "insecto"
+                }
+            ]
+        },
+        {
+            "id": "kana-katakana-me",
+            "symbol": "メ",
+            "romaji": "me",
+            "script": "KATAKANA",
+            "group": "BASIC_KATAKANA",
+            "learningItemId": "kana-katakana-me",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "メモ",
+                    "romaji": "memo",
+                    "meaning": "nota"
+                }
+            ]
+        },
+        {
+            "id": "kana-katakana-mo",
+            "symbol": "モ",
+            "romaji": "mo",
+            "script": "KATAKANA",
+            "group": "BASIC_KATAKANA",
+            "learningItemId": "kana-katakana-mo",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "モモ",
+                    "romaji": "momo",
+                    "meaning": "durazno"
+                }
+            ]
+        },
+        {
+            "id": "kana-katakana-ya",
+            "symbol": "ヤ",
+            "romaji": "ya",
+            "script": "KATAKANA",
+            "group": "BASIC_KATAKANA",
+            "learningItemId": "kana-katakana-ya",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "ヤマ",
+                    "romaji": "yama",
+                    "meaning": "montana"
+                }
+            ]
+        },
+        {
+            "id": "kana-katakana-yu",
+            "symbol": "ユ",
+            "romaji": "yu",
+            "script": "KATAKANA",
+            "group": "BASIC_KATAKANA",
+            "learningItemId": "kana-katakana-yu",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "ユキ",
+                    "romaji": "yuki",
+                    "meaning": "nieve"
+                }
+            ]
+        },
+        {
+            "id": "kana-katakana-yo",
+            "symbol": "ヨ",
+            "romaji": "yo",
+            "script": "KATAKANA",
+            "group": "BASIC_KATAKANA",
+            "learningItemId": "kana-katakana-yo",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "ヨル",
+                    "romaji": "yoru",
+                    "meaning": "noche"
+                }
+            ]
+        },
+        {
+            "id": "kana-katakana-ra",
+            "symbol": "ラ",
+            "romaji": "ra",
+            "script": "KATAKANA",
+            "group": "BASIC_KATAKANA",
+            "learningItemId": "kana-katakana-ra",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "ラーメン",
+                    "romaji": "raamen",
+                    "meaning": "ramen"
+                }
+            ]
+        },
+        {
+            "id": "kana-katakana-ri",
+            "symbol": "リ",
+            "romaji": "ri",
+            "script": "KATAKANA",
+            "group": "BASIC_KATAKANA",
+            "learningItemId": "kana-katakana-ri",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "リス",
+                    "romaji": "risu",
+                    "meaning": "ardilla"
+                }
+            ]
+        },
+        {
+            "id": "kana-katakana-ru",
+            "symbol": "ル",
+            "romaji": "ru",
+            "script": "KATAKANA",
+            "group": "BASIC_KATAKANA",
+            "learningItemId": "kana-katakana-ru",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "ルス",
+                    "romaji": "rusu",
+                    "meaning": "ausencia"
+                }
+            ]
+        },
+        {
+            "id": "kana-katakana-re",
+            "symbol": "レ",
+            "romaji": "re",
+            "script": "KATAKANA",
+            "group": "BASIC_KATAKANA",
+            "learningItemId": "kana-katakana-re",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "レモン",
+                    "romaji": "remon",
+                    "meaning": "limon"
+                }
+            ]
+        },
+        {
+            "id": "kana-katakana-ro",
+            "symbol": "ロ",
+            "romaji": "ro",
+            "script": "KATAKANA",
+            "group": "BASIC_KATAKANA",
+            "learningItemId": "kana-katakana-ro",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "ロク",
+                    "romaji": "roku",
+                    "meaning": "seis"
+                }
+            ]
+        },
+        {
+            "id": "kana-katakana-wa",
+            "symbol": "ワ",
+            "romaji": "wa",
+            "script": "KATAKANA",
+            "group": "BASIC_KATAKANA",
+            "learningItemId": "kana-katakana-wa",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "ワタシ",
+                    "romaji": "watashi",
+                    "meaning": "yo"
+                }
+            ]
+        },
+        {
+            "id": "kana-katakana-wo",
+            "symbol": "ヲ",
+            "romaji": "wo",
+            "script": "KATAKANA",
+            "group": "BASIC_KATAKANA",
+            "learningItemId": "kana-katakana-wo",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "ヲ",
+                    "romaji": "wo",
+                    "meaning": "particula katakana"
+                }
+            ]
+        },
+        {
+            "id": "kana-katakana-n",
+            "symbol": "ン",
+            "romaji": "n",
+            "script": "KATAKANA",
+            "group": "BASIC_KATAKANA",
+            "learningItemId": "kana-katakana-n",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "ン",
+                    "romaji": "n",
+                    "meaning": "sonido n"
+                }
+            ]
+        },
+        {
+            "id": "kana-katakana-ga",
+            "symbol": "ガ",
+            "romaji": "ga",
+            "script": "KATAKANA",
+            "group": "DAKUTEN",
+            "learningItemId": "kana-katakana-ga",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "ガム",
+                    "romaji": "gamu",
+                    "meaning": "goma de mascar"
+                }
+            ]
+        },
+        {
+            "id": "kana-katakana-gi",
+            "symbol": "ギ",
+            "romaji": "gi",
+            "script": "KATAKANA",
+            "group": "DAKUTEN",
+            "learningItemId": "kana-katakana-gi",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "ギター",
+                    "romaji": "gitaa",
+                    "meaning": "guitarra"
+                }
+            ]
+        },
+        {
+            "id": "kana-katakana-gu",
+            "symbol": "グ",
+            "romaji": "gu",
+            "script": "KATAKANA",
+            "group": "DAKUTEN",
+            "learningItemId": "kana-katakana-gu",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "グループ",
+                    "romaji": "guruupu",
+                    "meaning": "grupo"
+                }
+            ]
+        },
+        {
+            "id": "kana-katakana-ge",
+            "symbol": "ゲ",
+            "romaji": "ge",
+            "script": "KATAKANA",
+            "group": "DAKUTEN",
+            "learningItemId": "kana-katakana-ge",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "ゲーム",
+                    "romaji": "geemu",
+                    "meaning": "juego"
+                }
+            ]
+        },
+        {
+            "id": "kana-katakana-go",
+            "symbol": "ゴ",
+            "romaji": "go",
+            "script": "KATAKANA",
+            "group": "DAKUTEN",
+            "learningItemId": "kana-katakana-go",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "ゴルフ",
+                    "romaji": "gorufu",
+                    "meaning": "golf"
+                }
+            ]
+        },
+        {
+            "id": "kana-katakana-za",
+            "symbol": "ザ",
+            "romaji": "za",
+            "script": "KATAKANA",
+            "group": "DAKUTEN",
+            "learningItemId": "kana-katakana-za",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "ザック",
+                    "romaji": "zakku",
+                    "meaning": "mochila"
+                }
+            ]
+        },
+        {
+            "id": "kana-katakana-ji",
+            "symbol": "ジ",
+            "romaji": "ji",
+            "script": "KATAKANA",
+            "group": "DAKUTEN",
+            "learningItemId": "kana-katakana-ji",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "ジム",
+                    "romaji": "jimu",
+                    "meaning": "gimnasio"
+                }
+            ]
+        },
+        {
+            "id": "kana-katakana-zu",
+            "symbol": "ズ",
+            "romaji": "zu",
+            "script": "KATAKANA",
+            "group": "DAKUTEN",
+            "learningItemId": "kana-katakana-zu",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "ズボン",
+                    "romaji": "zubon",
+                    "meaning": "pantalon"
+                }
+            ]
+        },
+        {
+            "id": "kana-katakana-ze",
+            "symbol": "ゼ",
+            "romaji": "ze",
+            "script": "KATAKANA",
+            "group": "DAKUTEN",
+            "learningItemId": "kana-katakana-ze",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "ゼロ",
+                    "romaji": "zero",
+                    "meaning": "cero"
+                }
+            ]
+        },
+        {
+            "id": "kana-katakana-zo",
+            "symbol": "ゾ",
+            "romaji": "zo",
+            "script": "KATAKANA",
+            "group": "DAKUTEN",
+            "learningItemId": "kana-katakana-zo",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "ゾーン",
+                    "romaji": "zoon",
+                    "meaning": "zona"
+                }
+            ]
+        },
+        {
+            "id": "kana-katakana-da",
+            "symbol": "ダ",
+            "romaji": "da",
+            "script": "KATAKANA",
+            "group": "DAKUTEN",
+            "learningItemId": "kana-katakana-da",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "ダンス",
+                    "romaji": "dansu",
+                    "meaning": "baile"
+                }
+            ]
+        },
+        {
+            "id": "kana-katakana-di",
+            "symbol": "ヂ",
+            "romaji": "ji",
+            "script": "KATAKANA",
+            "group": "DAKUTEN",
+            "learningItemId": "kana-katakana-di",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "ヂ",
+                    "romaji": "ji",
+                    "meaning": "ji katakana"
+                }
+            ]
+        },
+        {
+            "id": "kana-katakana-du",
+            "symbol": "ヅ",
+            "romaji": "zu",
+            "script": "KATAKANA",
+            "group": "DAKUTEN",
+            "learningItemId": "kana-katakana-du",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "ヅ",
+                    "romaji": "zu",
+                    "meaning": "zu katakana"
+                }
+            ]
+        },
+        {
+            "id": "kana-katakana-de",
+            "symbol": "デ",
+            "romaji": "de",
+            "script": "KATAKANA",
+            "group": "DAKUTEN",
+            "learningItemId": "kana-katakana-de",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "デザート",
+                    "romaji": "dezaato",
+                    "meaning": "postre"
+                }
+            ]
+        },
+        {
+            "id": "kana-katakana-do",
+            "symbol": "ド",
+            "romaji": "do",
+            "script": "KATAKANA",
+            "group": "DAKUTEN",
+            "learningItemId": "kana-katakana-do",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "ドア",
+                    "romaji": "doa",
+                    "meaning": "puerta"
+                }
+            ]
+        },
+        {
+            "id": "kana-katakana-ba",
+            "symbol": "バ",
+            "romaji": "ba",
+            "script": "KATAKANA",
+            "group": "DAKUTEN",
+            "learningItemId": "kana-katakana-ba",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "バス",
+                    "romaji": "basu",
+                    "meaning": "bus"
+                }
+            ]
+        },
+        {
+            "id": "kana-katakana-bi",
+            "symbol": "ビ",
+            "romaji": "bi",
+            "script": "KATAKANA",
+            "group": "DAKUTEN",
+            "learningItemId": "kana-katakana-bi",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "ビル",
+                    "romaji": "biru",
+                    "meaning": "edificio"
+                }
+            ]
+        },
+        {
+            "id": "kana-katakana-bu",
+            "symbol": "ブ",
+            "romaji": "bu",
+            "script": "KATAKANA",
+            "group": "DAKUTEN",
+            "learningItemId": "kana-katakana-bu",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "ブログ",
+                    "romaji": "burogu",
+                    "meaning": "blog"
+                }
+            ]
+        },
+        {
+            "id": "kana-katakana-be",
+            "symbol": "ベ",
+            "romaji": "be",
+            "script": "KATAKANA",
+            "group": "DAKUTEN",
+            "learningItemId": "kana-katakana-be",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "ベル",
+                    "romaji": "beru",
+                    "meaning": "campana"
+                }
+            ]
+        },
+        {
+            "id": "kana-katakana-bo",
+            "symbol": "ボ",
+            "romaji": "bo",
+            "script": "KATAKANA",
+            "group": "DAKUTEN",
+            "learningItemId": "kana-katakana-bo",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "ボール",
+                    "romaji": "booru",
+                    "meaning": "pelota"
+                }
+            ]
+        },
+        {
+            "id": "kana-katakana-pa",
+            "symbol": "パ",
+            "romaji": "pa",
+            "script": "KATAKANA",
+            "group": "DAKUTEN",
+            "learningItemId": "kana-katakana-pa",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "パン",
+                    "romaji": "pan",
+                    "meaning": "pan"
+                }
+            ]
+        },
+        {
+            "id": "kana-katakana-pi",
+            "symbol": "ピ",
+            "romaji": "pi",
+            "script": "KATAKANA",
+            "group": "DAKUTEN",
+            "learningItemId": "kana-katakana-pi",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "ピアノ",
+                    "romaji": "piano",
+                    "meaning": "piano"
+                }
+            ]
+        },
+        {
+            "id": "kana-katakana-pu",
+            "symbol": "プ",
+            "romaji": "pu",
+            "script": "KATAKANA",
+            "group": "DAKUTEN",
+            "learningItemId": "kana-katakana-pu",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "プール",
+                    "romaji": "puuru",
+                    "meaning": "piscina"
+                }
+            ]
+        },
+        {
+            "id": "kana-katakana-pe",
+            "symbol": "ペ",
+            "romaji": "pe",
+            "script": "KATAKANA",
+            "group": "DAKUTEN",
+            "learningItemId": "kana-katakana-pe",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "ペン",
+                    "romaji": "pen",
+                    "meaning": "boligrafo"
+                }
+            ]
+        },
+        {
+            "id": "kana-katakana-po",
+            "symbol": "ポ",
+            "romaji": "po",
+            "script": "KATAKANA",
+            "group": "DAKUTEN",
+            "learningItemId": "kana-katakana-po",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "ポスト",
+                    "romaji": "posuto",
+                    "meaning": "buzon"
+                }
+            ]
+        }
+    ]
+}

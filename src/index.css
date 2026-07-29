@@ -1,0 +1,128 @@
+@import 'tailwindcss';
+
+/*
+ * Paleta Mirabi, portada 1:1 desde core/designsystem/MirabiTheme.kt.
+ * Los nombres son los mismos que en Compose para que un cambio de marca
+ * se pueda aplicar en los dos proyectos sin traducir nada.
+ */
+@theme {
+  --color-mirabi-purple: #7b5fd0;
+  --color-mirabi-purple-deep: #4a3880;
+  --color-mirabi-purple-bright: #a78bfa;
+  --color-sakura: #e36fa4;
+  --color-sakura-soft: #fbdce9;
+  --color-night-blue: #171632;
+  --color-night-surface: #221f42;
+  --color-lavender: #f6f2fa;
+  --color-warm-yellow: #e9a13b;
+  --color-soft-green: #6fbf8e;
+  --color-cream: #fff8e7;
+
+  --radius-xs: 8px;
+  --radius-sm: 12px;
+  --radius-md: 16px;
+  --radius-lg: 22px;
+  --radius-xl: 28px;
+
+  --font-sans:
+    'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --font-jp:
+    'Hiragino Sans', 'Yu Gothic', 'Meiryo', 'Noto Sans JP', system-ui, sans-serif;
+}
+
+/* Tokens semanticos: mismos roles que el ColorScheme de Material 3. */
+:root {
+  --primary: #7b5fd0;
+  --on-primary: #ffffff;
+  --primary-container: #e9e1f9;
+  --on-primary-container: #4a3880;
+  --secondary: #e36fa4;
+  --on-secondary: #ffffff;
+  --secondary-container: #fbdce9;
+  --on-secondary-container: #8a2e58;
+  --tertiary: #e9a13b;
+  --on-tertiary: #ffffff;
+  --tertiary-container: #fdeec9;
+  --on-tertiary-container: #6e4a0a;
+  --background: #f6f2fa;
+  --on-background: #2a2440;
+  --surface: #ffffff;
+  --on-surface: #2a2440;
+  --surface-variant: #efe9f7;
+  --on-surface-variant: #6f6a82;
+  --outline: #b9b2cc;
+  --success: #6fbf8e;
+  --shadow-card: 0 6px 20px rgb(74 56 128 / 0.08);
+  color-scheme: light;
+}
+
+.dark {
+  --primary: #a78bfa;
+  --on-primary: #241a4d;
+  --primary-container: #4a3880;
+  --on-primary-container: #e9e1f9;
+  --secondary: #f191bc;
+  --on-secondary: #4a1230;
+  --secondary-container: #5c2c44;
+  --on-secondary-container: #fbdce9;
+  --tertiary: #f0c05a;
+  --on-tertiary: #3f2e00;
+  --tertiary-container: #57430e;
+  --on-tertiary-container: #fdeec9;
+  --background: #171632;
+  --on-background: #ece8f7;
+  --surface: #221f42;
+  --on-surface: #ece8f7;
+  --surface-variant: #2d2a52;
+  --on-surface-variant: #a9a3c2;
+  --outline: #544e78;
+  --success: #6fbf8e;
+  --shadow-card: 0 6px 20px rgb(0 0 0 / 0.35);
+  color-scheme: dark;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--background);
+  color: var(--on-background);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  overscroll-behavior-y: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+}
+
+/* La barra inferior no debe tapar el ultimo elemento de una pantalla scrollable. */
+.pb-nav {
+  padding-bottom: calc(5.5rem + env(safe-area-inset-bottom));
+}
+
+@keyframes mirabi-pop {
+  0% {
+    transform: scale(0.94);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.animate-pop {
+  animation: mirabi-pop 180ms ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-pop {
+    animation: none;
+  }
+}
