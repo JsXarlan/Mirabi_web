@@ -1,33 +1,11 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import type { CourseNodeState } from '../../core/domain/course'
 import { useMirabiStore } from '../../core/store/useMirabiStore'
-import { MirabiCard, MirabiProgressBar, SectionTitle } from '../../ui/components'
+import { MirabiCard, MirabiProgressBar } from '../../ui/components'
 import { Screen } from '../../ui/Layout'
-
-const NODE_STYLE: Record<CourseNodeState, { chip: string; icon: string; hint: string }> = {
-  COMPLETED: {
-    chip: 'bg-[var(--success)] text-white',
-    icon: '✓',
-    hint: 'Completada',
-  },
-  CURRENT: {
-    chip: 'bg-[var(--primary)] text-[var(--on-primary)] ring-4 ring-[var(--primary-container)]',
-    icon: '▶',
-    hint: 'Continuar aquí',
-  },
-  AVAILABLE: {
-    chip: 'bg-[var(--surface-variant)] text-[var(--on-surface)]',
-    icon: '•',
-    hint: 'Disponible',
-  },
-  LOCKED: {
-    chip: 'bg-[var(--surface-variant)] text-[var(--on-surface-variant)]',
-    icon: '🔒',
-    hint: 'Completa la lección anterior',
-  },
-}
+import { WorldBackdrop } from '../../ui/illustrations'
+import { CourseTrail } from './CourseTrail'
 
 export function CourseScreen() {
   const navigate = useNavigate()
@@ -55,14 +33,22 @@ export function CourseScreen() {
     worldIndex > 0 && !courseMap.worldProgress.get(previousWorld.id)?.isCompleted
 
   return (
-    <Screen title="Curso">
-      <p className="mb-4 -mt-3 text-sm text-[var(--on-surface-variant)]">
-        {courseMap.courseProgress.completedLessons} de {courseMap.courseProgress.totalLessons}{' '}
-        lecciones · {Math.round(courseMap.overallProgressPercentage)}%
-      </p>
+    <Screen>
+      {/* Cabecera ilustrada: cada mundo tiene su cielo, asi avanzar se ve. */}
+      <div className="relative -mx-4 -mt-5 mb-5 h-36 overflow-hidden sm:rounded-b-[28px]">
+        <WorldBackdrop worldId={world.id} className="absolute inset-0 h-full w-full" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/45 to-transparent" />
+        <div className="absolute inset-x-0 bottom-0 p-4 text-white">
+          <p className="text-xs font-semibold opacity-90">
+            Mundo {worldIndex} · {courseMap.courseProgress.completedLessons} de{' '}
+            {courseMap.courseProgress.totalLessons} lecciones
+          </p>
+          <h1 className="text-2xl font-bold drop-shadow-sm">{world.title}</h1>
+        </div>
+      </div>
 
       {/* Selector de mundo */}
-      <div className="mb-5 -mx-4 flex gap-2 overflow-x-auto px-4 pb-1">
+      <div className="-mx-4 mb-5 flex gap-2 overflow-x-auto px-4 pb-1">
         {courseMap.worlds.map((item, itemIndex) => {
           const progress = courseMap.worldProgress.get(item.id)
           const locked =
@@ -73,19 +59,18 @@ export function CourseScreen() {
               key={item.id}
               type="button"
               onClick={() => setSelectedWorldId(item.id)}
+              aria-current={item.id === world.id}
               className={[
                 'shrink-0 rounded-full px-4 py-2 text-sm font-semibold transition',
                 item.id === world.id
                   ? 'bg-[var(--primary)] text-[var(--on-primary)]'
-                  : 'bg-[var(--surface-variant)] text-[var(--on-surface-variant)]',
+                  : 'bg-[var(--surface-variant)] text-[var(--on-surface-variant)] hover:brightness-105',
               ].join(' ')}
             >
               {locked && <span aria-hidden>🔒 </span>}
               {item.title}
               {progress && progress.totalUnits > 0 && (
-                <span className="ml-1.5 opacity-70">
-                  {Math.round(progress.percentage)}%
-                </span>
+                <span className="ml-1.5 opacity-70">{Math.round(progress.percentage)}%</span>
               )}
             </button>
           )
@@ -102,14 +87,17 @@ export function CourseScreen() {
       )}
 
       {worldProgress && (
-        <MirabiCard className="mb-5 p-5">
+        <MirabiCard className="mb-6 p-5">
           <div className="mb-2 flex items-baseline justify-between">
-            <span className="text-sm font-semibold">{world.title}</span>
+            <span className="text-sm font-semibold">Progreso del mundo</span>
             <span className="text-xs text-[var(--on-surface-variant)]">
               {worldProgress.completedUnits}/{worldProgress.totalUnits} unidades
             </span>
           </div>
-          <MirabiProgressBar progress={worldProgress.percentage / 100} />
+          <MirabiProgressBar
+            progress={worldProgress.percentage / 100}
+            tone={worldProgress.isCompleted ? 'success' : 'primary'}
+          />
         </MirabiCard>
       )}
 
@@ -120,59 +108,38 @@ export function CourseScreen() {
         const nodes = courseMap.nodes.filter((node) => node.unitId === unitId)
 
         return (
-          <section key={unitId} className="mb-6">
-            <SectionTitle
-              action={
-                <button
-                  type="button"
-                  onClick={() => navigate(`/curso/unidad/${unitId}`)}
-                  className="text-xs font-semibold text-[var(--primary)]"
-                >
-                  Ver detalle
-                </button>
-              }
-            >
-              Unidad {unitIndex + 1} · {unit.title}
-            </SectionTitle>
+          <section key={unitId} className="mb-4">
+            {/* Hito de unidad: marca la frontera dentro del camino. */}
+            <div className="flex items-center gap-3">
+              <span
+                aria-hidden
+                className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-sm font-bold ${
+                  progress?.isCompleted
+                    ? 'bg-[var(--success)] text-white'
+                    : 'bg-[var(--primary-container)] text-[var(--on-primary-container)]'
+                }`}
+              >
+                {unitIndex + 1}
+              </span>
+              <div className="min-w-0 flex-1">
+                <h2 className="truncate text-sm font-bold">{unit.title}</h2>
+                <p className="text-[11px] text-[var(--on-surface-variant)]">
+                  {progress?.completedLessons ?? 0}/{progress?.totalLessons ?? 0} lecciones
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => navigate(`/curso/unidad/${unitId}`)}
+                className="shrink-0 text-xs font-semibold text-[var(--primary)]"
+              >
+                Detalle
+              </button>
+            </div>
 
-            {progress && (
-              <MirabiProgressBar
-                className="mb-3"
-                progress={progress.percentage / 100}
-                tone={progress.isCompleted ? 'success' : 'primary'}
-              />
-            )}
-
-            <ol className="flex flex-col gap-2">
-              {nodes.map((node) => {
-                const style = NODE_STYLE[node.state]
-                const locked = node.state === 'LOCKED'
-                return (
-                  <li key={node.id}>
-                    <MirabiCard
-                      className="flex items-center gap-3 p-3.5"
-                      disabled={locked}
-                      onClick={() => !locked && navigate(`/leccion/${node.lessonId}`)}
-                    >
-                      <span
-                        aria-hidden
-                        className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-sm font-bold ${style.chip}`}
-                      >
-                        {style.icon}
-                      </span>
-                      <span className="min-w-0 flex-1">
-                        <span className="block truncate font-jp text-sm font-semibold">
-                          {node.title}
-                        </span>
-                        <span className="block text-xs text-[var(--on-surface-variant)]">
-                          {style.hint}
-                        </span>
-                      </span>
-                    </MirabiCard>
-                  </li>
-                )
-              })}
-            </ol>
+            <CourseTrail
+              nodes={nodes}
+              onSelect={(node) => navigate(`/leccion/${node.lessonId}`)}
+            />
           </section>
         )
       })}
