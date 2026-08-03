@@ -1,4 +1,7 @@
 {
+    "schemaVersion": 1,
+    "version": "1.0.0",
+    "checksum": "characters-1.0.0-n142",
     "characters": [
         {
             "id": "kana-hiragana-a",

@@ -1,0 +1,268 @@
+{
+    "schemaVersion": 1,
+    "version": "1.0.0",
+    "checksum": "words-1.0.0-n10-k4",
+    "words": [
+        {
+            "id": "word-yama",
+            "learningItemId": "vocab_yama",
+            "lemma": "山",
+            "kana": "やま",
+            "romaji": "yama",
+            "meanings": [
+                "montana"
+            ],
+            "script": "HIRAGANA",
+            "learningItemType": "VOCABULARY",
+            "partOfSpeech": null,
+            "jlptLevel": null,
+            "tags": [],
+            "kanaCharacterIds": [
+                "kana-hiragana-ya",
+                "kana-hiragana-ma"
+            ],
+            "kanjiIds": [
+                "kanji-5c71"
+            ],
+            "audioText": "やま",
+            "source": "MIRABI",
+            "sourceRef": null,
+            "license": null
+        },
+        {
+            "id": "word-mizu",
+            "learningItemId": "vocab_mizu",
+            "lemma": "水",
+            "kana": "みず",
+            "romaji": "mizu",
+            "meanings": [
+                "agua"
+            ],
+            "script": "HIRAGANA",
+            "learningItemType": "VOCABULARY",
+            "partOfSpeech": null,
+            "jlptLevel": null,
+            "tags": [],
+            "kanaCharacterIds": [
+                "kana-hiragana-mi",
+                "kana-hiragana-zu"
+            ],
+            "kanjiIds": [
+                "kanji-6c34"
+            ],
+            "audioText": "みず",
+            "source": "MIRABI",
+            "sourceRef": null,
+            "license": null
+        },
+        {
+            "id": "word-hito",
+            "learningItemId": "vocab_hito",
+            "lemma": "人",
+            "kana": "ひと",
+            "romaji": "hito",
+            "meanings": [
+                "persona"
+            ],
+            "script": "HIRAGANA",
+            "learningItemType": "VOCABULARY",
+            "partOfSpeech": null,
+            "jlptLevel": null,
+            "tags": [],
+            "kanaCharacterIds": [
+                "kana-hiragana-hi",
+                "kana-hiragana-to"
+            ],
+            "kanjiIds": [
+                "kanji-4eba"
+            ],
+            "audioText": "ひと",
+            "source": "MIRABI",
+            "sourceRef": null,
+            "license": null
+        },
+        {
+            "id": "word-nihon",
+            "learningItemId": "vocab_nihon",
+            "lemma": "日本",
+            "kana": "にほん",
+            "romaji": "nihon",
+            "meanings": [
+                "Japon"
+            ],
+            "script": "HIRAGANA",
+            "learningItemType": "VOCABULARY",
+            "partOfSpeech": null,
+            "jlptLevel": null,
+            "tags": [],
+            "kanaCharacterIds": [
+                "kana-hiragana-ni",
+                "kana-hiragana-ho",
+                "kana-hiragana-n"
+            ],
+            "kanjiIds": [
+                "kanji-65e5",
+                "kanji-672c"
+            ],
+            "audioText": "にほん",
+            "source": "MIRABI",
+            "sourceRef": null,
+            "license": null
+        },
+        {
+            "id": "word-neko",
+            "learningItemId": "vocab_neko",
+            "lemma": "ねこ",
+            "kana": "ねこ",
+            "romaji": "neko",
+            "meanings": [
+                "gato"
+            ],
+            "script": "HIRAGANA",
+            "learningItemType": "VOCABULARY",
+            "partOfSpeech": null,
+            "jlptLevel": null,
+            "tags": [
+                "animales"
+            ],
+            "kanaCharacterIds": [
+                "kana-hiragana-ne",
+                "kana-hiragana-ko"
+            ],
+            "kanjiIds": [],
+            "audioText": "ねこ",
+            "source": "MIRABI",
+            "sourceRef": null,
+            "license": null
+        },
+        {
+            "id": "word-hana",
+            "learningItemId": "vocab_hana",
+            "lemma": "はな",
+            "kana": "はな",
+            "romaji": "hana",
+            "meanings": [
+                "flor"
+            ],
+            "script": "HIRAGANA",
+            "learningItemType": "VOCABULARY",
+            "partOfSpeech": null,
+            "jlptLevel": null,
+            "tags": [],
+            "kanaCharacterIds": [
+                "kana-hiragana-ha",
+                "kana-hiragana-na"
+            ],
+            "kanjiIds": [],
+            "audioText": "はな",
+            "source": "MIRABI",
+            "sourceRef": null,
+            "license": null
+        },
+        {
+            "id": "word-tsuki",
+            "learningItemId": "vocab_tsuki",
+            "lemma": "つき",
+            "kana": "つき",
+            "romaji": "tsuki",
+            "meanings": [
+                "luna"
+            ],
+            "script": "HIRAGANA",
+            "learningItemType": "VOCABULARY",
+            "partOfSpeech": null,
+            "jlptLevel": null,
+            "tags": [],
+            "kanaCharacterIds": [
+                "kana-hiragana-tsu",
+                "kana-hiragana-ki"
+            ],
+            "kanjiIds": [],
+            "audioText": "つき",
+            "source": "MIRABI",
+            "sourceRef": null,
+            "license": null
+        },
+        {
+            "id": "word-anime",
+            "learningItemId": "vocab_anime",
+            "lemma": "アニメ",
+            "kana": "アニメ",
+            "romaji": "anime",
+            "meanings": [
+                "anime"
+            ],
+            "script": "KATAKANA",
+            "learningItemType": "VOCABULARY",
+            "partOfSpeech": null,
+            "jlptLevel": null,
+            "tags": [
+                "prestamo"
+            ],
+            "kanaCharacterIds": [
+                "kana-katakana-a",
+                "kana-katakana-ni",
+                "kana-katakana-me"
+            ],
+            "kanjiIds": [],
+            "audioText": "アニメ",
+            "source": "MIRABI",
+            "sourceRef": null,
+            "license": null
+        },
+        {
+            "id": "word-terebi",
+            "learningItemId": "vocab_terebi",
+            "lemma": "テレビ",
+            "kana": "テレビ",
+            "romaji": "terebi",
+            "meanings": [
+                "television"
+            ],
+            "script": "KATAKANA",
+            "learningItemType": "VOCABULARY",
+            "partOfSpeech": null,
+            "jlptLevel": null,
+            "tags": [
+                "prestamo"
+            ],
+            "kanaCharacterIds": [
+                "kana-katakana-te",
+                "kana-katakana-re",
+                "kana-katakana-bi"
+            ],
+            "kanjiIds": [],
+            "audioText": "テレビ",
+            "source": "MIRABI",
+            "sourceRef": null,
+            "license": null
+        },
+        {
+            "id": "word-kamera",
+            "learningItemId": "vocab_kamera",
+            "lemma": "カメラ",
+            "kana": "カメラ",
+            "romaji": "kamera",
+            "meanings": [
+                "camara"
+            ],
+            "script": "KATAKANA",
+            "learningItemType": "VOCABULARY",
+            "partOfSpeech": null,
+            "jlptLevel": null,
+            "tags": [
+                "prestamo"
+            ],
+            "kanaCharacterIds": [
+                "kana-katakana-ka",
+                "kana-katakana-me",
+                "kana-katakana-ra"
+            ],
+            "kanjiIds": [],
+            "audioText": "カメラ",
+            "source": "MIRABI",
+            "sourceRef": null,
+            "license": null
+        }
+    ]
+}

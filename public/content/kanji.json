@@ -1,0 +1,201 @@
+{
+    "schemaVersion": 1,
+    "version": "1.0.0",
+    "checksum": "kanji-1.0.0-n5-s18",
+    "kanji": [
+        {
+            "id": "kanji-65e5",
+            "symbol": "日",
+            "learningItemId": "kanji-65e5",
+            "meanings": [
+                "dia",
+                "sol"
+            ],
+            "meaningsLanguage": "ES",
+            "onyomi": [
+                {
+                    "kana": "ニチ",
+                    "romaji": "nichi"
+                },
+                {
+                    "kana": "ジツ",
+                    "romaji": "jitsu"
+                }
+            ],
+            "kunyomi": [
+                {
+                    "kana": "ひ",
+                    "romaji": "hi"
+                },
+                {
+                    "kana": "か",
+                    "romaji": "ka"
+                }
+            ],
+            "strokeCount": 4,
+            "radical": {
+                "symbol": "日",
+                "meaning": "sol"
+            },
+            "grade": 1,
+            "frequencyRank": 1,
+            "jlptLevel": null,
+            "learningItemType": "KANJI",
+            "wordIds": [
+                "word-nihon"
+            ],
+            "source": "MIRABI",
+            "sourceRef": null,
+            "license": null
+        },
+        {
+            "id": "kanji-672c",
+            "symbol": "本",
+            "learningItemId": "kanji-672c",
+            "meanings": [
+                "libro",
+                "origen"
+            ],
+            "meaningsLanguage": "ES",
+            "onyomi": [
+                {
+                    "kana": "ホン",
+                    "romaji": "hon"
+                }
+            ],
+            "kunyomi": [
+                {
+                    "kana": "もと",
+                    "romaji": "moto"
+                }
+            ],
+            "strokeCount": 5,
+            "radical": {
+                "symbol": "木",
+                "meaning": "arbol"
+            },
+            "grade": 1,
+            "frequencyRank": 10,
+            "jlptLevel": null,
+            "learningItemType": "KANJI",
+            "wordIds": [
+                "word-nihon"
+            ],
+            "source": "MIRABI",
+            "sourceRef": null,
+            "license": null
+        },
+        {
+            "id": "kanji-5c71",
+            "symbol": "山",
+            "learningItemId": "kanji-5c71",
+            "meanings": [
+                "montana"
+            ],
+            "meaningsLanguage": "ES",
+            "onyomi": [
+                {
+                    "kana": "サン",
+                    "romaji": "san"
+                }
+            ],
+            "kunyomi": [
+                {
+                    "kana": "やま",
+                    "romaji": "yama"
+                }
+            ],
+            "strokeCount": 3,
+            "radical": {
+                "symbol": "山",
+                "meaning": "montana"
+            },
+            "grade": 1,
+            "frequencyRank": 369,
+            "jlptLevel": null,
+            "learningItemType": "KANJI",
+            "wordIds": [
+                "word-yama"
+            ],
+            "source": "MIRABI",
+            "sourceRef": null,
+            "license": null
+        },
+        {
+            "id": "kanji-6c34",
+            "symbol": "水",
+            "learningItemId": "kanji-6c34",
+            "meanings": [
+                "agua"
+            ],
+            "meaningsLanguage": "ES",
+            "onyomi": [
+                {
+                    "kana": "スイ",
+                    "romaji": "sui"
+                }
+            ],
+            "kunyomi": [
+                {
+                    "kana": "みず",
+                    "romaji": "mizu"
+                }
+            ],
+            "strokeCount": 4,
+            "radical": {
+                "symbol": "水",
+                "meaning": "agua"
+            },
+            "grade": 1,
+            "frequencyRank": 293,
+            "jlptLevel": null,
+            "learningItemType": "KANJI",
+            "wordIds": [
+                "word-mizu"
+            ],
+            "source": "MIRABI",
+            "sourceRef": null,
+            "license": null
+        },
+        {
+            "id": "kanji-4eba",
+            "symbol": "人",
+            "learningItemId": "kanji-4eba",
+            "meanings": [
+                "persona"
+            ],
+            "meaningsLanguage": "ES",
+            "onyomi": [
+                {
+                    "kana": "ジン",
+                    "romaji": "jin"
+                },
+                {
+                    "kana": "ニン",
+                    "romaji": "nin"
+                }
+            ],
+            "kunyomi": [
+                {
+                    "kana": "ひと",
+                    "romaji": "hito"
+                }
+            ],
+            "strokeCount": 2,
+            "radical": {
+                "symbol": "人",
+                "meaning": "persona"
+            },
+            "grade": 1,
+            "frequencyRank": 5,
+            "jlptLevel": null,
+            "learningItemType": "KANJI",
+            "wordIds": [
+                "word-hito"
+            ],
+            "source": "MIRABI",
+            "sourceRef": null,
+            "license": null
+        }
+    ]
+}
