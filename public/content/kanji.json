@@ -95,7 +95,10 @@
             "frequencyRank": 2,
             "jlptLevel": 4,
             "learningItemType": "KANJI",
-            "wordIds": [],
+            "wordIds": [
+                "word-hitori",
+                "word-hitotsu"
+            ],
             "source": "JMDICT",
             "sourceRef": "4e00",
             "license": "KANJIDIC2 (c) EDRDG, CC BY-SA 4.0"
@@ -143,7 +146,9 @@
             "jlptLevel": 4,
             "learningItemType": "KANJI",
             "wordIds": [
-                "word-hito"
+                "word-hito",
+                "word-futari",
+                "word-hitori"
             ],
             "source": "JMDICT",
             "sourceRef": "4eba",
@@ -180,7 +185,9 @@
             "frequencyRank": 6,
             "jlptLevel": 4,
             "learningItemType": "KANJI",
-            "wordIds": [],
+            "wordIds": [
+                "word-rainen"
+            ],
             "source": "JMDICT",
             "sourceRef": "5e74",
             "license": "KANJIDIC2 (c) EDRDG, CC BY-SA 4.0"
@@ -229,7 +236,9 @@
             "frequencyRank": 7,
             "jlptLevel": 4,
             "learningItemType": "KANJI",
-            "wordIds": [],
+            "wordIds": [
+                "word-daigaku"
+            ],
             "source": "JMDICT",
             "sourceRef": "5927",
             "license": "KANJIDIC2 (c) EDRDG, CC BY-SA 4.0"
@@ -329,7 +338,10 @@
             "frequencyRank": 9,
             "jlptLevel": 4,
             "learningItemType": "KANJI",
-            "wordIds": [],
+            "wordIds": [
+                "word-futari",
+                "word-futatsu"
+            ],
             "source": "JMDICT",
             "sourceRef": "4e8c",
             "license": "KANJIDIC2 (c) EDRDG, CC BY-SA 4.0"
@@ -368,7 +380,8 @@
             "jlptLevel": 4,
             "learningItemType": "KANJI",
             "wordIds": [
-                "word-nihon"
+                "word-nihon",
+                "word-hon"
             ],
             "source": "JMDICT",
             "sourceRef": "672c",
@@ -730,7 +743,10 @@
             "frequencyRank": 29,
             "jlptLevel": 4,
             "learningItemType": "KANJI",
-            "wordIds": [],
+            "wordIds": [
+                "word-sensei",
+                "word-gakusei"
+            ],
             "source": "JMDICT",
             "sourceRef": "751f",
             "license": "KANJIDIC2 (c) EDRDG, CC BY-SA 4.0"
@@ -873,7 +889,9 @@
             "frequencyRank": 35,
             "jlptLevel": 4,
             "learningItemType": "KANJI",
-            "wordIds": [],
+            "wordIds": [
+                "word-ue"
+            ],
             "source": "JMDICT",
             "sourceRef": "4e0a",
             "license": "KANJIDIC2 (c) EDRDG, CC BY-SA 4.0"
@@ -1216,7 +1234,9 @@
             "frequencyRank": 60,
             "jlptLevel": 4,
             "learningItemType": "KANJI",
-            "wordIds": [],
+            "wordIds": [
+                "word-te"
+            ],
             "source": "JMDICT",
             "sourceRef": "624b",
             "license": "KANJIDIC2 (c) EDRDG, CC BY-SA 4.0"
@@ -1302,7 +1322,11 @@
             "frequencyRank": 63,
             "jlptLevel": 4,
             "learningItemType": "KANJI",
-            "wordIds": [],
+            "wordIds": [
+                "word-gakusei",
+                "word-gakkou",
+                "word-daigaku"
+            ],
             "source": "JMDICT",
             "sourceRef": "5b66",
             "license": "KANJIDIC2 (c) EDRDG, CC BY-SA 4.0"
@@ -1355,7 +1379,9 @@
             "frequencyRank": 69,
             "jlptLevel": 4,
             "learningItemType": "KANJI",
-            "wordIds": [],
+            "wordIds": [
+                "word-en"
+            ],
             "source": "JMDICT",
             "sourceRef": "5186",
             "license": "KANJIDIC2 (c) EDRDG, CC BY-SA 4.0"
@@ -1456,7 +1482,9 @@
             "frequencyRank": 76,
             "jlptLevel": 4,
             "learningItemType": "KANJI",
-            "wordIds": [],
+            "wordIds": [
+                "word-me"
+            ],
             "source": "JMDICT",
             "sourceRef": "76ee",
             "license": "KANJIDIC2 (c) EDRDG, CC BY-SA 4.0"
@@ -1726,7 +1754,10 @@
             "frequencyRank": 113,
             "jlptLevel": 4,
             "learningItemType": "KANJI",
-            "wordIds": [],
+            "wordIds": [
+                "word-genki",
+                "word-byouki"
+            ],
             "source": "JMDICT",
             "sourceRef": "6c17",
             "license": "KANJIDIC2 (c) EDRDG, CC BY-SA 4.0"
@@ -1774,7 +1805,9 @@
             "frequencyRank": 114,
             "jlptLevel": 4,
             "learningItemType": "KANJI",
-            "wordIds": [],
+            "wordIds": [
+                "word-chiisai"
+            ],
             "source": "JMDICT",
             "sourceRef": "5c0f",
             "license": "KANJIDIC2 (c) EDRDG, CC BY-SA 4.0"
@@ -2047,7 +2080,9 @@
             "frequencyRank": 173,
             "jlptLevel": 4,
             "learningItemType": "KANJI",
-            "wordIds": [],
+            "wordIds": [
+                "word-sensei"
+            ],
             "source": "JMDICT",
             "sourceRef": "5148",
             "license": "KANJIDIC2 (c) EDRDG, CC BY-SA 4.0"
@@ -2093,7 +2128,9 @@
             "frequencyRank": 177,
             "jlptLevel": 4,
             "learningItemType": "KANJI",
-            "wordIds": [],
+            "wordIds": [
+                "word-namae"
+            ],
             "source": "JMDICT",
             "sourceRef": "540d",
             "license": "KANJIDIC2 (c) EDRDG, CC BY-SA 4.0"
@@ -2409,7 +2446,9 @@
             "frequencyRank": 292,
             "jlptLevel": 3,
             "learningItemType": "KANJI",
-            "wordIds": [],
+            "wordIds": [
+                "word-machi"
+            ],
             "source": "JMDICT",
             "sourceRef": "753a",
             "license": "KANJIDIC2 (c) EDRDG, CC BY-SA 4.0"
@@ -2445,7 +2484,9 @@
             "frequencyRank": 294,
             "jlptLevel": 4,
             "learningItemType": "KANJI",
-            "wordIds": [],
+            "wordIds": [
+                "word-gakkou"
+            ],
             "source": "JMDICT",
             "sourceRef": "6821",
             "license": "KANJIDIC2 (c) EDRDG, CC BY-SA 4.0"
@@ -2840,7 +2881,9 @@
             "frequencyRank": 483,
             "jlptLevel": 4,
             "learningItemType": "KANJI",
-            "wordIds": [],
+            "wordIds": [
+                "word-omoshiroi"
+            ],
             "source": "JMDICT",
             "sourceRef": "767d",
             "license": "KANJIDIC2 (c) EDRDG, CC BY-SA 4.0"
@@ -3644,7 +3687,9 @@
             "frequencyRank": 1326,
             "jlptLevel": 3,
             "learningItemType": "KANJI",
-            "wordIds": [],
+            "wordIds": [
+                "word-inu"
+            ],
             "source": "JMDICT",
             "sourceRef": "72ac",
             "license": "KANJIDIC2 (c) EDRDG, CC BY-SA 4.0"
@@ -3680,7 +3725,9 @@
             "frequencyRank": 1328,
             "jlptLevel": 4,
             "learningItemType": "KANJI",
-            "wordIds": [],
+            "wordIds": [
+                "word-mimi"
+            ],
             "source": "JMDICT",
             "sourceRef": "8033",
             "license": "KANJIDIC2 (c) EDRDG, CC BY-SA 4.0"
@@ -3720,7 +3767,9 @@
             "frequencyRank": 1351,
             "jlptLevel": 2,
             "learningItemType": "KANJI",
-            "wordIds": [],
+            "wordIds": [
+                "word-mushi"
+            ],
             "source": "JMDICT",
             "sourceRef": "866b",
             "license": "KANJIDIC2 (c) EDRDG, CC BY-SA 4.0"
@@ -3998,7 +4047,10 @@
             "frequencyRank": 16,
             "jlptLevel": 4,
             "learningItemType": "KANJI",
-            "wordIds": [],
+            "wordIds": [
+                "word-tokei",
+                "word-jikan"
+            ],
             "source": "JMDICT",
             "sourceRef": "6642",
             "license": "KANJIDIC2 (c) EDRDG, CC BY-SA 4.0"
@@ -4125,7 +4177,9 @@
             "frequencyRank": 20,
             "jlptLevel": 4,
             "learningItemType": "KANJI",
-            "wordIds": [],
+            "wordIds": [
+                "word-ikimasu"
+            ],
             "source": "JMDICT",
             "sourceRef": "884c",
             "license": "KANJIDIC2 (c) EDRDG, CC BY-SA 4.0"
@@ -4324,7 +4378,9 @@
             "frequencyRank": 27,
             "jlptLevel": 4,
             "learningItemType": "KANJI",
-            "wordIds": [],
+            "wordIds": [
+                "word-namae"
+            ],
             "source": "JMDICT",
             "sourceRef": "524d",
             "license": "KANJIDIC2 (c) EDRDG, CC BY-SA 4.0"
@@ -4373,7 +4429,9 @@
             "frequencyRank": 33,
             "jlptLevel": 4,
             "learningItemType": "KANJI",
-            "wordIds": [],
+            "wordIds": [
+                "word-jikan"
+            ],
             "source": "JMDICT",
             "sourceRef": "9593",
             "license": "KANJIDIC2 (c) EDRDG, CC BY-SA 4.0"
@@ -4961,7 +5019,9 @@
             "frequencyRank": 65,
             "jlptLevel": 4,
             "learningItemType": "KANJI",
-            "wordIds": [],
+            "wordIds": [
+                "word-takai"
+            ],
             "source": "JMDICT",
             "sourceRef": "9ad8",
             "license": "KANJIDIC2 (c) EDRDG, CC BY-SA 4.0"
@@ -5508,7 +5568,9 @@
             "frequencyRank": 102,
             "jlptLevel": 4,
             "learningItemType": "KANJI",
-            "wordIds": [],
+            "wordIds": [
+                "word-rainen"
+            ],
             "source": "JMDICT",
             "sourceRef": "6765",
             "license": "KANJIDIC2 (c) EDRDG, CC BY-SA 4.0"
@@ -5749,7 +5811,9 @@
             "frequencyRank": 120,
             "jlptLevel": 3,
             "learningItemType": "KANJI",
-            "wordIds": [],
+            "wordIds": [
+                "word-yasai"
+            ],
             "source": "JMDICT",
             "sourceRef": "91ce",
             "license": "KANJIDIC2 (c) EDRDG, CC BY-SA 4.0"
@@ -5884,7 +5948,9 @@
             "frequencyRank": 134,
             "jlptLevel": 4,
             "learningItemType": "KANJI",
-            "wordIds": [],
+            "wordIds": [
+                "word-denwa"
+            ],
             "source": "JMDICT",
             "sourceRef": "8a71",
             "license": "KANJIDIC2 (c) EDRDG, CC BY-SA 4.0"
@@ -6499,7 +6565,9 @@
             "frequencyRank": 192,
             "jlptLevel": 3,
             "learningItemType": "KANJI",
-            "wordIds": [],
+            "wordIds": [
+                "word-genki"
+            ],
             "source": "JMDICT",
             "sourceRef": "5143",
             "license": "KANJIDIC2 (c) EDRDG, CC BY-SA 4.0"
@@ -6991,7 +7059,9 @@
             "frequencyRank": 228,
             "jlptLevel": 3,
             "learningItemType": "KANJI",
-            "wordIds": [],
+            "wordIds": [
+                "word-tokei"
+            ],
             "source": "JMDICT",
             "sourceRef": "8a08",
             "license": "KANJIDIC2 (c) EDRDG, CC BY-SA 4.0"
@@ -7281,7 +7351,9 @@
             "frequencyRank": 268,
             "jlptLevel": 4,
             "learningItemType": "KANJI",
-            "wordIds": [],
+            "wordIds": [
+                "word-denwa"
+            ],
             "source": "JMDICT",
             "sourceRef": "96fb",
             "license": "KANJIDIC2 (c) EDRDG, CC BY-SA 4.0"
@@ -7680,7 +7752,9 @@
             "frequencyRank": 328,
             "jlptLevel": 4,
             "learningItemType": "KANJI",
-            "wordIds": [],
+            "wordIds": [
+                "word-tabemasu"
+            ],
             "source": "JMDICT",
             "sourceRef": "98df",
             "license": "KANJIDIC2 (c) EDRDG, CC BY-SA 4.0"
@@ -7727,7 +7801,9 @@
             "frequencyRank": 340,
             "jlptLevel": 4,
             "learningItemType": "KANJI",
-            "wordIds": [],
+            "wordIds": [
+                "word-nan"
+            ],
             "source": "JMDICT",
             "sourceRef": "4f55",
             "license": "KANJIDIC2 (c) EDRDG, CC BY-SA 4.0"
@@ -8389,7 +8465,9 @@
             "frequencyRank": 487,
             "jlptLevel": 3,
             "learningItemType": "KANJI",
-            "wordIds": [],
+            "wordIds": [
+                "word-yoru"
+            ],
             "source": "JMDICT",
             "sourceRef": "591c",
             "license": "KANJIDIC2 (c) EDRDG, CC BY-SA 4.0"
@@ -9113,7 +9191,10 @@
             "frequencyRank": 570,
             "jlptLevel": 4,
             "learningItemType": "KANJI",
-            "wordIds": [],
+            "wordIds": [
+                "word-haha",
+                "word-okaasan"
+            ],
             "source": "JMDICT",
             "sourceRef": "6bcd",
             "license": "KANJIDIC2 (c) EDRDG, CC BY-SA 4.0"
@@ -9354,7 +9435,9 @@
             "frequencyRank": 622,
             "jlptLevel": 4,
             "learningItemType": "KANJI",
-            "wordIds": [],
+            "wordIds": [
+                "word-tomodachi"
+            ],
             "source": "JMDICT",
             "sourceRef": "53cb",
             "license": "KANJIDIC2 (c) EDRDG, CC BY-SA 4.0"
@@ -9557,7 +9640,9 @@
             "frequencyRank": 646,
             "jlptLevel": 4,
             "learningItemType": "KANJI",
-            "wordIds": [],
+            "wordIds": [
+                "word-otousan"
+            ],
             "source": "JMDICT",
             "sourceRef": "7236",
             "license": "KANJIDIC2 (c) EDRDG, CC BY-SA 4.0"
@@ -9639,7 +9724,9 @@
             "frequencyRank": 676,
             "jlptLevel": 3,
             "learningItemType": "KANJI",
-            "wordIds": [],
+            "wordIds": [
+                "word-kao"
+            ],
             "source": "JMDICT",
             "sourceRef": "9854",
             "license": "KANJIDIC2 (c) EDRDG, CC BY-SA 4.0"
@@ -9883,7 +9970,9 @@
             "frequencyRank": 844,
             "jlptLevel": 2,
             "learningItemType": "KANJI",
-            "wordIds": [],
+            "wordIds": [
+                "word-hoshi"
+            ],
             "source": "JMDICT",
             "sourceRef": "661f",
             "license": "KANJIDIC2 (c) EDRDG, CC BY-SA 4.0"
@@ -10113,7 +10202,9 @@
             "frequencyRank": 986,
             "jlptLevel": 3,
             "learningItemType": "KANJI",
-            "wordIds": [],
+            "wordIds": [
+                "word-niku"
+            ],
             "source": "JMDICT",
             "sourceRef": "8089",
             "license": "KANJIDIC2 (c) EDRDG, CC BY-SA 4.0"
@@ -10207,7 +10298,9 @@
             "frequencyRank": 1043,
             "jlptLevel": 3,
             "learningItemType": "KANJI",
-            "wordIds": [],
+            "wordIds": [
+                "word-tori"
+            ],
             "source": "JMDICT",
             "sourceRef": "9ce5",
             "license": "KANJIDIC2 (c) EDRDG, CC BY-SA 4.0"
@@ -10242,7 +10335,9 @@
             "frequencyRank": 1090,
             "jlptLevel": 3,
             "learningItemType": "KANJI",
-            "wordIds": [],
+            "wordIds": [
+                "word-fuyu"
+            ],
             "source": "JMDICT",
             "sourceRef": "51ac",
             "license": "KANJIDIC2 (c) EDRDG, CC BY-SA 4.0"
@@ -10351,7 +10446,9 @@
             "frequencyRank": 1116,
             "jlptLevel": 3,
             "learningItemType": "KANJI",
-            "wordIds": [],
+            "wordIds": [
+                "word-ocha"
+            ],
             "source": "JMDICT",
             "sourceRef": "8336",
             "license": "KANJIDIC2 (c) EDRDG, CC BY-SA 4.0"
@@ -10386,7 +10483,9 @@
             "frequencyRank": 1131,
             "jlptLevel": 2,
             "learningItemType": "KANJI",
-            "wordIds": [],
+            "wordIds": [
+                "word-yuki"
+            ],
             "source": "JMDICT",
             "sourceRef": "96ea",
             "license": "KANJIDIC2 (c) EDRDG, CC BY-SA 4.0"
@@ -10548,7 +10647,9 @@
             "frequencyRank": 1208,
             "jlptLevel": 4,
             "learningItemType": "KANJI",
-            "wordIds": [],
+            "wordIds": [
+                "word-sakana"
+            ],
             "source": "JMDICT",
             "sourceRef": "9b5a",
             "license": "KANJIDIC2 (c) EDRDG, CC BY-SA 4.0"
@@ -10587,7 +10688,9 @@
             "frequencyRank": 1219,
             "jlptLevel": 3,
             "learningItemType": "KANJI",
-            "wordIds": [],
+            "wordIds": [
+                "word-ani"
+            ],
             "source": "JMDICT",
             "sourceRef": "5144",
             "license": "KANJIDIC2 (c) EDRDG, CC BY-SA 4.0"
@@ -10669,7 +10772,9 @@
             "frequencyRank": 1256,
             "jlptLevel": 2,
             "learningItemType": "KANJI",
-            "wordIds": [],
+            "wordIds": [
+                "word-kumo"
+            ],
             "source": "JMDICT",
             "sourceRef": "96f2",
             "license": "KANJIDIC2 (c) EDRDG, CC BY-SA 4.0"
@@ -10785,7 +10890,9 @@
             "frequencyRank": 1446,
             "jlptLevel": 3,
             "learningItemType": "KANJI",
-            "wordIds": [],
+            "wordIds": [
+                "word-imouto"
+            ],
             "source": "JMDICT",
             "sourceRef": "59b9",
             "license": "KANJIDIC2 (c) EDRDG, CC BY-SA 4.0"
@@ -10824,7 +10931,9 @@
             "frequencyRank": 1473,
             "jlptLevel": 3,
             "learningItemType": "KANJI",
-            "wordIds": [],
+            "wordIds": [
+                "word-ane"
+            ],
             "source": "JMDICT",
             "sourceRef": "59c9",
             "license": "KANJIDIC2 (c) EDRDG, CC BY-SA 4.0"
@@ -11203,7 +11312,9 @@
             "frequencyRank": 36,
             "jlptLevel": 2,
             "learningItemType": "KANJI",
-            "wordIds": [],
+            "wordIds": [
+                "word-heya"
+            ],
             "source": "JMDICT",
             "sourceRef": "90e8",
             "license": "KANJIDIC2 (c) EDRDG, CC BY-SA 4.0"
@@ -13030,7 +13141,9 @@
             "frequencyRank": 186,
             "jlptLevel": 2,
             "learningItemType": "KANJI",
-            "wordIds": [],
+            "wordIds": [
+                "word-omoshiroi"
+            ],
             "source": "JMDICT",
             "sourceRef": "9762",
             "license": "KANJIDIC2 (c) EDRDG, CC BY-SA 4.0"
@@ -13290,7 +13403,9 @@
             "frequencyRank": 215,
             "jlptLevel": 3,
             "learningItemType": "KANJI",
-            "wordIds": [],
+            "wordIds": [
+                "word-kudamono"
+            ],
             "source": "JMDICT",
             "sourceRef": "7269",
             "license": "KANJIDIC2 (c) EDRDG, CC BY-SA 4.0"
@@ -15124,7 +15239,9 @@
             "frequencyRank": 384,
             "jlptLevel": 3,
             "learningItemType": "KANJI",
-            "wordIds": [],
+            "wordIds": [
+                "word-byouki"
+            ],
             "source": "JMDICT",
             "sourceRef": "75c5",
             "license": "KANJIDIC2 (c) EDRDG, CC BY-SA 4.0"
@@ -16832,7 +16949,9 @@
             "frequencyRank": 616,
             "jlptLevel": 3,
             "learningItemType": "KANJI",
-            "wordIds": [],
+            "wordIds": [
+                "word-heya"
+            ],
             "source": "JMDICT",
             "sourceRef": "5c4b",
             "license": "KANJIDIC2 (c) EDRDG, CC BY-SA 4.0"
@@ -17397,7 +17516,9 @@
             "frequencyRank": 724,
             "jlptLevel": 4,
             "learningItemType": "KANJI",
-            "wordIds": [],
+            "wordIds": [
+                "word-eki"
+            ],
             "source": "JMDICT",
             "sourceRef": "99c5",
             "license": "KANJIDIC2 (c) EDRDG, CC BY-SA 4.0"
@@ -18254,7 +18375,10 @@
             "frequencyRank": 969,
             "jlptLevel": 4,
             "learningItemType": "KANJI",
-            "wordIds": [],
+            "wordIds": [
+                "word-nomimasu",
+                "word-nomu"
+            ],
             "source": "JMDICT",
             "sourceRef": "98f2",
             "license": "KANJIDIC2 (c) EDRDG, CC BY-SA 4.0"
@@ -20525,7 +20649,9 @@
             "frequencyRank": 141,
             "jlptLevel": 2,
             "learningItemType": "KANJI",
-            "wordIds": [],
+            "wordIds": [
+                "word-tsuzuku"
+            ],
             "source": "JMDICT",
             "sourceRef": "7d9a",
             "license": "KANJIDIC2 (c) EDRDG, CC BY-SA 4.0"
@@ -20945,7 +21071,9 @@
             "frequencyRank": 203,
             "jlptLevel": 2,
             "learningItemType": "KANJI",
-            "wordIds": [],
+            "wordIds": [
+                "word-benri"
+            ],
             "source": "JMDICT",
             "sourceRef": "5229",
             "license": "KANJIDIC2 (c) EDRDG, CC BY-SA 4.0"
@@ -21433,7 +21561,9 @@
             "frequencyRank": 258,
             "jlptLevel": 2,
             "learningItemType": "KANJI",
-            "wordIds": [],
+            "wordIds": [
+                "word-kudamono"
+            ],
             "source": "JMDICT",
             "sourceRef": "679c",
             "license": "KANJIDIC2 (c) EDRDG, CC BY-SA 4.0"
@@ -22051,7 +22181,9 @@
             "frequencyRank": 370,
             "jlptLevel": 2,
             "learningItemType": "KANJI",
-            "wordIds": [],
+            "wordIds": [
+                "word-seki"
+            ],
             "source": "JMDICT",
             "sourceRef": "5e2d",
             "license": "KANJIDIC2 (c) EDRDG, CC BY-SA 4.0"
@@ -22565,7 +22697,9 @@
             "frequencyRank": 423,
             "jlptLevel": 3,
             "learningItemType": "KANJI",
-            "wordIds": [],
+            "wordIds": [
+                "word-suki"
+            ],
             "source": "JMDICT",
             "sourceRef": "597d",
             "license": "KANJIDIC2 (c) EDRDG, CC BY-SA 4.0"
@@ -23319,7 +23453,9 @@
             "frequencyRank": 500,
             "jlptLevel": 2,
             "learningItemType": "KANJI",
-            "wordIds": [],
+            "wordIds": [
+                "word-tomodachi"
+            ],
             "source": "JMDICT",
             "sourceRef": "9054",
             "license": "KANJIDIC2 (c) EDRDG, CC BY-SA 4.0"
@@ -24934,7 +25070,9 @@
             "frequencyRank": 729,
             "jlptLevel": 3,
             "learningItemType": "KANJI",
-            "wordIds": [],
+            "wordIds": [
+                "word-benri"
+            ],
             "source": "JMDICT",
             "sourceRef": "4fbf",
             "license": "KANJIDIC2 (c) EDRDG, CC BY-SA 4.0"
@@ -26831,7 +26969,9 @@
             "frequencyRank": 1046,
             "jlptLevel": 3,
             "learningItemType": "KANJI",
-            "wordIds": [],
+            "wordIds": [
+                "word-gohan"
+            ],
             "source": "JMDICT",
             "sourceRef": "98ef",
             "license": "KANJIDIC2 (c) EDRDG, CC BY-SA 4.0"
@@ -27256,7 +27396,9 @@
             "frequencyRank": 1148,
             "jlptLevel": 2,
             "learningItemType": "KANJI",
-            "wordIds": [],
+            "wordIds": [
+                "word-shio"
+            ],
             "source": "JMDICT",
             "sourceRef": "5869",
             "license": "KANJIDIC2 (c) EDRDG, CC BY-SA 4.0"
@@ -27734,7 +27876,9 @@
             "frequencyRank": 1327,
             "jlptLevel": 3,
             "learningItemType": "KANJI",
-            "wordIds": [],
+            "wordIds": [
+                "word-yasai"
+            ],
             "source": "JMDICT",
             "sourceRef": "83dc",
             "license": "KANJIDIC2 (c) EDRDG, CC BY-SA 4.0"
@@ -35034,7 +35178,9 @@
             "frequencyRank": 877,
             "jlptLevel": 2,
             "learningItemType": "KANJI",
-            "wordIds": [],
+            "wordIds": [
+                "word-nuno"
+            ],
             "source": "JMDICT",
             "sourceRef": "5e03",
             "license": "KANJIDIC2 (c) EDRDG, CC BY-SA 4.0"
@@ -36816,7 +36962,9 @@
             "frequencyRank": 242,
             "jlptLevel": 3,
             "learningItemType": "KANJI",
-            "wordIds": [],
+            "wordIds": [
+                "word-watashi"
+            ],
             "source": "JMDICT",
             "sourceRef": "79c1",
             "license": "KANJIDIC2 (c) EDRDG, CC BY-SA 4.0"

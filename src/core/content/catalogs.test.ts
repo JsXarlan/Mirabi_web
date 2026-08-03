@@ -89,16 +89,54 @@ describe('palabras', () => {
   })
 
   it('la palabra que comparte id con el curso comparte también el elemento', () => {
+    // El curso desdobla algunas palabras en un id `_kana` para practicar
+    // lectura por separado del significado; la biblioteca no las duplica.
     const delCurso = new Set(
       coursePack.lessons
         .flatMap((lesson) => lesson.exercises)
         .filter((exercise) => exercise.learningItemType === 'VOCABULARY')
-        .map((exercise) => exercise.learningItemId),
+        .map((exercise) => exercise.learningItemId.replace(/_kana$/, '')),
     )
 
     const compartidas = wordCatalog.words.filter((word) => delCurso.has(word.learningItemId))
-    // La semilla incluye neko y anime justamente para ejercitar este camino.
-    expect(compartidas.length).toBeGreaterThan(0)
+    // numbers_1_10 es un id de agrupacion del curso, no una palabra suelta:
+    // es el unico que se queda fuera a proposito.
+    expect(compartidas.length).toBe(delCurso.size - 1)
+  })
+
+  it('los ejemplos del catálogo de caracteres siguen en la biblioteca', () => {
+    /*
+     * Cada kana trae un ejemplo. Casi todos deben aparecer como palabra; los
+     * que no son exclusiones deliberadas y nombradas, no huecos que se cuelen
+     * sin que nadie se entere:
+     *  - ぜろ/ぱん/ぺん: la forma hiragana de un prestamo que en japones real
+     *    se escribe en katakana (ゼロ/パン/ペン, esas si estan).
+     *  - タコ/ニコ/ヌノ/ネコ/フユ/ヘヤ/ホシ/ミミ/ムシ/モモ/ヤマ/ユキ/ヨル/ロク/ワタシ:
+     *    el mismo lexema nativo, transliterado a katakana solo para practicar
+     *    lectura del silabario; nunca se escriben asi en japones real (queda
+     *    la forma hiragana, que es la genuina).
+     *  - ヲ/ン/ヂ/ヅ: no son palabras, son kana sueltos usados como ejemplo.
+     */
+    const excepciones = new Set([
+      'ぜろ', 'ぱん', 'ぺん',
+      'タコ', 'ニコ', 'ヌノ', 'ネコ', 'フユ', 'ヘヤ', 'ホシ', 'ミミ', 'ムシ', 'モモ',
+      'ヤマ', 'ユキ', 'ヨル', 'ロク', 'ワタシ',
+      'ヲ', 'ン', 'ヂ', 'ヅ',
+    ])
+
+    const textos = new Map<string, string>()
+    for (const character of characterCatalog.characters) {
+      for (const example of character.examples) {
+        if (!textos.has(example.text)) textos.set(example.text, example.romaji)
+      }
+    }
+
+    const kanaDeLasPalabras = new Set(wordCatalog.words.map((word) => word.kana))
+    const perdidos = [...textos.keys()].filter(
+      (text) => !excepciones.has(text) && !kanaDeLasPalabras.has(text),
+    )
+
+    expect(perdidos, `contenido perdido en silencio: ${perdidos.join(', ')}`).toEqual([])
   })
 
   it('se busca por japonés, por romaji y por significado', () => {
