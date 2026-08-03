@@ -30,18 +30,41 @@
     'Hiragino Sans', 'Yu Gothic', 'Meiryo', 'Noto Sans JP', system-ui, sans-serif;
 }
 
-/* Tokens semanticos: mismos roles que el ColorScheme de Material 3. */
+/*
+ * Tokens semanticos: mismos roles que el ColorScheme de Material 3.
+ *
+ * Los colores de marca del bloque @theme siguen siendo los de MirabiTheme.kt,
+ * intactos. Lo que se aparta de Android son algunos valores semanticos del
+ * tema claro, que no llegaban al contraste minimo de WCAG AA: el sakura y el
+ * ambar no sostienen texto blanco, el verde de exito era ilegible sobre las
+ * tarjetas y el borde no separaba los controles del fondo. Cada desvio lleva
+ * su motivo al lado. Si se porta de vuelta a Compose, portar tambien esto: el
+ * problema esta en la paleta, no en la web.
+ */
 :root {
-  --primary: #7b5fd0;
+  /* Texto pequeno sobre --background: #7b5fd0 se quedaba en 4,33. */
+  --primary: #7658cb;
   --on-primary: #ffffff;
   --primary-container: #e9e1f9;
   --on-primary-container: #4a3880;
-  --secondary: #e36fa4;
-  --on-secondary: #ffffff;
+  /*
+   * Un pelo mas oscuro que el sakura de marca (#e36fa4), que se quedaba en
+   * 2,97 y necesita 3:1: marca el borde de la respuesta fallada, y un borde
+   * que no se distingue del fondo no comunica el estado. El margen hasta la
+   * tinta de --on-secondary es estrecho, asi que no oscurecer mas sin volver
+   * a medir las dos direcciones.
+   */
+  --secondary: #e16a9f;
+  /*
+   * Tinta oscura sobre el rosa, no blanca: el rosa es demasiado claro para
+   * sostener texto blanco (2,97), igual que ya resolvia el tema oscuro.
+   */
+  --on-secondary: #4a1230;
   --secondary-container: #fbdce9;
   --on-secondary-container: #8a2e58;
   --tertiary: #e9a13b;
-  --on-tertiary: #ffffff;
+  /* Mismo motivo que --on-secondary: el ambar no sostiene blanco (2,18). */
+  --on-tertiary: #3f2e00;
   --tertiary-container: #fdeec9;
   --on-tertiary-container: #6e4a0a;
   --background: #f6f2fa;
@@ -49,9 +72,14 @@
   --surface: #ffffff;
   --on-surface: #2a2440;
   --surface-variant: #efe9f7;
-  --on-surface-variant: #6f6a82;
-  --outline: #b9b2cc;
-  --success: #6fbf8e;
+  --on-surface-variant: #6a657d;
+  /* Delimita controles: WCAG 1.4.11 pide 3:1, y #b9b2cc daba 2,04. */
+  --outline: #8f87a6;
+  /*
+   * Verde oscuro solo en claro. El #6fbf8e original vale de sobra sobre el
+   * fondo nocturno (7,09) pero como texto sobre blanco daba 2,21.
+   */
+  --success: #27774c;
   --shadow-card: 0 6px 20px rgb(74 56 128 / 0.08);
 
   /* Yuki. Blanco calido en claro para que no se pierda sobre tarjetas blancas. */
@@ -87,7 +115,8 @@
   --on-surface: #ece8f7;
   --surface-variant: #2d2a52;
   --on-surface-variant: #a9a3c2;
-  --outline: #544e78;
+  /* Unico fallo del tema oscuro: #544e78 daba 2,04 y hacen falta 3:1. */
+  --outline: #756ea0;
   --success: #6fbf8e;
   --shadow-card: 0 6px 20px rgb(0 0 0 / 0.35);
 
@@ -105,24 +134,35 @@
   color-scheme: dark;
 }
 
-html,
-body,
-#root {
-  height: 100%;
-}
+/*
+ * Los reajustes de elemento van dentro de @layer base a proposito.
+ *
+ * Sin capa ganan a las utilidades de Tailwind, que viven en @layer utilities:
+ * el CSS sin capa tiene mas prioridad que cualquier capa. Con `button { color:
+ * inherit }` suelto, el text-[var(--on-primary)] de MirabiButton no se
+ * aplicaba y todos los botones se pintaban con el color heredado del body:
+ * texto claro sobre el morado del boton primario, 2,26:1.
+ */
+@layer base {
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
 
-body {
-  margin: 0;
-  background: var(--background);
-  color: var(--on-background);
-  font-family: var(--font-sans);
-  -webkit-font-smoothing: antialiased;
-  overscroll-behavior-y: none;
-}
+  body {
+    margin: 0;
+    background: var(--background);
+    color: var(--on-background);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    overscroll-behavior-y: none;
+  }
 
-button {
-  font: inherit;
-  color: inherit;
+  button {
+    font: inherit;
+    color: inherit;
+  }
 }
 
 /* La barra inferior no debe tapar el ultimo elemento de una pantalla scrollable. */
