@@ -521,7 +521,8 @@ export const useMirabiStore = create<MirabiStore>()(
           const state = get()
           set({
             kanji,
-            kanjiIndex: buildKanjiIndex(kanji),
+            // Con el catalogo de caracteres, para poder transcribir las lecturas.
+            kanjiIndex: buildKanjiIndex(kanji, state.catalog),
             labels: state.pack
               ? buildItemLabels(state.pack, state.catalog, state.words, kanji)
               : state.labels,

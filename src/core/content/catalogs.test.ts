@@ -4,6 +4,7 @@ import { validateCatalog, validateKanjiCatalog, validateWordCatalog } from './va
 import {
   buildKanjiIndex,
   buildWordIndex,
+  cleanReading,
   findKanji,
   findWords,
   wordsByScript,
@@ -139,18 +140,77 @@ describe('kanji', () => {
     }
   })
 
-  it('las lecturas van en el silabario que les toca', () => {
-    const hiragana = /^[぀-ゟー-]+$/
-    const katakana = /^[゠-ヿ-]+$/
+  it('las lecturas on van siempre en katakana', () => {
+    // cleanReading quita las marcas de KANJIDIC2: el punto separa la okurigana
+    // (ひと.つ) y el guion marca la posicion de un afijo (-び).
+    const katakana = /^[゠-ヿ]+$/
 
     for (const item of kanjiCatalog.kanji) {
       for (const lectura of item.onyomi) {
-        expect(katakana.test(lectura.kana), `${item.symbol} on ${lectura.kana}`).toBe(true)
-      }
-      for (const lectura of item.kunyomi) {
-        expect(hiragana.test(lectura.kana), `${item.symbol} kun ${lectura.kana}`).toBe(true)
+        expect(katakana.test(cleanReading(lectura.kana)), `${item.symbol} on ${lectura.kana}`).toBe(
+          true,
+        )
       }
     }
+  })
+
+  it('las lecturas kun van en hiragana salvo un puñado de ateji', () => {
+    const hiragana = /^[぀-ゟー]+$/
+    const kana = /^[぀-ゟ゠-ヿー]+$/
+
+    const excepciones: string[] = []
+    for (const item of kanjiCatalog.kanji) {
+      for (const lectura of item.kunyomi) {
+        const limpia = cleanReading(lectura.kana)
+        // Kana siempre; el silabario concreto admite excepciones.
+        expect(kana.test(limpia), `${item.symbol} kun ${lectura.kana}`).toBe(true)
+        if (!hiragana.test(limpia)) excepciones.push(`${item.symbol} ${lectura.kana}`)
+      }
+    }
+
+    /*
+     * KANJIDIC2 marca como kun algunas lecturas en katakana: son ateji de
+     * unidades extranjeras (志 shilling, 粉 decimetro). Se fija el numero en vez
+     * de afirmar que no existen, que era falso, para enterarse si un dia crecen.
+     */
+    expect(excepciones.length).toBeLessThanOrEqual(5)
+  })
+
+  it('el catálogo importado es el jōyō completo, agrupado por grado escolar', () => {
+    // Las cifras oficiales del joyo: 1.026 de primaria y 1.110 de secundaria.
+    const porGrado = new Map<number, number>()
+    for (const item of kanjiCatalog.kanji) {
+      if (item.grade === null) continue
+      porGrado.set(item.grade, (porGrado.get(item.grade) ?? 0) + 1)
+    }
+
+    expect(kanjiCatalog.kanji.length).toBe(2136)
+    expect([...porGrado.keys()].sort((a, b) => a - b)).toEqual([1, 2, 3, 4, 5, 6, 8])
+    expect(porGrado.get(1)).toBe(80)
+    expect(porGrado.get(8)).toBe(1110)
+  })
+
+  it('lo importado declara su procedencia y su licencia', () => {
+    const importados = kanjiCatalog.kanji.filter((item) => item.source === 'JMDICT')
+    expect(importados.length).toBeGreaterThan(0)
+
+    for (const item of importados) {
+      // La licencia de KANJIDIC2 exige reconocimiento: si viaja por entrada, no
+      // se puede perder al recortar el catalogo.
+      expect(item.license, item.id).toBeTruthy()
+      expect(item.sourceRef, item.id).toBeTruthy()
+    }
+  })
+
+  it('el significado en español cubre casi todo, y lo que no queda marcado', () => {
+    const enEspanol = kanjiCatalog.kanji.filter((item) => item.meaningsLanguage === 'ES')
+    const enIngles = kanjiCatalog.kanji.filter((item) => item.meaningsLanguage === 'EN')
+
+    expect(enEspanol.length + enIngles.length).toBe(kanjiCatalog.kanji.length)
+    // Medido sobre el fichero real: 2.063 de 2.136.
+    expect(enEspanol.length / kanjiCatalog.kanji.length).toBeGreaterThan(0.95)
+    // Los que caen al inglés quedan marcados para poder repasarlos.
+    for (const item of enIngles) expect(item.meaningsLanguage).toBe('EN')
   })
 
   it('wordIds es el inverso exacto de kanjiIds', () => {
@@ -168,10 +228,21 @@ describe('kanji', () => {
     }
   })
 
-  it('se busca por símbolo, por significado y por lectura', () => {
+  it('se busca por símbolo, por significado y por lectura en kana', () => {
     expect(findKanji(kanjiCatalog, '山').map((item) => item.id)).toContain('kanji-5c71')
     expect(findKanji(kanjiCatalog, 'agua').map((item) => item.id)).toContain('kanji-6c34')
-    expect(findKanji(kanjiCatalog, 'yama').map((item) => item.id)).toContain('kanji-5c71')
+    expect(findKanji(kanjiCatalog, 'やま').map((item) => item.id)).toContain('kanji-5c71')
+  })
+
+  it('se busca también por romaji, que KANJIDIC2 no trae y la app deriva', () => {
+    const index = buildKanjiIndex(kanjiCatalog, characterCatalog)
+
+    // Sin el índice no hay romaji que buscar: KANJIDIC2 solo da kana.
+    expect(findKanji(kanjiCatalog, 'yama').map((item) => item.id)).not.toContain('kanji-5c71')
+    expect(findKanji(kanjiCatalog, 'yama', index.romajiById).map((item) => item.id)).toContain(
+      'kanji-5c71',
+    )
+    expect(index.romajiById.size).toBeGreaterThan(kanjiCatalog.kanji.length * 0.9)
   })
 
   it('el índice agrupa por grado escolar, en orden', () => {

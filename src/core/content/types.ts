@@ -248,12 +248,16 @@ export interface WordCatalog {
 
 export interface KanjiReading {
   kana: string
-  romaji: string
+  /** Nulo cuando viene de KANJIDIC2, que solo da kana. Lo transcribe toRomaji. */
+  romaji: string | null
 }
 
 export interface KanjiRadical {
+  /** Numero clasico, 1-214. */
+  number: number
   symbol: string
-  meaning: string
+  /** KANJIDIC2 solo nombra 108 de los 214, asi que casi siempre es nulo. */
+  meaning: string | null
 }
 
 export interface KanjiCharacter {

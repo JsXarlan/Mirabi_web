@@ -7,6 +7,7 @@ import type {
   VocabularyWord,
   WordCatalog,
 } from './types'
+import { toRomaji } from '../domain/romaji'
 
 /**
  * Carga del contenido versionado. Equivalente web de CourseContentLoader:
@@ -119,7 +120,21 @@ export function findWords(catalog: WordCatalog, query: string): VocabularyWord[]
   )
 }
 
-export function findKanji(catalog: KanjiCatalog, query: string): KanjiCharacter[] {
+/**
+ * KANJIDIC2 marca la okurigana con un punto (ひと.つ) y la posicion de los
+ * afijos con guiones (-び). Son utiles al leerlas, pero estorban para
+ * transcribirlas o para buscar.
+ */
+export function cleanReading(kana: string): string {
+  return kana.replaceAll('.', '').replaceAll('-', '')
+}
+
+export function findKanji(
+  catalog: KanjiCatalog,
+  query: string,
+  /** Romaji derivado por lectura; KANJIDIC2 no lo trae. Ver buildKanjiIndex. */
+  romajiById: Map<string, string> | null = null,
+): KanjiCharacter[] {
   const needle = query.trim().toLowerCase()
   if (!needle) return catalog.kanji
 
@@ -128,8 +143,11 @@ export function findKanji(catalog: KanjiCatalog, query: string): KanjiCharacter[
       item.symbol.includes(needle) ||
       item.meanings.some((meaning) => meaning.toLowerCase().includes(needle)) ||
       [...item.onyomi, ...item.kunyomi].some(
-        (reading) => reading.kana.includes(needle) || reading.romaji.toLowerCase().includes(needle),
-      ),
+        (reading) =>
+          cleanReading(reading.kana).includes(needle) ||
+          (reading.romaji?.toLowerCase().includes(needle) ?? false),
+      ) ||
+      (romajiById?.get(item.id)?.includes(needle) ?? false),
   )
 }
 
@@ -151,17 +169,39 @@ export interface KanjiIndex {
   bySymbol: Map<string, KanjiCharacter>
   /** Grados presentes, ordenados; el 8 (resto del joyo) queda al final. */
   grades: number[]
+  /**
+   * Lecturas transcritas, para poder buscar «yama» y encontrar 山.
+   *
+   * KANJIDIC2 solo da kana, y la tabla para transcribirlo ya vive en esta app;
+   * duplicarla en Kotlin habria sido mantener dos. Se calcula una vez al cargar
+   * el catalogo en vez de en cada pulsacion del buscador.
+   */
+  romajiById: Map<string, string>
 }
 
-export function buildKanjiIndex(catalog: KanjiCatalog): KanjiIndex {
+export function buildKanjiIndex(
+  catalog: KanjiCatalog,
+  characters: CharacterCatalog | null = null,
+): KanjiIndex {
   const grades = [...new Set(catalog.kanji.map((item) => item.grade))]
     .filter((grade): grade is number => grade !== null)
     .sort((a, b) => a - b)
+
+  const romajiById = new Map<string, string>()
+  if (characters) {
+    for (const item of catalog.kanji) {
+      const transcritas = [...item.onyomi, ...item.kunyomi]
+        .map((reading) => toRomaji(cleanReading(reading.kana), characters))
+        .filter((romaji): romaji is string => romaji !== null)
+      if (transcritas.length > 0) romajiById.set(item.id, transcritas.join(' ').toLowerCase())
+    }
+  }
 
   return {
     byId: new Map(catalog.kanji.map((item) => [item.id, item])),
     bySymbol: new Map(catalog.kanji.map((item) => [item.symbol, item])),
     grades,
+    romajiById,
   }
 }
 

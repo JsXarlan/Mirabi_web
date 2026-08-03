@@ -303,6 +303,28 @@ export function SettingsScreen() {
           </MirabiButton>
         )}
       </MirabiCard>
+
+      {/*
+        Reconocimiento de fuentes. No es una cortesia: la licencia de KANJIDIC2
+        lo exige, y la app no puede servir sus 2.136 kanji sin decir de donde
+        salen.
+      */}
+      <SectionTitle>Fuentes</SectionTitle>
+      <MirabiCard className="mt-2 p-5">
+        <p className="text-sm font-semibold">Datos de kanji</p>
+        <p className="mt-1 text-xs text-[var(--on-surface-variant)]">
+          Los kanji, sus lecturas y sus significados vienen de KANJIDIC2, del{' '}
+          <a
+            className="font-semibold text-[var(--primary)] underline"
+            href="https://www.edrdg.org/"
+            target="_blank"
+            rel="noreferrer noopener"
+          >
+            Electronic Dictionary Research and Development Group
+          </a>
+          , bajo licencia CC BY-SA 4.0. Los significados en español los compiló Francisco Gutiérrez.
+        </p>
+      </MirabiCard>
     </Screen>
   )
 }
