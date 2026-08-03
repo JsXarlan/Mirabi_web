@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 
 import type { KanaCharacter, KanaGroup } from '../../core/content/types'
 import type { MasteryScore } from '../../core/domain/models'
@@ -10,12 +10,15 @@ import {
   MirabiEmpty,
   MirabiProgressBar,
   MirabiSheet,
+  MirabiTabs,
   SectionTitle,
 } from '../../ui/components'
 import { Screen } from '../../ui/Layout'
 import { AudioButton } from '../lesson/ExerciseView'
 import { useScriptMastery } from './CharactersScreen'
+import { MASTERY_LABEL, MASTERY_STYLE } from './masteryStyle'
 import { scriptFromSlug, slugOf, titleOf } from './scriptSlug'
+import { WordsTab } from './WordsTab'
 
 const GROUP_LABEL: Record<KanaGroup, string> = {
   VOWELS: 'Vocales',
@@ -33,19 +36,21 @@ const GROUP_LABEL: Record<KanaGroup, string> = {
   BASIC_KATAKANA: 'Katakana básico',
 }
 
-const MASTERY_STYLE: Record<MasteryScore, string> = {
-  UNKNOWN: 'bg-[var(--surface-variant)] text-[var(--on-surface-variant)]',
-  FAMILIAR: 'bg-[color-mix(in_srgb,var(--secondary)_20%,transparent)]',
-  LEARNING: 'bg-[color-mix(in_srgb,var(--tertiary)_28%,transparent)]',
-  MASTERED: 'bg-[color-mix(in_srgb,var(--success)_28%,transparent)]',
-  EXPERT: 'bg-[var(--success)] text-white',
-}
+type Tab = 'caracteres' | 'palabras'
 
 export function CharacterScriptScreen() {
   const { script } = useParams<{ script: string }>()
   const navigate = useNavigate()
   const catalog = useMirabiStore((state) => state.catalog)
   const learningProgress = useMirabiStore((state) => state.learningProgress)
+
+  // En la query, no en estado local: asi la pestana activa sobrevive a
+  // recargar y se puede enlazar directamente a /caracteres/hiragana?tab=palabras.
+  const [params, setParams] = useSearchParams()
+  const tab: Tab = params.get('tab') === 'palabras' ? 'palabras' : 'caracteres'
+  const setTab = (next: Tab) => {
+    setParams(next === 'palabras' ? { tab: 'palabras' } : {}, { replace: true })
+  }
 
   const scriptKey = scriptFromSlug(script)
   const title = scriptKey ? titleOf(scriptKey) : 'Caracteres'
@@ -97,30 +102,55 @@ export function CharacterScriptScreen() {
         </MirabiButton>
       </MirabiCard>
 
-      {groups.map((group) => (
-        <section key={group} className="mb-6">
-          <SectionTitle>{GROUP_LABEL[group]}</SectionTitle>
-          <div className="grid grid-cols-5 gap-2">
-            {characters
-              .filter((character) => character.group === group)
-              .map((character) => {
-                const mastery = learningProgress[character.learningItemId]?.mastery ?? 'UNKNOWN'
-                return (
-                  <button
-                    key={character.id}
-                    type="button"
-                    onClick={() => setSelected(character)}
-                    className={`flex aspect-square flex-col items-center justify-center rounded-[16px] transition active:scale-95 ${MASTERY_STYLE[mastery]}`}
-                  >
-                    <span className="font-jp text-2xl leading-none">{character.symbol}</span>
-                    <span className="mt-1 text-[10px] opacity-80">{character.romaji}</span>
-                  </button>
-                )
-              })}
-          </div>
-        </section>
-      ))}
+      <MirabiTabs
+        className="mb-5"
+        value={tab}
+        onChange={setTab}
+        options={[
+          { value: 'caracteres', label: 'Caracteres' },
+          { value: 'palabras', label: 'Palabras' },
+        ]}
+      />
 
+      {tab === 'caracteres' ? (
+        groups.map((group) => (
+          <section key={group} className="mb-6">
+            <SectionTitle>{GROUP_LABEL[group]}</SectionTitle>
+            <div className="grid grid-cols-5 gap-2">
+              {characters
+                .filter((character) => character.group === group)
+                .map((character) => {
+                  const mastery = learningProgress[character.learningItemId]?.mastery ?? 'UNKNOWN'
+                  return (
+                    <button
+                      key={character.id}
+                      type="button"
+                      onClick={() => setSelected(character)}
+                      className={`flex aspect-square flex-col items-center justify-center rounded-[16px] transition active:scale-95 ${MASTERY_STYLE[mastery]}`}
+                    >
+                      <span className="font-jp text-2xl leading-none">{character.symbol}</span>
+                      <span className="mt-1 text-[10px] opacity-80">{character.romaji}</span>
+                    </button>
+                  )
+                })}
+            </div>
+          </section>
+        ))
+      ) : (
+        <WordsTab
+          script={scriptKey}
+          onOpenCharacter={(characterId) => {
+            const character = catalog?.characters.find((item) => item.id === characterId)
+            if (character) setSelected(character)
+          }}
+        />
+      )}
+
+      {/*
+        Fuera del condicional de pestanas a proposito: abrir un carácter desde
+        un chip de la pestana Palabras tiene que mostrar su ficha aunque la
+        pestana activa siga siendo «Palabras».
+      */}
       {selected && (
         <CharacterSheet
           character={selected}
@@ -131,14 +161,6 @@ export function CharacterScriptScreen() {
       )}
     </Screen>
   )
-}
-
-const MASTERY_LABEL: Record<MasteryScore, string> = {
-  UNKNOWN: 'Sin practicar',
-  FAMILIAR: 'Te suena',
-  LEARNING: 'En aprendizaje',
-  MASTERED: 'Dominado',
-  EXPERT: 'Experto',
 }
 
 function CharacterSheet({

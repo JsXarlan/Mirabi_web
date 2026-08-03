@@ -11,6 +11,7 @@ import {
   SectionTitle,
 } from '../../ui/components'
 import { Screen } from '../../ui/Layout'
+import { useKanjiMastery } from '../kanji/KanjiScreen'
 import { slugOf, titleOf } from './scriptSlug'
 
 /** Dominio medio de un conjunto de kana, en 0..100. */
@@ -40,6 +41,7 @@ export function CharactersScreen() {
   const navigate = useNavigate()
   const hiragana = useScriptMastery('HIRAGANA')
   const katakana = useScriptMastery('KATAKANA')
+  const kanji = useKanjiMastery()
 
   const overall =
     hiragana.total + katakana.total === 0
@@ -85,14 +87,16 @@ export function CharactersScreen() {
         onOpen={() => navigate('/caracteres/katakana')}
       />
 
+      {kanji.total > 0 && (
+        <ScriptCard
+          title="Kanji"
+          sample="日本語"
+          stats={kanji}
+          onOpen={() => navigate('/caracteres/kanji')}
+        />
+      )}
+
       <SectionTitle>Próximamente</SectionTitle>
-      <MirabiCard className="mb-2 flex items-center gap-4 p-5 opacity-60">
-        <span className="font-jp text-2xl">漢字</span>
-        <div>
-          <p className="text-sm font-bold">Kanji</p>
-          <p className="text-xs text-[var(--on-surface-variant)]">Llega después del MVP.</p>
-        </div>
-      </MirabiCard>
       <MirabiCard className="flex items-center gap-4 p-5 opacity-60">
         <span className="text-2xl" aria-hidden>
           ✍️

@@ -1,5 +1,5 @@
 import { useEffect, useId, useRef } from 'react'
-import type { ButtonHTMLAttributes, ReactNode } from 'react'
+import type { ButtonHTMLAttributes, KeyboardEvent as ReactKeyboardEvent, ReactNode } from 'react'
 
 /** Puerto de core/designsystem/component: mismos componentes, mismos nombres. */
 
@@ -290,6 +290,149 @@ export function MirabiSheet({
         </h2>
         {children}
       </div>
+    </div>
+  )
+}
+
+export function MirabiSearchField({
+  value,
+  onChange,
+  placeholder = 'Buscar',
+  label,
+  className,
+}: {
+  value: string
+  onChange: (value: string) => void
+  placeholder?: string
+  /** Nombre accesible: el placeholder no basta para un lector de pantalla. */
+  label: string
+  className?: string
+}) {
+  return (
+    <label className={cx('block', className)}>
+      <span className="sr-only">{label}</span>
+      <input
+        type="search"
+        value={value}
+        onChange={(event) => onChange(event.target.value)}
+        placeholder={placeholder}
+        className="w-full rounded-[14px] border border-[var(--outline)] bg-[var(--surface)] px-4 py-2.5 text-sm text-[var(--on-surface)] outline-none placeholder:text-[var(--on-surface-variant)] focus-visible:border-[var(--primary)]"
+      />
+    </label>
+  )
+}
+
+/**
+ * Fila de chips de seleccion unica. Sin `allLabel` no hay chip «Todas»: es lo
+ * que usa el filtro de grado de kanji, donde partir de miles de resultados
+ * sueltos no tiene sentido y conviene arrancar con un grado ya elegido.
+ */
+export function MirabiFilterChips<T extends string>({
+  value,
+  onChange,
+  options,
+  allLabel,
+  className,
+}: {
+  value: T | null
+  onChange: (value: T | null) => void
+  options: { value: T; label: string }[]
+  allLabel?: string
+  className?: string
+}) {
+  return (
+    <div role="radiogroup" className={cx('flex flex-wrap gap-2', className)}>
+      {allLabel && <FilterChip active={value === null} label={allLabel} onClick={() => onChange(null)} />}
+      {options.map((option) => (
+        <FilterChip
+          key={option.value}
+          active={value === option.value}
+          label={option.label}
+          onClick={() => onChange(option.value)}
+        />
+      ))}
+    </div>
+  )
+}
+
+function FilterChip({
+  active,
+  label,
+  onClick,
+}: {
+  active: boolean
+  label: string
+  onClick: () => void
+}) {
+  return (
+    <button
+      type="button"
+      role="radio"
+      aria-checked={active}
+      onClick={onClick}
+      className={cx(
+        'rounded-full px-3 py-1.5 text-xs font-semibold transition',
+        active
+          ? 'bg-[var(--primary)] text-[var(--on-primary)]'
+          : 'bg-[var(--surface-variant)] text-[var(--on-surface-variant)] hover:brightness-95',
+      )}
+    >
+      {label}
+    </button>
+  )
+}
+
+/** Control segmentado. Flechas para moverse, sin perder el foco del tablist. */
+export function MirabiTabs<T extends string>({
+  value,
+  onChange,
+  options,
+  className,
+}: {
+  value: T
+  onChange: (value: T) => void
+  options: { value: T; label: string }[]
+  className?: string
+}) {
+  // El aria-selected del boton destino no cambia hasta el siguiente render, asi
+  // que apuntar por indice es lo unico fiable: buscar «el que ya esta activo»
+  // en el mismo tick encontraria el anterior.
+  const move = (event: ReactKeyboardEvent<HTMLButtonElement>, from: number, delta: number) => {
+    const next = options[(from + delta + options.length) % options.length]
+    onChange(next.value)
+    const buttons = event.currentTarget.parentElement?.querySelectorAll<HTMLButtonElement>(
+      '[role="tab"]',
+    )
+    buttons?.[(from + delta + options.length) % options.length]?.focus()
+  }
+
+  return (
+    <div role="tablist" className={cx('inline-flex rounded-[14px] bg-[var(--surface-variant)] p-1', className)}>
+      {options.map((option, index) => {
+        const active = option.value === value
+        return (
+          <button
+            key={option.value}
+            type="button"
+            role="tab"
+            aria-selected={active}
+            tabIndex={active ? 0 : -1}
+            onClick={() => onChange(option.value)}
+            onKeyDown={(event) => {
+              if (event.key === 'ArrowRight') move(event, index, 1)
+              else if (event.key === 'ArrowLeft') move(event, index, -1)
+            }}
+            className={cx(
+              'flex-1 rounded-[10px] px-4 py-2 text-sm font-semibold transition',
+              active
+                ? 'bg-[var(--surface)] text-[var(--on-surface)] shadow-[var(--shadow-card)]'
+                : 'text-[var(--on-surface-variant)]',
+            )}
+          >
+            {option.label}
+          </button>
+        )
+      })}
     </div>
   )
 }
