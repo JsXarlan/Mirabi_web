@@ -1,4 +1,5 @@
 import type { CharacterCatalog, ContentExercise, KanaCharacter } from '../content/types'
+import { nextRandom, seedOf } from './seededRandom'
 
 /**
  * Ejercicios de kana sinteticos.
@@ -16,17 +17,6 @@ import type { CharacterCatalog, ContentExercise, KanaCharacter } from '../conten
 export const KANA_EXERCISE_PREFIX = 'kana-practice-'
 
 const OPTIONS_PER_ITEM = 4
-
-/** Hash estable de una cadena: mismo id, mismos distractores, siempre. */
-function seedOf(value: string): number {
-  let hash = 0
-  for (let i = 0; i < value.length; i += 1) hash = (hash * 31 + value.charCodeAt(i)) | 0
-  return Math.abs(hash) || 1
-}
-
-function nextRandom(seed: number): number {
-  return (seed * 1103515245 + 12345) & 0x7fffffff
-}
 
 export function isKanaExerciseId(exerciseId: string): boolean {
   return exerciseId.startsWith(KANA_EXERCISE_PREFIX)

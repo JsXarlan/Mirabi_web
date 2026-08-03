@@ -1,3 +1,4 @@
+import { useEffect, useId, useRef } from 'react'
 import type { ButtonHTMLAttributes, ReactNode } from 'react'
 
 /** Puerto de core/designsystem/component: mismos componentes, mismos nombres. */
@@ -225,6 +226,71 @@ export function MirabiEmpty({
       <p className="text-sm text-[var(--on-surface-variant)]">{message}</p>
       {action}
     </MirabiCard>
+  )
+}
+
+/**
+ * Hoja modal: bottom-sheet en movil, centrada a partir de sm.
+ *
+ * Vivia como componente local de la pantalla de caracteres, sin cierre con
+ * Escape ni gestion del foco. Al sacarla aqui se arregla, porque el proximo que
+ * la use no deberia heredar el fallo: al abrir, el foco entra en el panel; al
+ * cerrar, vuelve a donde estaba, que es lo unico que hace usable un dialogo con
+ * teclado.
+ */
+export function MirabiSheet({
+  title,
+  onClose,
+  children,
+}: {
+  /** Nombre accesible del dialogo; no se pinta. */
+  title: string
+  onClose: () => void
+  children: ReactNode
+}) {
+  const panelRef = useRef<HTMLDivElement>(null)
+  const titleId = useId()
+
+  // Por referencia y no por dependencia: quien llama suele pasar una funcion
+  // nueva en cada render, y con ella en las dependencias el efecto se
+  // reengancharia sin parar, robando el foco en cada pasada.
+  const closeRef = useRef(onClose)
+  closeRef.current = onClose
+
+  useEffect(() => {
+    const previous = document.activeElement as HTMLElement | null
+    panelRef.current?.focus()
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') closeRef.current()
+    }
+    document.addEventListener('keydown', onKeyDown)
+    return () => {
+      document.removeEventListener('keydown', onKeyDown)
+      previous?.focus?.()
+    }
+  }, [])
+
+  return (
+    <div
+      className="fixed inset-0 z-30 flex items-end justify-center bg-black/40 p-0 sm:items-center sm:p-4"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby={titleId}
+      onClick={onClose}
+    >
+      <div
+        ref={panelRef}
+        tabIndex={-1}
+        className="w-full max-w-md rounded-t-[28px] bg-[var(--surface)] p-6 outline-none sm:rounded-[28px] animate-pop"
+        onClick={(event) => event.stopPropagation()}
+      >
+        <h2 id={titleId} className="sr-only">
+          {title}
+        </h2>
+        {children}
+      </div>
+    </div>
   )
 }
 

@@ -1,13 +1,21 @@
 import { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
-import type { CharacterScript, KanaCharacter, KanaGroup } from '../../core/content/types'
+import type { KanaCharacter, KanaGroup } from '../../core/content/types'
 import type { MasteryScore } from '../../core/domain/models'
 import { useMirabiStore } from '../../core/store/useMirabiStore'
-import { isSpeechAvailable, speakJapanese } from '../../core/audio/speech'
-import { MirabiButton, MirabiCard, MirabiProgressBar, SectionTitle } from '../../ui/components'
+import {
+  MirabiButton,
+  MirabiCard,
+  MirabiEmpty,
+  MirabiProgressBar,
+  MirabiSheet,
+  SectionTitle,
+} from '../../ui/components'
 import { Screen } from '../../ui/Layout'
+import { AudioButton } from '../lesson/ExerciseView'
 import { useScriptMastery } from './CharactersScreen'
+import { scriptFromSlug, slugOf, titleOf } from './scriptSlug'
 
 const GROUP_LABEL: Record<KanaGroup, string> = {
   VOWELS: 'Vocales',
@@ -39,14 +47,39 @@ export function CharacterScriptScreen() {
   const catalog = useMirabiStore((state) => state.catalog)
   const learningProgress = useMirabiStore((state) => state.learningProgress)
 
-  const scriptKey: CharacterScript = script === 'katakana' ? 'KATAKANA' : 'HIRAGANA'
-  const title = scriptKey === 'KATAKANA' ? 'Katakana' : 'Hiragana'
-  const stats = useScriptMastery(scriptKey)
+  const scriptKey = scriptFromSlug(script)
+  const title = scriptKey ? titleOf(scriptKey) : 'Caracteres'
+  // El hook se llama siempre, tambien con slug desconocido: las reglas de los
+  // hooks no admiten saltarselo, y sin caracteres devuelve ceros.
+  const stats = useScriptMastery(scriptKey ?? 'HIRAGANA')
 
   const [selected, setSelected] = useState<KanaCharacter | null>(null)
 
-  const characters = catalog?.characters.filter((item) => item.script === scriptKey) ?? []
+  const characters =
+    scriptKey === null ? [] : (catalog?.characters.filter((item) => item.script === scriptKey) ?? [])
   const groups = [...new Set(characters.map((item) => item.group))]
+
+  // Un slug desconocido corta siempre; la falta de caracteres solo cuando el
+  // catalogo ya esta cargado, para no confundir «vacio» con «cargando».
+  if (scriptKey === null || (catalog && characters.length === 0)) {
+    return (
+      <Screen title={title}>
+        <MirabiEmpty
+          title="Aquí todavía no hay nada"
+          message={
+            scriptKey === null
+              ? 'Ese sistema de escritura no existe.'
+              : `Todavía no hay caracteres de ${title} en el catálogo.`
+          }
+          action={
+            <MirabiButton className="mt-4" onClick={() => navigate('/caracteres')}>
+              Volver a Caracteres
+            </MirabiButton>
+          }
+        />
+      </Screen>
+    )
+  }
 
   return (
     <Screen title={title}>
@@ -58,7 +91,7 @@ export function CharacterScriptScreen() {
         <MirabiProgressBar progress={stats.percentage / 100} />
         <MirabiButton
           className="mt-4"
-          onClick={() => navigate(`/caracteres/${script}/practica`)}
+          onClick={() => navigate(`/caracteres/${slugOf(scriptKey)}/practica`)}
         >
           Practicar {title}
         </MirabiButton>
@@ -93,7 +126,7 @@ export function CharacterScriptScreen() {
           character={selected}
           mastery={learningProgress[selected.learningItemId]?.mastery ?? 'UNKNOWN'}
           onClose={() => setSelected(null)}
-          onPractice={() => navigate(`/caracteres/${script}/practica`)}
+          onPractice={() => navigate(`/caracteres/${slugOf(scriptKey)}/practica`)}
         />
       )}
     </Screen>
@@ -120,64 +153,47 @@ function CharacterSheet({
   onPractice: () => void
 }) {
   return (
-    <div
-      className="fixed inset-0 z-30 flex items-end justify-center bg-black/40 p-0 sm:items-center sm:p-4"
-      role="dialog"
-      aria-modal="true"
-      onClick={onClose}
-    >
-      <div
-        className="w-full max-w-md rounded-t-[28px] bg-[var(--surface)] p-6 sm:rounded-[28px] animate-pop"
-        onClick={(event) => event.stopPropagation()}
-      >
-        <div className="flex items-start justify-between">
-          <div>
-            <p className="font-jp text-6xl leading-none">{character.symbol}</p>
-            <p className="mt-2 text-lg font-bold">{character.romaji}</p>
-            <p className="text-xs text-[var(--on-surface-variant)]">{MASTERY_LABEL[mastery]}</p>
-          </div>
-          <div className="flex gap-2">
-            {isSpeechAvailable() && (
-              <button
-                type="button"
-                aria-label="Escuchar carácter"
-                onClick={() => speakJapanese(character.symbol)}
-                className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--primary-container)]"
-              >
-                🔊
-              </button>
-            )}
-            <button
-              type="button"
-              aria-label="Cerrar"
-              onClick={onClose}
-              className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--surface-variant)]"
-            >
-              ✕
-            </button>
-          </div>
+    <MirabiSheet title={`Carácter ${character.symbol}, ${character.romaji}`} onClose={onClose}>
+      <div className="flex items-start justify-between">
+        <div>
+          <p className="font-jp text-6xl leading-none">{character.symbol}</p>
+          <p className="mt-2 text-lg font-bold">{character.romaji}</p>
+          <p className="text-xs text-[var(--on-surface-variant)]">{MASTERY_LABEL[mastery]}</p>
         </div>
-
-        <SectionTitle>Ejemplos</SectionTitle>
-        <ul className="flex flex-col gap-2">
-          {character.examples.map((example) => (
-            <li
-              key={example.text}
-              className="flex items-center justify-between rounded-[16px] bg-[var(--surface-variant)] px-4 py-3"
-            >
-              <div>
-                <p className="font-jp text-lg">{example.text}</p>
-                <p className="text-xs text-[var(--on-surface-variant)]">{example.romaji}</p>
-              </div>
-              <span className="text-sm">{example.meaning}</span>
-            </li>
-          ))}
-        </ul>
-
-        <MirabiButton className="mt-5" onClick={onPractice}>
-          Practicar
-        </MirabiButton>
+        <div className="flex items-center gap-2">
+          {/* AudioButton y no un boton propio: respeta el ajuste de audio y la
+              carga tardia de las voces, que el de aqui se saltaba. */}
+          <AudioButton text={character.symbol} compact />
+          <button
+            type="button"
+            aria-label="Cerrar"
+            onClick={onClose}
+            className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--surface-variant)]"
+          >
+            ✕
+          </button>
+        </div>
       </div>
-    </div>
+
+      <SectionTitle>Ejemplos</SectionTitle>
+      <ul className="flex flex-col gap-2">
+        {character.examples.map((example) => (
+          <li
+            key={example.text}
+            className="flex items-center justify-between rounded-[16px] bg-[var(--surface-variant)] px-4 py-3"
+          >
+            <div>
+              <p className="font-jp text-lg">{example.text}</p>
+              <p className="text-xs text-[var(--on-surface-variant)]">{example.romaji}</p>
+            </div>
+            <span className="text-sm">{example.meaning}</span>
+          </li>
+        ))}
+      </ul>
+
+      <MirabiButton className="mt-5" onClick={onPractice}>
+        Practicar
+      </MirabiButton>
+    </MirabiSheet>
   )
 }

@@ -1,7 +1,7 @@
 import { useCallback, useMemo, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
-import type { CharacterScript, ContentExercise, KanaCharacter } from '../../core/content/types'
+import type { ContentExercise, KanaCharacter } from '../../core/content/types'
 import { MASTERY_VALUE } from '../../core/domain/models'
 import { buildKanaExercise } from '../../core/domain/kanaExercises'
 import { yukiReaction } from '../../core/domain/yuki'
@@ -11,6 +11,7 @@ import { useDigitKeys, useEnterKey } from '../../ui/keys'
 import { SessionScreen } from '../../ui/Layout'
 import { Yuki } from '../../ui/Yuki'
 import { AudioButton } from '../lesson/ExerciseView'
+import { scriptFromSlug, titleOf } from './scriptSlug'
 
 const SESSION_SIZE = 10
 
@@ -49,11 +50,11 @@ export function CharacterPracticeScreen() {
   const answerExercise = useMirabiStore((state) => state.answerExercise)
   const completeCharacterPractice = useMirabiStore((state) => state.completeCharacterPractice)
 
-  const scriptKey: CharacterScript = script === 'katakana' ? 'KATAKANA' : 'HIRAGANA'
-  const title = scriptKey === 'KATAKANA' ? 'Katakana' : 'Hiragana'
+  const scriptKey = scriptFromSlug(script)
+  const title = scriptKey ? titleOf(scriptKey) : 'Práctica'
 
   const items = useMemo(() => {
-    if (!catalog) return []
+    if (!catalog || scriptKey === null) return []
     const characters = catalog.characters.filter((item) => item.script === scriptKey)
     return buildSession(characters, catalog, masteryOf)
     // Se construye una sola vez por sesion: rebarajar a media practica seria confuso.

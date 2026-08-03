@@ -11,6 +11,7 @@ import {
   SectionTitle,
 } from '../../ui/components'
 import { Screen } from '../../ui/Layout'
+import { slugOf, titleOf } from './scriptSlug'
 
 /** Dominio medio de un conjunto de kana, en 0..100. */
 export function useScriptMastery(script: CharacterScript): {
@@ -62,11 +63,9 @@ export function CharactersScreen() {
           </p>
           <MirabiButton
             className="mt-3"
-            onClick={() =>
-              navigate(`/caracteres/${recommended === 'HIRAGANA' ? 'hiragana' : 'katakana'}/practica`)
-            }
+            onClick={() => navigate(`/caracteres/${slugOf(recommended)}/practica`)}
           >
-            Practicar {recommended === 'HIRAGANA' ? 'Hiragana' : 'Katakana'}
+            Practicar {titleOf(recommended)}
           </MirabiButton>
         </div>
       </MirabiCard>
