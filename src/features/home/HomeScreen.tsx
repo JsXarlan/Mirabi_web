@@ -2,7 +2,9 @@ import { useMemo } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
 import { epochDayOf, levelFromXp, xpIntoLevel, XP_PER_LEVEL } from '../../core/domain/models'
-import { yukiReaction } from '../../core/domain/yuki'
+import { motivationCopy } from '../../core/domain/motivation'
+import { streakStatus } from '../../core/domain/rewards'
+import { resolveHomeTrigger, yukiReaction } from '../../core/domain/yuki'
 import { useMirabiStore } from '../../core/store/useMirabiStore'
 import { isSpeechAvailable, speakJapanese } from '../../core/audio/speech'
 import {
@@ -27,7 +29,9 @@ export function HomeScreen() {
   const navigate = useNavigate()
 
   const displayName = useMirabiStore((state) => state.displayName)
+  const motivationValue = useMirabiStore((state) => state.motivation)
   const streakDays = useMirabiStore((state) => state.streakDays)
+  const lastActivityEpochDay = useMirabiStore((state) => state.lastActivityEpochDay)
   const sakura = useMirabiStore((state) => state.sakura)
   const totalXp = useMirabiStore((state) => state.totalXp)
   const dailyGoalXp = useMirabiStore((state) => state.dailyGoalXp)
@@ -41,7 +45,7 @@ export function HomeScreen() {
   const index = useMirabiStore((state) => state.index)
 
   const courseMap = useMirabiStore((state) => state.courseMap)()
-  const pendingReviews = useMirabiStore((state) => state.pendingReviewItems)()
+  const pendingReviews = useMirabiStore((state) => state.dueReviewItems)()
   const missions = useMirabiStore((state) => state.todayMissions)()
 
   const today = epochDayOf(Date.now())
@@ -75,13 +79,34 @@ export function HomeScreen() {
     return character.examples[0]
   }, [catalog, today])
 
-  const yuki = useMemo(() => {
-    if (pendingReviews.length > 0) return yukiReaction('MANY_ERRORS')
-    if (streakDays > 1) return yukiReaction('STREAK_CONTINUED')
-    if (totalLessonsCompleted === 0) return yukiReaction('RETURNING_USER')
-    return yukiReaction('ALL_CAUGHT_UP')
-  }, [pendingReviews.length, streakDays, totalLessonsCompleted])
+  // La racha se muestra tal y como esta hoy, no como quedo el ultimo dia activo.
+  const streak = streakStatus(streakDays, lastActivityEpochDay, today)
 
+  const yuki = useMemo(
+    () =>
+      yukiReaction(
+        resolveHomeTrigger({
+          daysSinceLastActivity:
+            lastActivityEpochDay === null ? null : today - lastActivityEpochDay,
+          streakLost: streak.lost,
+          streakDays: streak.days,
+          pendingReviews: pendingReviews.length,
+          lessonsCompleted: totalLessonsCompleted,
+          dailyGoalCompleted: todayActivity.dailyGoalCompleted,
+        }),
+      ),
+    [
+      lastActivityEpochDay,
+      today,
+      streak.lost,
+      streak.days,
+      pendingReviews.length,
+      totalLessonsCompleted,
+      todayActivity.dailyGoalCompleted,
+    ],
+  )
+
+  const motivation = motivationCopy(motivationValue)
   const level = levelFromXp(totalXp)
   const goalProgress = dailyGoalXp > 0 ? todayActivity.xpEarnedToday / dailyGoalXp : 0
 
@@ -102,8 +127,21 @@ export function HomeScreen() {
         </Link>
       </header>
 
+      {/* Yuki dice algo, no solo pone cara: es su unico momento fuera de los
+          resultados, y el que recoge volver tras unos dias. */}
+      <MirabiCard className="mb-5 p-4">
+        <p className="text-sm">{yuki.text}</p>
+        <p className="mt-1 text-xs text-[var(--on-surface-variant)]">
+          {motivation.icon} {motivation.encouragement}
+        </p>
+      </MirabiCard>
+
       <div className="mb-5 flex gap-2">
-        <MirabiStatChip icon="🔥" value={streakDays} label="Racha" />
+        <MirabiStatChip
+          icon={streak.atRisk ? '⏳' : '🔥'}
+          value={streak.days}
+          label={streak.atRisk ? 'Racha (hoy no)' : 'Racha'}
+        />
         <MirabiStatChip icon="🌸" value={sakura} label="Sakura" />
         <MirabiStatChip icon="⭐" value={`Nv ${level}`} label={`${xpIntoLevel(totalXp)}/${XP_PER_LEVEL} XP`} />
       </div>

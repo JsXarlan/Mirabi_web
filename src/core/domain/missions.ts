@@ -53,6 +53,57 @@ export function generateDailyMissions(
   ]
 }
 
+/**
+ * Misiones semanales.
+ *
+ * El modelo ya traia el tipo WEEKLY, su recompensa y su politica de cobro; solo
+ * faltaba quien las emitiera. Piden mas de lo que cabe en un dia a proposito:
+ * son el motivo para volver el jueves, no para hacer mas hoy.
+ */
+export function generateWeeklyMissions(
+  config: RewardPolicyConfig = DEFAULT_REWARD_CONFIG,
+): MissionDefinition[] {
+  const reward = config.weeklyMissionSakura
+  return [
+    {
+      id: 'weekly_lessons',
+      title: 'Completa 5 lecciones',
+      description: 'Avanza en el curso durante la semana',
+      type: 'WEEKLY',
+      targetType: 'COMPLETE_LESSON',
+      targetValue: 5,
+      rewardXp: 0,
+      rewardSakura: reward,
+    },
+    {
+      id: 'weekly_reviews',
+      title: 'Haz 3 repasos',
+      description: 'Vuelve sobre lo que se te resiste',
+      type: 'WEEKLY',
+      targetType: 'COMPLETE_REVIEW',
+      targetValue: 3,
+      rewardXp: 0,
+      rewardSakura: reward,
+    },
+    {
+      id: 'weekly_xp',
+      title: 'Gana 150 XP',
+      description: 'Constancia a lo largo de la semana',
+      type: 'WEEKLY',
+      targetType: 'EARN_XP',
+      targetValue: 150,
+      rewardXp: 0,
+      rewardSakura: reward,
+    },
+  ]
+}
+
+/** Semana ISO a la que pertenece un dia epoch (lunes como primer dia). */
+export function epochWeekOf(epochDay: number): number {
+  // El dia epoch 0 fue jueves; se corrige para que la semana empiece el lunes.
+  return Math.floor((epochDay + 3) / 7)
+}
+
 /** DefaultMissionProgressCalculator: nunca pasa del objetivo. */
 export function applyMissionProgress(
   currentProgress: number,

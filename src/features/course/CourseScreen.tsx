@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { useMirabiStore } from '../../core/store/useMirabiStore'
-import { MirabiCard, MirabiProgressBar } from '../../ui/components'
+import { MirabiButton, MirabiCard, MirabiProgressBar } from '../../ui/components'
 import { Screen } from '../../ui/Layout'
 import { WorldBackdrop } from '../../ui/illustrations'
 import { CourseTrail } from './CourseTrail'
@@ -11,6 +11,7 @@ export function CourseScreen() {
   const navigate = useNavigate()
   const index = useMirabiStore((state) => state.index)
   const courseMap = useMirabiStore((state) => state.courseMap)()
+  const examPassed = useMirabiStore((state) => state.passedExamWorldIds)
 
   const [selectedWorldId, setSelectedWorldId] = useState<string | null>(null)
 
@@ -98,6 +99,18 @@ export function CourseScreen() {
             progress={worldProgress.percentage / 100}
             tone={worldProgress.isCompleted ? 'success' : 'primary'}
           />
+          {/* La prueba se abre cuando ya hay algo que medir, no antes. */}
+          {worldProgress.completedUnits > 0 && (
+            <MirabiButton
+              className="mt-4"
+              variant={worldProgress.isCompleted ? 'primary' : 'secondary'}
+              onClick={() => navigate(`/examen/${world.id}`)}
+            >
+              {examPassed.includes(world.id)
+                ? '🏁 Repetir la prueba del mundo'
+                : '🏁 Hacer la prueba del mundo'}
+            </MirabiButton>
+          )}
         </MirabiCard>
       )}
 

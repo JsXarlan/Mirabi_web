@@ -71,11 +71,14 @@ export function MirabiProgressBar({
   progress,
   className,
   tone = 'primary',
+  label = 'Progreso',
 }: {
   /** 0..1 */
   progress: number
   className?: string
   tone?: 'primary' | 'success' | 'sakura'
+  /** Nombre accesible: una barra sin etiqueta no dice nada en un lector. */
+  label?: string
 }) {
   const clamped = Math.min(1, Math.max(0, progress))
   const color =
@@ -88,6 +91,7 @@ export function MirabiProgressBar({
     <div
       className={cx('h-2.5 w-full overflow-hidden rounded-full bg-[var(--surface-variant)]', className)}
       role="progressbar"
+      aria-label={label}
       aria-valuemin={0}
       aria-valuemax={100}
       aria-valuenow={Math.round(clamped * 100)}

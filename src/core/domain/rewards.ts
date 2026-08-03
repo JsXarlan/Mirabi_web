@@ -112,6 +112,32 @@ export interface StreakUpdateResult {
   wasReset: boolean
 }
 
+export interface StreakStatus {
+  /** Lo que vale la racha ahora mismo, no la ultima vez que se estudio. */
+  days: number
+  /** Ayer si, hoy todavia no: se pierde si acaba el dia sin actividad. */
+  atRisk: boolean
+  lost: boolean
+}
+
+/**
+ * Racha vista desde hoy.
+ *
+ * `streakDays` solo se recalcula al ganar algo, asi que tras romperla la app
+ * seguia enseñando el numero viejo hasta la siguiente leccion: contaba una
+ * racha que ya no existia. Esto lo resuelve en el momento de mostrarla.
+ */
+export function streakStatus(
+  streakDays: number,
+  lastActivityEpochDay: number | null,
+  today: number,
+): StreakStatus {
+  if (lastActivityEpochDay === null) return { days: 0, atRisk: false, lost: false }
+  if (lastActivityEpochDay === today) return { days: streakDays, atRisk: false, lost: false }
+  if (lastActivityEpochDay === today - 1) return { days: streakDays, atRisk: true, lost: false }
+  return { days: 0, atRisk: false, lost: streakDays > 0 }
+}
+
 /** DefaultStreakPolicy: mismo dia no suma, dia siguiente suma, hueco reinicia. */
 export function updateStreak(
   currentDays: number,

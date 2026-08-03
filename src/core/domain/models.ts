@@ -1,4 +1,4 @@
-import type { LearningItemType, MistakeType } from '../content/types'
+import type { LearningItemType, MistakeType, SrsCategory } from '../content/types'
 
 /** Espejo de core/model del proyecto Android. */
 
@@ -41,12 +41,22 @@ export interface ReviewItem {
   id: string
   learningItemId: string
   learningItemType: LearningItemType
+  /** Familia de contenido: decide la tabla de intervalos del SRS. */
+  srsCategory: SrsCategory
   priority: ReviewPriority
   status: ReviewStatus
   masteryBefore: MasteryScore
   mistakeType: MistakeType | null
+  /** Tipificacion editorial del fallo (PARTICLE_WA_HA, AUDIO_SU_TSU...). */
+  errorType: string | null
+  /** Caja Leitner: 0 es "recien fallado", la ultima gradua el item. */
+  box: number
+  reviewCount: number
+  lapses: number
   createdAtEpochMillis: number
-  /** Ejercicio que origino el fallo; permite reconstruir la pregunta en el repaso. */
+  /** Momento a partir del cual el item vuelve a entrar en una sesion. */
+  nextReviewAtEpochMillis: number
+  /** Ejercicio que origino el item; permite reconstruir la pregunta en el repaso. */
   sourceExerciseId: string | null
 }
 

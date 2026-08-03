@@ -1,4 +1,4 @@
-import type { ContentExercise, CoursePack } from '../../core/content/types'
+import type { ContentExercise, CoursePack, RomajiPolicy } from '../../core/content/types'
 import type { CourseMap } from '../../core/domain/course'
 
 /**
@@ -12,6 +12,8 @@ export interface GuidedConversation {
   title: string
   worldTitle: string
   steps: ContentExercise[]
+  /** La leccion de origen manda tambien aqui cuanto romaji se ve. */
+  romajiPolicy: RomajiPolicy
   isUnlocked: boolean
   isCompleted: boolean
 }
@@ -40,6 +42,7 @@ export function buildConversations(
         title: lesson.title,
         worldTitle: world?.title ?? '',
         steps,
+        romajiPolicy: lesson.romajiPolicy,
         isUnlocked: nodeState.get(lesson.id) !== 'LOCKED',
         isCompleted: completedLessonIds.includes(lesson.id),
       }

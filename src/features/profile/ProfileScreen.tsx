@@ -8,6 +8,7 @@ import {
   xpIntoLevel,
 } from '../../core/domain/models'
 import { calculateLearningStats, resolveProfileSignals } from '../../core/domain/profile'
+import { streakStatus } from '../../core/domain/rewards'
 import { useMirabiStore } from '../../core/store/useMirabiStore'
 import {
   MirabiCard,
@@ -49,7 +50,8 @@ export function ProfileScreen() {
   const displayName = useMirabiStore((state) => state.displayName)
   const totalXp = useMirabiStore((state) => state.totalXp)
   const sakura = useMirabiStore((state) => state.sakura)
-  const streakDays = useMirabiStore((state) => state.streakDays)
+  const persistedStreakDays = useMirabiStore((state) => state.streakDays)
+  const lastActivityEpochDay = useMirabiStore((state) => state.lastActivityEpochDay)
   const subscriptionType = useMirabiStore((state) => state.subscriptionType)
   const learningProgress = useMirabiStore((state) => state.learningProgress)
   const totalAnswers = useMirabiStore((state) => state.totalAnswers)
@@ -61,7 +63,11 @@ export function ProfileScreen() {
   const totalConversationsCompleted = useMirabiStore((state) => state.totalConversationsCompleted)
 
   const courseMap = useMirabiStore((state) => state.courseMap)()
-  const pending = useMirabiStore((state) => state.pendingReviewItems)()
+  const pending = useMirabiStore((state) => state.dueReviewItems)()
+
+  const today = epochDayOf(Date.now())
+  // Misma verdad que en Inicio: la racha vale lo que vale hoy.
+  const streakDays = streakStatus(persistedStreakDays, lastActivityEpochDay, today).days
 
   const level = levelFromXp(totalXp)
   const tracked = Object.values(learningProgress)
@@ -93,7 +99,6 @@ export function ProfileScreen() {
     masteredKana,
   })
 
-  const today = epochDayOf(Date.now())
   const last28 = Array.from({ length: 28 }, (_, offset) => today - 27 + offset)
 
   return (
@@ -170,14 +175,16 @@ export function ProfileScreen() {
           <dt className="text-[var(--on-surface-variant)]">Conversaciones</dt>
           <dd className="text-right font-semibold">{totalConversationsCompleted}</dd>
         </dl>
-        {subscriptionType === 'FREE' && (
-          <Link
-            to="/premium"
-            className="mt-4 block text-center text-xs font-semibold text-[var(--primary)]"
-          >
-            Las estadísticas avanzadas llegan con Mirabi Plus
-          </Link>
-        )}
+        {/*
+          El analisis de fallos es gratis: el producto promete que Plus da
+          comodidad, no aprendizaje, y saber que se te resiste es aprendizaje.
+        */}
+        <Link
+          to="/analisis"
+          className="mt-4 block text-center text-xs font-semibold text-[var(--primary)]"
+        >
+          Ver qué se te resiste y por qué →
+        </Link>
       </MirabiCard>
 
       <SectionTitle>Calendario</SectionTitle>

@@ -1,27 +1,35 @@
-import { useMemo, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
+import { hasKana, resolveRomaji, toRomaji } from '../../core/domain/romaji'
 import { yukiReaction } from '../../core/domain/yuki'
 import { useMirabiStore } from '../../core/store/useMirabiStore'
 import { MirabiButton, MirabiCard, MirabiStatChip } from '../../ui/components'
+import { useDigitKeys, useEnterKey } from '../../ui/keys'
 import { SessionScreen } from '../../ui/Layout'
 import { Yuki } from '../../ui/Yuki'
+import { AudioButton, speakableText } from '../lesson/ExerciseView'
 import { FeedbackBar } from '../lesson/FeedbackBar'
 import { buildConversations } from './conversations'
 
 /**
  * Conversacion guiada: mismo contenido que un paso de leccion, pero presentado
  * como dialogo. El interlocutor habla en una burbuja y el usuario elige su turno.
+ *
+ * Es la pantalla donde mas sentido tiene oir la frase, asi que la burbuja se
+ * puede escuchar y las respuestas llevan su lectura cuando la leccion lo permite.
  */
 export function ConversationSessionScreen() {
   const { lessonId } = useParams<{ lessonId: string }>()
   const navigate = useNavigate()
 
   const pack = useMirabiStore((state) => state.pack)
+  const catalog = useMirabiStore((state) => state.catalog)
   const courseMap = useMirabiStore((state) => state.courseMap)()
   const completedIds = useMirabiStore((state) => state.completedConversationLessonIds)
   const answerExercise = useMirabiStore((state) => state.answerExercise)
   const completeConversation = useMirabiStore((state) => state.completeConversation)
+  const masteryOf = useMirabiStore((state) => state.masteryOf)
 
   const conversation = useMemo(() => {
     if (!pack || !courseMap) return null
@@ -38,7 +46,48 @@ export function ConversationSessionScreen() {
   const [tally, setTally] = useState({ correct: 0, wrong: 0 })
   const [finished, setFinished] = useState(false)
 
-  if (!conversation) {
+  const step = conversation?.steps[currentIndex]
+  const answered = isCorrect !== null
+  const isLastStep = conversation ? currentIndex === conversation.steps.length - 1 : false
+
+  const choose = useCallback(
+    (option: string) => {
+      if (answered || !step) return
+      setAnswer(option)
+      const result = answerExercise(step, option)
+      setIsCorrect(result.isCorrect)
+      setTally((previous) => ({
+        correct: previous.correct + (result.isCorrect ? 1 : 0),
+        wrong: previous.wrong + (result.isCorrect ? 0 : 1),
+      }))
+    },
+    [answered, step, answerExercise],
+  )
+
+  const advance = useCallback(() => {
+    if (!conversation) return
+    if (isLastStep) {
+      completeConversation(conversation.lessonId, tally.correct, tally.wrong)
+      setFinished(true)
+      return
+    }
+    setCurrentIndex((value) => value + 1)
+    setAnswer(null)
+    setIsCorrect(null)
+  }, [conversation, isLastStep, completeConversation, tally])
+
+  const pick = useCallback(
+    (index: number) => {
+      const option = step?.options[index]
+      if (option) choose(option.text)
+    },
+    [step, choose],
+  )
+
+  useDigitKeys(pick, Boolean(step) && !answered && !finished)
+  useEnterKey(advance, Boolean(step) && answered && !finished)
+
+  if (!conversation || !step) {
     return (
       <SessionScreen title="Conversación" progress={0}>
         <MirabiCard className="p-6 text-center">
@@ -78,56 +127,53 @@ export function ConversationSessionScreen() {
     )
   }
 
-  const step = conversation.steps[currentIndex]
-  const answered = isCorrect !== null
-  const isLastStep = currentIndex === conversation.steps.length - 1
-
-  const choose = (option: string) => {
-    if (answered) return
-    setAnswer(option)
-    const result = answerExercise(step, option)
-    setIsCorrect(result.isCorrect)
-    setTally((previous) => ({
-      correct: previous.correct + (result.isCorrect ? 1 : 0),
-      wrong: previous.wrong + (result.isCorrect ? 0 : 1),
-    }))
-  }
-
-  const advance = () => {
-    if (isLastStep) {
-      completeConversation(conversation.lessonId, tally.correct, tally.wrong)
-      setFinished(true)
-      return
-    }
-    setCurrentIndex((value) => value + 1)
-    setAnswer(null)
-    setIsCorrect(null)
-  }
+  const romaji = resolveRomaji(
+    conversation.romajiPolicy,
+    masteryOf(step.learningItemId),
+    isCorrect === false,
+  )
+  const promptReading = romaji.visible ? toRomaji(step.prompt, catalog) : null
+  const spoken = speakableText(step) ?? (hasKana(step.prompt) ? step.prompt : null)
 
   return (
     <SessionScreen
       title={conversation.title}
       progress={currentIndex / conversation.steps.length}
       onExit={() => navigate('/conversaciones')}
+      hint={answered ? 'Enter para continuar' : 'Pulsa 1-9 para responder'}
     >
       <div className="flex-1">
         <div className="mb-6 flex items-start gap-3 animate-pop">
           <Yuki size={48} state="HAPPY" />
-          <p className="rounded-[18px] rounded-tl-sm bg-[var(--surface-variant)] px-4 py-3 font-jp text-base leading-snug">
-            {step.prompt}
-          </p>
+          <div className="min-w-0">
+            <p
+              className="rounded-[18px] rounded-tl-sm bg-[var(--surface-variant)] px-4 py-3 font-jp text-base leading-snug"
+              lang={hasKana(step.prompt) ? 'ja' : undefined}
+            >
+              {step.prompt}
+            </p>
+            {promptReading && (
+              <p className="mt-1 px-1 text-xs text-[var(--on-surface-variant)]">{promptReading}</p>
+            )}
+            {spoken && <AudioButton compact className="mt-2 inline-flex" text={spoken} />}
+          </div>
         </div>
 
         <p className="mb-2 text-xs font-semibold text-[var(--on-surface-variant)]">Tu respuesta</p>
-        <div className="flex flex-col gap-2.5">
-          {step.options.map((option) => {
+        <div className="flex flex-col gap-2.5" role="radiogroup" aria-label="Tu respuesta">
+          {step.options.map((option, index) => {
             const selected = answer === option.text
             const revealCorrect = answered && option.text === step.correctAnswer
             const revealWrong = answered && selected && isCorrect === false
+            // La lectura de las opciones espera a la correccion: antes seria
+            // resolver el ejercicio por la persona.
+            const reading = answered && romaji.visible ? toRomaji(option.text, catalog) : null
             return (
               <button
                 key={option.id}
                 type="button"
+                role="radio"
+                aria-checked={selected}
                 disabled={answered}
                 onClick={() => choose(option.text)}
                 className={[
@@ -139,22 +185,27 @@ export function ConversationSessionScreen() {
                       : 'border-[var(--outline)] bg-[var(--surface)] hover:border-[var(--primary)]',
                 ].join(' ')}
               >
-                {option.text}
+                <span className="flex items-baseline justify-end gap-2">
+                  <span
+                    aria-hidden
+                    className="hidden text-[11px] font-bold text-[var(--on-surface-variant)] sm:inline"
+                  >
+                    {index + 1}
+                  </span>
+                  <span lang={hasKana(option.text) ? 'ja' : undefined}>{option.text}</span>
+                </span>
+                {reading && (
+                  <span className="mt-0.5 block text-xs font-normal text-[var(--on-surface-variant)]">
+                    {reading}
+                  </span>
+                )}
               </button>
             )
           })}
         </div>
       </div>
 
-      {answered && (
-        <FeedbackBar
-          isCorrect={isCorrect}
-          correctAnswer={step.correctAnswer}
-          distractorReason={
-            step.options.find((option) => option.text === answer)?.distractorReason ?? null
-          }
-        />
-      )}
+      {answered && <FeedbackBar exercise={step} answer={answer ?? ''} isCorrect={isCorrect} />}
 
       <MirabiButton className="mt-4" disabled={!answered} onClick={advance}>
         {isLastStep ? 'Terminar' : 'Continuar'}

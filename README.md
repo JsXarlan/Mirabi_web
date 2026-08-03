@@ -25,7 +25,32 @@ Paridad funcional con el MVP de la app Android:
 | Ajustes | ✅ |
 | Premium | ✅ (sin cobro real) |
 | Tienda Sakura | ✅ (compra simulada) |
+| Puntos débiles (análisis de errores) | ✅ |
+| Prueba de mundo (checkpoint) | ✅ |
+| Colocación inicial (prueba de nivel) | ✅ |
+| Misiones semanales | ✅ |
 | Kanji, escritura, IA conversacional | Fuera del MVP |
+
+Más allá del MVP de Android, la web añade:
+
+- **Repetición espaciada real.** Cada elemento lleva una caja Leitner y una fecha
+  de vuelta; los intervalos dependen de `srsCategory` (el kana vuelve antes que
+  la gramática). Acertar aleja, fallar devuelve a la caja 0 y la última caja
+  gradúa el elemento. Los ejercicios marcados `entersSrs` entran aunque se
+  acierte a la primera.
+- **Romaji progresivo**, según la `romajiPolicy` de cada lección. La muleta
+  nunca aparece sobre la respuesta: en un ejercicio de lectura de kana se calla,
+  y en las opciones espera a que esté corregido.
+- **Análisis de puntos débiles** con los `errorType` y `criticalTags` que ya
+  declara el contenido, con su explicación.
+- **Atajos de teclado**: Enter comprueba y avanza, 1-9 eligen opción, Retroceso
+  deshace en el banco de palabras.
+- **PWA instalable con modo offline** y copia de seguridad exportable.
+- **Colocación inicial**: quien declara saber algo puede demostrarlo con una
+  prueba corta hecha con los ejercicios `appearsInCheckpoint`, y empezar en el
+  mundo que le toca. Saltar no da XP ni racha: eso se gana estudiando.
+- **Recordatorio diario**, con `periodicsync` donde el navegador lo permite y
+  aviso al abrir en el resto. Ajustes dice cuál de los dos está activo.
 
 ## Stack
 
@@ -34,8 +59,11 @@ Paridad funcional con el MVP de la app Android:
 - Zustand con persistencia en `localStorage`
 - `HashRouter`, para poder servirlo como estático (GitHub Pages)
 - Web Speech API para la pronunciación (sin ficheros de audio)
+- Service worker propio, sin dependencias de build
+- Vitest para los tests
 
-Sin backend: **todo funciona offline** y el progreso vive en el navegador.
+Sin backend: **todo funciona offline** —incluida la primera recarga sin red— y el
+progreso vive en el navegador.
 
 ## Desarrollo
 
@@ -50,6 +78,15 @@ npm run dev
 ```bash
 npm run build
 ```
+
+```bash
+npm test
+```
+
+Los tests corren contra el store y el pack reales, sin dobles: una lección
+completa paga XP, cierra misión y programa el repaso igual que en el navegador.
+`npm run build` minifica el contenido de `dist/` (1,1 MB → 465 KB); la fuente de
+`public/content/` no se toca, porque la reescribe el exportador de Kotlin.
 
 ## Contenido educativo
 
@@ -89,6 +126,8 @@ de qué clase Kotlin es equivalente.
 
 ## Diferencias con la app Android
 
+- **Repaso**: Android guarda los fallos; aquí hay repetición espaciada con fechas.
+  Si se porta de vuelta, `ReviewItem` necesita `box` y `nextReviewAt`.
 - **Conversaciones guiadas**: en Android llegan de una API remota. Aquí se construyen con los pasos
   `CONVERSATION_RESPONSE` que ya viven dentro de las lecciones, para que la pantalla funcione sin
   backend y offline.

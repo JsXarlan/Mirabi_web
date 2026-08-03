@@ -106,6 +106,7 @@ function MirabiSideRail() {
         <ul className="flex flex-col gap-1">
           {[
             { to: '/conversaciones', label: 'Conversaciones', icon: '💬' },
+            { to: '/analisis', label: 'Puntos débiles', icon: '📊' },
             { to: '/misiones', label: 'Misiones', icon: '🎯' },
             { to: '/tienda', label: 'Tienda', icon: '🛍️' },
             { to: '/ajustes', label: 'Ajustes', icon: '⚙️' },
@@ -200,7 +201,14 @@ export function SessionScreen({
         </button>
         <div className="min-w-0 flex-1">
           <p className="truncate text-xs font-semibold text-[var(--on-surface-variant)]">{title}</p>
-          <div className="mt-1 h-2 w-full overflow-hidden rounded-full bg-[var(--surface-variant)]">
+          <div
+            className="mt-1 h-2 w-full overflow-hidden rounded-full bg-[var(--surface-variant)]"
+            role="progressbar"
+            aria-label="Progreso de la sesión"
+            aria-valuemin={0}
+            aria-valuemax={100}
+            aria-valuenow={Math.round(clamped * 100)}
+          >
             <div
               className="h-full rounded-full bg-[var(--primary)] transition-[width] duration-300"
               style={{ width: `${clamped * 100}%` }}

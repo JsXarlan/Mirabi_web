@@ -1,9 +1,10 @@
-import { useMemo, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import { isRuntimeCompatible, isTeachingExercise } from '../../core/content/types'
 import { useMirabiStore } from '../../core/store/useMirabiStore'
 import { MirabiButton, MirabiCard } from '../../ui/components'
+import { useEnterKey } from '../../ui/keys'
 import { SessionScreen } from '../../ui/Layout'
 import { ExerciseView } from './ExerciseView'
 import { FeedbackBar } from './FeedbackBar'
@@ -28,7 +29,48 @@ export function LessonScreen() {
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null)
   const [tally, setTally] = useState({ correct: 0, wrong: 0 })
 
-  if (!lesson || steps.length === 0) {
+  const exercise = steps[currentIndex]
+  const teaching = exercise ? isTeachingExercise(exercise) : false
+  const answered = isCorrect !== null
+  const isLastStep = currentIndex === steps.length - 1
+  const canAdvance = teaching || answered || answer.trim() !== ''
+
+  const primaryAction = useCallback(() => {
+    if (!lesson || !exercise) return
+    if (teaching || answered) {
+      if (isLastStep) {
+        const outcome = completeLesson(lesson.id, tally.correct, tally.wrong)
+        navigate(`/leccion/${lesson.id}/resultado`, { replace: true, state: outcome })
+        return
+      }
+      setCurrentIndex((value) => value + 1)
+      setAnswer('')
+      setIsCorrect(null)
+      return
+    }
+    if (answer.trim() === '') return
+    const result = answerExercise(exercise, answer)
+    setIsCorrect(result.isCorrect)
+    setTally((previous) => ({
+      correct: previous.correct + (result.isCorrect ? 1 : 0),
+      wrong: previous.wrong + (result.isCorrect ? 0 : 1),
+    }))
+  }, [
+    lesson,
+    exercise,
+    teaching,
+    answered,
+    isLastStep,
+    answer,
+    tally,
+    answerExercise,
+    completeLesson,
+    navigate,
+  ])
+
+  useEnterKey(primaryAction, Boolean(exercise) && canAdvance)
+
+  if (!lesson || steps.length === 0 || !exercise) {
     return (
       <SessionScreen title="Lección" progress={0}>
         <MirabiCard className="p-6 text-center">
@@ -41,52 +83,22 @@ export function LessonScreen() {
     )
   }
 
-  const exercise = steps[currentIndex]
-  const teaching = isTeachingExercise(exercise)
-  const answered = isCorrect !== null
-  const isLastStep = currentIndex === steps.length - 1
-  const canAdvance = teaching || answered || answer.trim() !== ''
-
-  const check = () => {
-    const result = answerExercise(exercise, answer)
-    setIsCorrect(result.isCorrect)
-    setTally((previous) => ({
-      correct: previous.correct + (result.isCorrect ? 1 : 0),
-      wrong: previous.wrong + (result.isCorrect ? 0 : 1),
-    }))
-  }
-
-  const advance = () => {
-    if (isLastStep) {
-      const outcome = completeLesson(lesson.id, tally.correct, tally.wrong)
-      navigate(`/leccion/${lesson.id}/resultado`, { replace: true, state: outcome })
-      return
-    }
-    setCurrentIndex((value) => value + 1)
-    setAnswer('')
-    setIsCorrect(null)
-  }
-
-  const primaryAction = () => {
-    if (teaching || answered) advance()
-    else check()
-  }
-
-  const actionLabel = teaching
-    ? isLastStep
-      ? 'Terminar'
-      : 'Continuar'
-    : answered
-      ? isLastStep
-        ? 'Terminar'
-        : 'Continuar'
-      : 'Comprobar'
+  const actionLabel = answered || teaching ? (isLastStep ? 'Terminar' : 'Continuar') : 'Comprobar'
+  // La prueba de mundo se anuncia: es la unica leccion que cierra un mundo.
+  const isCheckpoint = lesson.checkpointKind === 'VISIBLE_WORLD_CHECKPOINT'
 
   return (
     <SessionScreen
-      title={lesson.title}
+      title={isCheckpoint ? `🏁 Prueba · ${lesson.title}` : lesson.title}
       progress={currentIndex / steps.length}
       onExit={() => navigate(`/leccion/${lesson.id}`)}
+      hint={
+        answered || teaching
+          ? 'Enter para continuar'
+          : exercise.options.length > 0
+            ? 'Pulsa 1-9 para elegir · Enter para comprobar'
+            : 'Enter para comprobar'
+      }
     >
       <div className="flex-1">
         <ExerciseView
@@ -96,18 +108,11 @@ export function LessonScreen() {
           onAnswerChange={setAnswer}
           locked={answered}
           isCorrect={isCorrect}
+          romajiPolicy={lesson.romajiPolicy}
         />
       </div>
 
-      {answered && (
-        <FeedbackBar
-          isCorrect={isCorrect}
-          correctAnswer={exercise.correctAnswer}
-          distractorReason={
-            exercise.options.find((option) => option.text === answer)?.distractorReason ?? null
-          }
-        />
-      )}
+      {answered && <FeedbackBar exercise={exercise} answer={answer} isCorrect={isCorrect} />}
 
       <MirabiButton
         className="mt-4"

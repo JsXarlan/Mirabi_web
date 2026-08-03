@@ -1,49 +1,43 @@
-import { useMemo, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
-import type { CharacterScript, KanaCharacter } from '../../core/content/types'
-import { MASTERY_VALUE, nextMastery } from '../../core/domain/models'
+import type { CharacterScript, ContentExercise, KanaCharacter } from '../../core/content/types'
+import { MASTERY_VALUE } from '../../core/domain/models'
+import { buildKanaExercise } from '../../core/domain/kanaExercises'
 import { yukiReaction } from '../../core/domain/yuki'
 import { useMirabiStore } from '../../core/store/useMirabiStore'
 import { MirabiButton, MirabiCard, MirabiStatChip } from '../../ui/components'
+import { useDigitKeys, useEnterKey } from '../../ui/keys'
 import { SessionScreen } from '../../ui/Layout'
 import { Yuki } from '../../ui/Yuki'
+import { AudioButton } from '../lesson/ExerciseView'
 
 const SESSION_SIZE = 10
-const OPTIONS_PER_ITEM = 4
 
 interface PracticeItem {
   character: KanaCharacter
-  options: string[]
+  exercise: ContentExercise
 }
 
 /**
  * DefaultCharacterPracticeSessionBuilder: primero lo mas debil.
- * Los distractores salen del mismo silabario para que la confusion sea realista.
+ *
+ * Cada carta es un ejercicio de verdad, no una pregunta de pantalla: asi la
+ * practica actualiza el dominio y programa el repaso por el mismo camino que
+ * una leccion, en vez de escribir el estado por su cuenta.
  */
 function buildSession(
   characters: KanaCharacter[],
+  catalog: Parameters<typeof buildKanaExercise>[1],
   masteryOf: (id: string) => keyof typeof MASTERY_VALUE,
 ): PracticeItem[] {
-  const ranked = [...characters].sort(
-    (a, b) =>
-      MASTERY_VALUE[masteryOf(a.learningItemId)] - MASTERY_VALUE[masteryOf(b.learningItemId)],
-  )
-  const selected = ranked.slice(0, SESSION_SIZE)
-
-  return selected.map((character) => {
-    const pool = characters
-      .filter((other) => other.romaji !== character.romaji)
-      .map((other) => other.romaji)
-    const distractors: string[] = []
-    while (distractors.length < OPTIONS_PER_ITEM - 1 && pool.length > 0) {
-      const at = Math.floor(Math.random() * pool.length)
-      const [candidate] = pool.splice(at, 1)
-      if (!distractors.includes(candidate)) distractors.push(candidate)
-    }
-    const options = [character.romaji, ...distractors].sort(() => Math.random() - 0.5)
-    return { character, options }
-  })
+  return [...characters]
+    .sort(
+      (a, b) =>
+        MASTERY_VALUE[masteryOf(a.learningItemId)] - MASTERY_VALUE[masteryOf(b.learningItemId)],
+    )
+    .slice(0, SESSION_SIZE)
+    .map((character) => ({ character, exercise: buildKanaExercise(character, catalog) }))
 }
 
 export function CharacterPracticeScreen() {
@@ -52,14 +46,16 @@ export function CharacterPracticeScreen() {
 
   const catalog = useMirabiStore((state) => state.catalog)
   const masteryOf = useMirabiStore((state) => state.masteryOf)
+  const answerExercise = useMirabiStore((state) => state.answerExercise)
   const completeCharacterPractice = useMirabiStore((state) => state.completeCharacterPractice)
 
   const scriptKey: CharacterScript = script === 'katakana' ? 'KATAKANA' : 'HIRAGANA'
   const title = scriptKey === 'KATAKANA' ? 'Katakana' : 'Hiragana'
 
   const items = useMemo(() => {
-    const characters = catalog?.characters.filter((item) => item.script === scriptKey) ?? []
-    return buildSession(characters, masteryOf)
+    if (!catalog) return []
+    const characters = catalog.characters.filter((item) => item.script === scriptKey)
+    return buildSession(characters, catalog, masteryOf)
     // Se construye una sola vez por sesion: rebarajar a media practica seria confuso.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [catalog, scriptKey])
@@ -69,7 +65,46 @@ export function CharacterPracticeScreen() {
   const [tally, setTally] = useState({ correct: 0, wrong: 0 })
   const [finished, setFinished] = useState(false)
 
-  if (items.length === 0) {
+  const item = items[currentIndex]
+  const answered = answer !== null
+  const isLastStep = currentIndex === items.length - 1
+
+  const choose = useCallback(
+    (option: string) => {
+      if (answered || !item) return
+      setAnswer(option)
+      // Una sola puerta de entrada: dominio, SRS y contadores de error.
+      const result = answerExercise(item.exercise, option)
+      setTally((previous) => ({
+        correct: previous.correct + (result.isCorrect ? 1 : 0),
+        wrong: previous.wrong + (result.isCorrect ? 0 : 1),
+      }))
+    },
+    [answered, item, answerExercise],
+  )
+
+  const advance = useCallback(() => {
+    if (isLastStep) {
+      completeCharacterPractice(tally.correct, tally.wrong)
+      setFinished(true)
+      return
+    }
+    setCurrentIndex((value) => value + 1)
+    setAnswer(null)
+  }, [isLastStep, completeCharacterPractice, tally])
+
+  const pick = useCallback(
+    (index: number) => {
+      const option = item?.exercise.options[index]
+      if (option) choose(option.text)
+    },
+    [item, choose],
+  )
+
+  useDigitKeys(pick, Boolean(item) && !answered && !finished)
+  useEnterKey(advance, Boolean(item) && answered && !finished)
+
+  if (items.length === 0 || !item) {
     return (
       <SessionScreen title={title} progress={0}>
         <MirabiCard className="p-6 text-center">
@@ -99,6 +134,11 @@ export function CharacterPracticeScreen() {
           <MirabiStatChip icon="✏️" value={tally.wrong} label="Fallos" />
           <MirabiStatChip icon="🎯" value={`${Math.round(accuracy)}%`} label="Precisión" />
         </div>
+        {tally.wrong > 0 && (
+          <p className="mt-4 text-center text-xs text-[var(--on-surface-variant)]">
+            Los {tally.wrong === 1 ? 'que fallaste vuelve' : 'que fallaste vuelven'} en tu repaso.
+          </p>
+        )}
         <MirabiButton className="mt-6" onClick={() => navigate('/caracteres', { replace: true })}>
           Continuar
         </MirabiButton>
@@ -106,74 +146,40 @@ export function CharacterPracticeScreen() {
     )
   }
 
-  const item = items[currentIndex]
-  const answered = answer !== null
   const isCorrect = answered && answer === item.character.romaji
-
-  const choose = (option: string) => {
-    if (answered) return
-    setAnswer(option)
-    const correct = option === item.character.romaji
-    setTally((previous) => ({
-      correct: previous.correct + (correct ? 1 : 0),
-      wrong: previous.wrong + (correct ? 0 : 1),
-    }))
-    // El dominio del kana se actualiza aqui: la practica no pasa por AnswerValidator.
-    useMirabiStore.setState((state) => {
-      const key = item.character.learningItemId
-      const previous = state.learningProgress[key]
-      const now = Date.now()
-      return {
-        learningProgress: {
-          ...state.learningProgress,
-          [key]: {
-            learningItemId: key,
-            learningItemType: 'KANA',
-            mastery: nextMastery(previous?.mastery ?? 'UNKNOWN', correct),
-            correctAnswers: (previous?.correctAnswers ?? 0) + (correct ? 1 : 0),
-            wrongAnswers: (previous?.wrongAnswers ?? 0) + (correct ? 0 : 1),
-            lastAnsweredAtEpochMillis: now,
-            updatedAtEpochMillis: now,
-          },
-        },
-      }
-    })
-  }
-
-  const advance = () => {
-    if (currentIndex === items.length - 1) {
-      completeCharacterPractice(tally.correct, tally.wrong)
-      setFinished(true)
-      return
-    }
-    setCurrentIndex((value) => value + 1)
-    setAnswer(null)
-  }
 
   return (
     <SessionScreen
       title={`Práctica de ${title}`}
       progress={currentIndex / items.length}
       onExit={() => navigate('/caracteres')}
+      hint={answered ? 'Enter para continuar' : 'Pulsa 1-4 para responder'}
     >
       <div className="flex flex-1 flex-col items-center justify-center">
         <p className="mb-4 text-sm text-[var(--on-surface-variant)]">¿Cómo se lee?</p>
-        <p className="font-jp text-8xl leading-none">{item.character.symbol}</p>
+        <p className="font-jp text-8xl leading-none" lang="ja">
+          {item.character.symbol}
+        </p>
+        {answered && (
+          <AudioButton className="mt-5 inline-flex items-center" text={item.character.symbol} />
+        )}
       </div>
 
-      <div className="mt-8 grid grid-cols-2 gap-2.5">
-        {item.options.map((option) => {
-          const selected = answer === option
-          const revealCorrect = answered && option === item.character.romaji
+      <div className="mt-8 grid grid-cols-2 gap-2.5" role="radiogroup" aria-label="Lecturas">
+        {item.exercise.options.map((option, index) => {
+          const selected = answer === option.text
+          const revealCorrect = answered && option.text === item.character.romaji
           const revealWrong = answered && selected && !isCorrect
           return (
             <button
-              key={option}
+              key={option.id}
               type="button"
+              role="radio"
+              aria-checked={selected}
               disabled={answered}
-              onClick={() => choose(option)}
+              onClick={() => choose(option.text)}
               className={[
-                'rounded-[16px] border-2 py-4 text-lg font-semibold transition',
+                'relative rounded-[16px] border-2 py-4 text-lg font-semibold transition',
                 revealCorrect
                   ? 'border-[var(--success)] bg-[color-mix(in_srgb,var(--success)_18%,transparent)]'
                   : revealWrong
@@ -181,14 +187,20 @@ export function CharacterPracticeScreen() {
                     : 'border-[var(--outline)] bg-[var(--surface)] hover:border-[var(--primary)]',
               ].join(' ')}
             >
-              {option}
+              <span
+                aria-hidden
+                className="absolute top-1.5 left-2 hidden text-[11px] font-bold text-[var(--on-surface-variant)] sm:block"
+              >
+                {index + 1}
+              </span>
+              {option.text}
             </button>
           )
         })}
       </div>
 
       <MirabiButton className="mt-4" disabled={!answered} onClick={advance}>
-        {currentIndex === items.length - 1 ? 'Terminar' : 'Continuar'}
+        {isLastStep ? 'Terminar' : 'Continuar'}
       </MirabiButton>
     </SessionScreen>
   )

@@ -1,5 +1,13 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState, type ChangeEvent } from 'react'
 import { Link } from 'react-router-dom'
+
+import {
+  disableBackgroundReminder,
+  enableBackgroundReminder,
+  reminderSupport,
+  requestNotificationPermission,
+  type ReminderSupport,
+} from '../../core/notifications'
 
 import type { ThemePreference } from '../../core/store/useMirabiStore'
 import { XP_PER_GOAL_MINUTE, useMirabiStore } from '../../core/store/useMirabiStore'
@@ -26,9 +34,73 @@ export function SettingsScreen() {
   const setDailyGoalMinutes = useMirabiStore((state) => state.setDailyGoalMinutes)
   const subscriptionType = useMirabiStore((state) => state.subscriptionType)
   const resetProgress = useMirabiStore((state) => state.resetProgress)
+  const exportProgress = useMirabiStore((state) => state.exportProgress)
+  const importProgress = useMirabiStore((state) => state.importProgress)
+
+  const reminderEnabled = useMirabiStore((state) => state.reminderEnabled)
+  const reminderHour = useMirabiStore((state) => state.reminderHour)
+  const setReminder = useMirabiStore((state) => state.setReminder)
 
   const [name, setName] = useState(displayName ?? '')
   const [confirmingReset, setConfirmingReset] = useState(false)
+  const [dataMessage, setDataMessage] = useState<string | null>(null)
+  const [support, setSupport] = useState<ReminderSupport>('UNSUPPORTED')
+  const fileInputRef = useRef<HTMLInputElement>(null)
+
+  useEffect(() => {
+    void reminderSupport().then(setSupport)
+  }, [])
+
+  /*
+   * Se dice exactamente lo que va a pasar. Prometer un aviso en segundo plano
+   * en un navegador que no lo soporta es la peor version de esta funcion.
+   */
+  const reminderNote =
+    support === 'UNSUPPORTED'
+      ? 'Este navegador no permite notificaciones.'
+      : !reminderEnabled
+        ? 'Sin recordatorio.'
+        : support === 'BACKGROUND'
+          ? 'Aviso en segundo plano una vez al día, y también al abrir la app.'
+          : 'Tu navegador solo avisa al abrir la app: instálala para recibirlo en segundo plano.'
+
+  const toggleReminder = async (enabled: boolean) => {
+    if (!enabled) {
+      setReminder(false)
+      await disableBackgroundReminder()
+      return
+    }
+    const permission = await requestNotificationPermission()
+    if (permission !== 'granted') {
+      setReminder(false)
+      setDataMessage('Sin permiso de notificaciones no podemos avisarte.')
+      return
+    }
+    setReminder(true)
+    await enableBackgroundReminder()
+  }
+
+  /** Descarga local: nada sale de este navegador. */
+  const downloadBackup = () => {
+    const blob = new Blob([exportProgress()], { type: 'application/json' })
+    const url = URL.createObjectURL(blob)
+    const link = document.createElement('a')
+    link.href = url
+    link.download = `mirabi-progreso-${new Date().toISOString().slice(0, 10)}.json`
+    link.click()
+    URL.revokeObjectURL(url)
+    setDataMessage('Copia descargada.')
+  }
+
+  const restoreBackup = async (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0]
+    event.target.value = ''
+    if (!file) return
+    const ok = importProgress(await file.text())
+    setDataMessage(
+      ok ? 'Progreso restaurado.' : 'Ese fichero no es una copia de Mirabi válida.',
+    )
+  }
 
   return (
     <Screen title="Ajustes">
@@ -137,11 +209,78 @@ export function SettingsScreen() {
         </Link>
       </MirabiCard>
 
+      <SectionTitle>Recordatorio diario</SectionTitle>
+      <MirabiCard className="mb-5 p-5">
+        <label className="flex items-center justify-between gap-4">
+          <span className="min-w-0">
+            <span className="block text-sm font-semibold">Avísame si no he estudiado</span>
+            <span className="mt-0.5 block text-xs text-[var(--on-surface-variant)]">
+              {reminderNote}
+            </span>
+          </span>
+          <input
+            type="checkbox"
+            checked={reminderEnabled}
+            onChange={(event) => void toggleReminder(event.target.checked)}
+            className="h-6 w-6 shrink-0 accent-[var(--primary)]"
+          />
+        </label>
+
+        {reminderEnabled && (
+          <label className="mt-4 block">
+            <span className="text-xs font-semibold text-[var(--on-surface-variant)]">
+              A partir de las
+            </span>
+            <select
+              value={reminderHour}
+              onChange={(event) => setReminder(true, Number(event.target.value))}
+              className="mt-1 w-full rounded-[16px] border border-[var(--outline)] bg-[var(--surface)] px-4 py-3 outline-none focus:border-[var(--primary)]"
+            >
+              {[8, 12, 15, 18, 20, 21, 22].map((hour) => (
+                <option key={hour} value={hour}>
+                  {String(hour).padStart(2, '0')}:00
+                </option>
+              ))}
+            </select>
+          </label>
+        )}
+      </MirabiCard>
+
+      <SectionTitle>Copia de seguridad</SectionTitle>
+      <MirabiCard className="mb-5 p-5">
+        <p className="text-sm font-semibold">Tu progreso vive solo en este navegador</p>
+        <p className="mt-1 text-xs text-[var(--on-surface-variant)]">
+          Sin cuenta no hay sincronización: si limpias los datos del navegador o cambias de
+          dispositivo, se pierde. Guarda un fichero de vez en cuando.
+        </p>
+        <div className="mt-3 flex gap-2">
+          <MirabiButton variant="secondary" onClick={downloadBackup}>
+            Exportar
+          </MirabiButton>
+          <MirabiButton variant="secondary" onClick={() => fileInputRef.current?.click()}>
+            Importar
+          </MirabiButton>
+        </div>
+        <input
+          ref={fileInputRef}
+          type="file"
+          accept="application/json"
+          className="hidden"
+          onChange={restoreBackup}
+        />
+        {dataMessage && (
+          <p role="status" className="mt-3 text-xs font-semibold text-[var(--primary)]">
+            {dataMessage}
+          </p>
+        )}
+      </MirabiCard>
+
       <SectionTitle>Datos</SectionTitle>
       <MirabiCard className="p-5">
         <p className="text-sm font-semibold">Reiniciar progreso</p>
         <p className="mt-1 text-xs text-[var(--on-surface-variant)]">
-          Borra racha, XP, Sakura, dominio y repasos de este navegador. No se puede deshacer.
+          Borra racha, XP, Sakura, dominio y repasos de este navegador. Tu nombre, el tema y el
+          objetivo diario se mantienen. No se puede deshacer.
         </p>
         {confirmingReset ? (
           <div className="mt-3 flex gap-2">

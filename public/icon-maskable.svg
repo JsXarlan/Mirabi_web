@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Mirabi">
+  <!-- Maskable: todo lo importante dentro del 80% central, el resto es fondo recortable. -->
+  <rect width="512" height="512" fill="#7B5FD0"/>
+  <g transform="translate(256 256) scale(0.66)" fill="#E36FA4">
+    <ellipse cx="0" cy="-64" rx="34" ry="50"/>
+    <ellipse cx="0" cy="-64" rx="34" ry="50" transform="rotate(72)"/>
+    <ellipse cx="0" cy="-64" rx="34" ry="50" transform="rotate(144)"/>
+    <ellipse cx="0" cy="-64" rx="34" ry="50" transform="rotate(216)"/>
+    <ellipse cx="0" cy="-64" rx="34" ry="50" transform="rotate(288)"/>
+    <circle r="20" fill="#FFF8E7"/>
+  </g>
+</svg>

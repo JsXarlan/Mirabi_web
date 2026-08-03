@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Mirabi">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#7B5FD0"/>
+      <stop offset="1" stop-color="#4A3880"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="url(#sky)"/>
+  <!-- Sakura: cinco petalos alrededor del centro. -->
+  <g transform="translate(256 232)" fill="#E36FA4">
+    <g>
+      <ellipse cx="0" cy="-64" rx="34" ry="50"/>
+      <ellipse cx="0" cy="-64" rx="34" ry="50" transform="rotate(72)"/>
+      <ellipse cx="0" cy="-64" rx="34" ry="50" transform="rotate(144)"/>
+      <ellipse cx="0" cy="-64" rx="34" ry="50" transform="rotate(216)"/>
+      <ellipse cx="0" cy="-64" rx="34" ry="50" transform="rotate(288)"/>
+    </g>
+    <circle r="20" fill="#FFF8E7"/>
+  </g>
+  <text x="256" y="410" text-anchor="middle" font-family="'Hiragino Sans','Yu Gothic','Noto Sans JP',sans-serif" font-size="104" font-weight="700" fill="#FFF8E7">未来</text>
+</svg>

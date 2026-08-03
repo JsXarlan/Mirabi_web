@@ -1,0 +1,31 @@
+{
+  "name": "Mirabi — Aprende japonés",
+  "short_name": "Mirabi",
+  "description": "Aprende japonés desde cero con curso guiado, kana, repaso inteligente y Yuki.",
+  "lang": "es",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#F6F2FA",
+  "theme_color": "#7B5FD0",
+  "categories": ["education"],
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "./icon-maskable.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    { "name": "Seguir el curso", "url": "./#/curso" },
+    { "name": "Repaso de hoy", "url": "./#/repaso" }
+  ]
+}

@@ -2,6 +2,9 @@ import { useEffect } from 'react'
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom'
 
 import { loadCharacterCatalog, loadCoursePack } from './core/content/loader'
+import { validateCatalog, validateCoursePack } from './core/content/validate'
+import { epochDayOf } from './core/domain/models'
+import { shouldRemindOnOpen, showReminderNotification } from './core/notifications'
 import { useMirabiStore } from './core/store/useMirabiStore'
 import { MirabiError, MirabiLoading } from './ui/components'
 
@@ -24,6 +27,9 @@ import { SettingsScreen } from './features/settings/SettingsScreen'
 import { PremiumScreen } from './features/premium/PremiumScreen'
 import { ShopScreen } from './features/shop/ShopScreen'
 import { OnboardingFlow } from './features/onboarding/OnboardingFlow'
+import { PlacementScreen } from './features/onboarding/PlacementScreen'
+import { WeakPointsScreen } from './features/analysis/WeakPointsScreen'
+import { WorldExamScreen } from './features/exam/WorldExamScreen'
 
 /** Aplica el tema elegido al documento; 'system' sigue al sistema operativo. */
 function useAppliedTheme() {
@@ -42,6 +48,31 @@ function useAppliedTheme() {
   }, [theme])
 }
 
+/**
+ * Aviso al abrir: la unica forma de recordatorio que funciona en todos los
+ * navegadores. El de fondo, cuando existe, lo lanza el service worker.
+ */
+function useOpenReminder() {
+  const enabled = useMirabiStore((state) => state.reminderEnabled)
+  const reminderHour = useMirabiStore((state) => state.reminderHour)
+  const lastActivityEpochDay = useMirabiStore((state) => state.lastActivityEpochDay)
+  const streakDays = useMirabiStore((state) => state.streakDays)
+
+  useEffect(() => {
+    const now = new Date()
+    const shouldRemind = shouldRemindOnOpen({
+      enabled,
+      reminderHour,
+      lastActivityEpochDay,
+      today: epochDayOf(now.getTime()),
+      now,
+    })
+    if (shouldRemind) showReminderNotification(streakDays)
+    // Solo al montar: recordar dos veces en la misma visita es ruido.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+}
+
 function useScrollReset() {
   const { pathname } = useLocation()
   useEffect(() => {
@@ -55,15 +86,27 @@ export default function App() {
   const setContent = useMirabiStore((state) => state.setContent)
   const setContentError = useMirabiStore((state) => state.setContentError)
   const onboardingCompleted = useMirabiStore((state) => state.onboardingCompleted)
+  const initialLevel = useMirabiStore((state) => state.initialLevel)
+  const placementDecided = useMirabiStore((state) => state.placementDecided)
 
   useAppliedTheme()
   useScrollReset()
+  useOpenReminder()
 
   useEffect(() => {
     let cancelled = false
     Promise.all([loadCoursePack(), loadCharacterCatalog()])
       .then(([coursePack, catalog]) => {
-        if (!cancelled) setContent(coursePack, catalog)
+        if (cancelled) return
+        // Mejor un mensaje claro ahora que una leccion vacia dentro de tres
+        // pantallas: el pack viene de otro repo y puede llegar a medias.
+        const checks = [validateCoursePack(coursePack), validateCatalog(catalog)]
+        const errors = checks.flatMap((check) => check.errors)
+        if (errors.length > 0) {
+          setContentError(errors.join(' '))
+          return
+        }
+        setContent(coursePack, catalog)
       })
       .catch((error: unknown) => {
         if (!cancelled) setContentError(error instanceof Error ? error.message : 'Error desconocido')
@@ -98,6 +141,19 @@ export default function App() {
     )
   }
 
+  /*
+   * Quien declara saber algo pasa por la colocacion antes de ver el curso: es
+   * el momento en que la promesa del onboarding se cumple o se rompe.
+   */
+  if (!placementDecided && initialLevel !== null && initialLevel !== 'FROM_ZERO') {
+    return (
+      <Routes>
+        <Route path="/colocacion" element={<PlacementScreen />} />
+        <Route path="*" element={<Navigate to="/colocacion" replace />} />
+      </Routes>
+    )
+  }
+
   return (
     <Routes>
       <Route path="/" element={<HomeScreen />} />
@@ -113,6 +169,8 @@ export default function App() {
       <Route path="/repaso/sesion" element={<ReviewSessionScreen />} />
       <Route path="/conversaciones" element={<ConversationsScreen />} />
       <Route path="/conversaciones/:lessonId" element={<ConversationSessionScreen />} />
+      <Route path="/examen/:worldId" element={<WorldExamScreen />} />
+      <Route path="/analisis" element={<WeakPointsScreen />} />
       <Route path="/misiones" element={<MissionsScreen />} />
       <Route path="/perfil" element={<ProfileScreen />} />
       <Route path="/ajustes" element={<SettingsScreen />} />

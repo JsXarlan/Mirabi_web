@@ -85,6 +85,37 @@ export function yukiReaction(trigger: YukiReactionTrigger): YukiReaction {
   return { ...MESSAGES[trigger], state: resolveYukiState(trigger), trigger }
 }
 
+export interface HomeYukiContext {
+  /** Dias desde la ultima actividad; null si nunca ha habido ninguna. */
+  daysSinceLastActivity: number | null
+  streakLost: boolean
+  streakDays: number
+  pendingReviews: number
+  lessonsCompleted: number
+  dailyGoalCompleted: boolean
+}
+
+/**
+ * Que dice Yuki al abrir la app.
+ *
+ * Sin esto Yuki solo aparecia al terminar algo: nunca reaccionaba a volver tras
+ * tres dias ni a perder la racha, que son justo los momentos en los que una
+ * compañera sirve para algo. La ausencia manda sobre el resto.
+ */
+export function resolveHomeTrigger(context: HomeYukiContext): YukiReactionTrigger {
+  const days = context.daysSinceLastActivity
+
+  if (context.lessonsCompleted === 0) return 'RETURNING_USER'
+  if (days !== null && days >= 5) return 'IDLE_USER'
+  if (context.streakLost) return 'STREAK_LOST'
+  if (days !== null && days >= 1) return 'RETURNING_USER'
+
+  if (context.dailyGoalCompleted) return 'DAILY_MISSION_COMPLETED'
+  if (context.pendingReviews > 0) return 'MANY_ERRORS'
+  if (context.streakDays > 1) return 'STREAK_CONTINUED'
+  return 'ALL_CAUGHT_UP'
+}
+
 /** Cara de Yuki por estado. El sprite real llega con los assets de arte. */
 export const YUKI_FACE: Record<YukiState, string> = {
   HAPPY: '🦊',
