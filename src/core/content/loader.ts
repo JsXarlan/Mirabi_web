@@ -1,4 +1,12 @@
-import type { CharacterCatalog, CoursePack, KanaCharacter } from './types'
+import type {
+  CharacterCatalog,
+  CoursePack,
+  KanaCharacter,
+  KanjiCatalog,
+  KanjiCharacter,
+  VocabularyWord,
+  WordCatalog,
+} from './types'
 
 /**
  * Carga del contenido versionado. Equivalente web de CourseContentLoader:
@@ -10,6 +18,8 @@ const base = import.meta.env.BASE_URL
 
 let coursePromise: Promise<CoursePack> | null = null
 let charactersPromise: Promise<CharacterCatalog> | null = null
+let wordsPromise: Promise<WordCatalog> | null = null
+let kanjiPromise: Promise<KanjiCatalog> | null = null
 
 async function fetchJson<T>(path: string): Promise<T> {
   const response = await fetch(`${base}content/${path}`)
@@ -62,4 +72,99 @@ export function charactersByScript(
   script: KanaCharacter['script'],
 ): KanaCharacter[] {
   return catalog.characters.filter((character) => character.script === script)
+}
+
+/*
+ * Acceso a palabras y kanji.
+ *
+ * Regla sin excepciones: ninguna pantalla recorre `catalog.words` ni
+ * `catalog.kanji` por su cuenta, todo entra por aqui. Con doscientas palabras
+ * da igual, pero el dia que el catalogo venga de un diccionario externo habra
+ * que cambiar el almacenamiento por uno indexado, y esa mudanza tiene que caber
+ * dentro de este fichero en vez de repartirse por la interfaz.
+ */
+
+export function loadWordCatalog(): Promise<WordCatalog> {
+  wordsPromise ??= fetchJson<WordCatalog>('words.json')
+  return wordsPromise
+}
+
+export function loadKanjiCatalog(): Promise<KanjiCatalog> {
+  kanjiPromise ??= fetchJson<KanjiCatalog>('kanji.json')
+  return kanjiPromise
+}
+
+export function wordsByScript(
+  catalog: WordCatalog,
+  script: VocabularyWord['script'],
+): VocabularyWord[] {
+  return catalog.words.filter((word) => word.script === script)
+}
+
+/**
+ * Busca por lo que la persona puede llegar a escribir: el japones, la lectura,
+ * el romaji o el significado. Sin normalizar acentos a proposito, porque el
+ * contenido se escribe sin ellos.
+ */
+export function findWords(catalog: WordCatalog, query: string): VocabularyWord[] {
+  const needle = query.trim().toLowerCase()
+  if (!needle) return catalog.words
+
+  return catalog.words.filter(
+    (word) =>
+      word.lemma.includes(needle) ||
+      word.kana.includes(needle) ||
+      word.romaji.toLowerCase().includes(needle) ||
+      word.meanings.some((meaning) => meaning.toLowerCase().includes(needle)),
+  )
+}
+
+export function findKanji(catalog: KanjiCatalog, query: string): KanjiCharacter[] {
+  const needle = query.trim().toLowerCase()
+  if (!needle) return catalog.kanji
+
+  return catalog.kanji.filter(
+    (item) =>
+      item.symbol.includes(needle) ||
+      item.meanings.some((meaning) => meaning.toLowerCase().includes(needle)) ||
+      [...item.onyomi, ...item.kunyomi].some(
+        (reading) => reading.kana.includes(needle) || reading.romaji.toLowerCase().includes(needle),
+      ),
+  )
+}
+
+export interface WordIndex {
+  byId: Map<string, VocabularyWord>
+  /** Por el id que comparte con el curso: es el que trae un item de repaso. */
+  byLearningItemId: Map<string, VocabularyWord>
+}
+
+export function buildWordIndex(catalog: WordCatalog): WordIndex {
+  return {
+    byId: new Map(catalog.words.map((word) => [word.id, word])),
+    byLearningItemId: new Map(catalog.words.map((word) => [word.learningItemId, word])),
+  }
+}
+
+export interface KanjiIndex {
+  byId: Map<string, KanjiCharacter>
+  bySymbol: Map<string, KanjiCharacter>
+  /** Grados presentes, ordenados; el 8 (resto del joyo) queda al final. */
+  grades: number[]
+}
+
+export function buildKanjiIndex(catalog: KanjiCatalog): KanjiIndex {
+  const grades = [...new Set(catalog.kanji.map((item) => item.grade))]
+    .filter((grade): grade is number => grade !== null)
+    .sort((a, b) => a - b)
+
+  return {
+    byId: new Map(catalog.kanji.map((item) => [item.id, item])),
+    bySymbol: new Map(catalog.kanji.map((item) => [item.symbol, item])),
+    grades,
+  }
+}
+
+export function kanjiByGrade(catalog: KanjiCatalog, grade: number): KanjiCharacter[] {
+  return catalog.kanji.filter((item) => item.grade === grade)
 }

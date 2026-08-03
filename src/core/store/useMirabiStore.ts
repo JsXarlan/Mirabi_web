@@ -5,8 +5,17 @@ import type {
   CharacterCatalog,
   ContentExercise,
   CoursePack,
+  KanjiCatalog,
+  WordCatalog,
 } from '../content/types'
-import { buildCourseIndex, type CourseIndex } from '../content/loader'
+import {
+  buildCourseIndex,
+  buildKanjiIndex,
+  buildWordIndex,
+  type CourseIndex,
+  type KanjiIndex,
+  type WordIndex,
+} from '../content/loader'
 import type {
   AnswerResult,
   DailyActivitySummary,
@@ -123,6 +132,16 @@ interface RuntimeState {
   index: CourseIndex | null
   labels: Map<string, ItemLabel> | null
   contentError: string | null
+  /*
+   * Palabras y kanji llegan despues del arranque y pueden no llegar: son un
+   * complemento, no el curso. Por eso su fallo va a contentWarning y no a
+   * contentError, que apaga la app entera.
+   */
+  words: WordCatalog | null
+  kanji: KanjiCatalog | null
+  wordIndex: WordIndex | null
+  kanjiIndex: KanjiIndex | null
+  contentWarning: string | null
 }
 
 export interface LessonOutcome {
@@ -151,6 +170,9 @@ export interface SessionOutcome {
 interface Actions {
   setContent: (pack: CoursePack, catalog: CharacterCatalog) => void
   setContentError: (message: string) => void
+  setWordCatalog: (words: WordCatalog) => void
+  setKanjiCatalog: (kanji: KanjiCatalog) => void
+  setContentWarning: (message: string) => void
 
   completeOnboarding: (input: {
     displayName: string | null
@@ -465,16 +487,47 @@ export const useMirabiStore = create<MirabiStore>()(
         index: null,
         labels: null,
         contentError: null,
+        words: null,
+        kanji: null,
+        wordIndex: null,
+        kanjiIndex: null,
+        contentWarning: null,
 
-        setContent: (pack, catalog) =>
+        setContent: (pack, catalog) => {
+          const state = get()
           set({
             pack,
             catalog,
             index: buildCourseIndex(pack),
-            labels: buildItemLabels(pack, catalog),
+            labels: buildItemLabels(pack, catalog, state.words, state.kanji),
             contentError: null,
-          }),
+          })
+        },
         setContentError: (message) => set({ contentError: message }),
+
+        // Los catalogos llegan tras el curso, asi que al entrar hay que rehacer
+        // las etiquetas: sin eso las palabras seguirian mostrandose por su id.
+        setWordCatalog: (words) => {
+          const state = get()
+          set({
+            words,
+            wordIndex: buildWordIndex(words),
+            labels: state.pack
+              ? buildItemLabels(state.pack, state.catalog, words, state.kanji)
+              : state.labels,
+          })
+        },
+        setKanjiCatalog: (kanji) => {
+          const state = get()
+          set({
+            kanji,
+            kanjiIndex: buildKanjiIndex(kanji),
+            labels: state.pack
+              ? buildItemLabels(state.pack, state.catalog, state.words, kanji)
+              : state.labels,
+          })
+        },
+        setContentWarning: (message) => set({ contentWarning: message }),
 
         completeOnboarding: ({ displayName, motivation, initialLevel, dailyGoalMinutes }) =>
           set({

@@ -1,8 +1,19 @@
 import { useEffect } from 'react'
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom'
 
-import { loadCharacterCatalog, loadCoursePack } from './core/content/loader'
-import { validateCatalog, validateCoursePack } from './core/content/validate'
+import type { CharacterCatalog } from './core/content/types'
+import {
+  loadCharacterCatalog,
+  loadCoursePack,
+  loadKanjiCatalog,
+  loadWordCatalog,
+} from './core/content/loader'
+import {
+  validateCatalog,
+  validateCoursePack,
+  validateKanjiCatalog,
+  validateWordCatalog,
+} from './core/content/validate'
 import { epochDayOf } from './core/domain/models'
 import { shouldRemindOnOpen, showReminderNotification } from './core/notifications'
 import { useMirabiStore } from './core/store/useMirabiStore'
@@ -30,6 +41,45 @@ import { OnboardingFlow } from './features/onboarding/OnboardingFlow'
 import { PlacementScreen } from './features/onboarding/PlacementScreen'
 import { WeakPointsScreen } from './features/analysis/WeakPointsScreen'
 import { WorldExamScreen } from './features/exam/WorldExamScreen'
+
+/**
+ * Palabras y kanji se piden despues del curso y sin esperarlos.
+ *
+ * No hacen falta para estudiar, asi que bloquear el arranque por ellos seria
+ * cambiar lo importante por lo accesorio. Pero pedirlos igualmente, aunque
+ * todavia no los mire nadie, es lo que hace que la biblioteca funcione sin red:
+ * el service worker cachea /content/*.json cuando pasan por el, no antes. Sin
+ * esta llamada, la primera visita a la biblioteca estando sin conexion se
+ * quedaria vacia.
+ *
+ * Un fallo aqui deja un aviso, no una pantalla de error: el curso sigue.
+ */
+function prewarmCatalogs(catalog: CharacterCatalog): void {
+  void (async () => {
+    const store = () => useMirabiStore.getState()
+    try {
+      const words = await loadWordCatalog()
+      const wordCheck = validateWordCatalog(words, catalog)
+      if (!wordCheck.ok) {
+        store().setContentWarning(wordCheck.errors.join(' '))
+        return
+      }
+      store().setWordCatalog(words)
+
+      const kanji = await loadKanjiCatalog()
+      const kanjiCheck = validateKanjiCatalog(kanji, words)
+      if (!kanjiCheck.ok) {
+        store().setContentWarning(kanjiCheck.errors.join(' '))
+        return
+      }
+      store().setKanjiCatalog(kanji)
+    } catch (error: unknown) {
+      store().setContentWarning(
+        error instanceof Error ? error.message : 'La biblioteca no se pudo cargar.',
+      )
+    }
+  })()
+}
 
 /** Aplica el tema elegido al documento; 'system' sigue al sistema operativo. */
 function useAppliedTheme() {
@@ -107,6 +157,7 @@ export default function App() {
           return
         }
         setContent(coursePack, catalog)
+        prewarmCatalogs(catalog)
       })
       .catch((error: unknown) => {
         if (!cancelled) setContentError(error instanceof Error ? error.message : 'Error desconocido')

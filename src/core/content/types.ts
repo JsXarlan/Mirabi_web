@@ -204,7 +204,87 @@ export interface KanaCharacter {
 }
 
 export interface CharacterCatalog {
+  schemaVersion: number
+  version: string
+  checksum: string
   characters: KanaCharacter[]
+}
+
+/** Espejo de VocabularyModels.kt y KanjiModels.kt. */
+
+export type WordSource = 'MIRABI' | 'JMDICT'
+export type JlptLevel = 'N5' | 'N4' | 'N3' | 'N2' | 'N1'
+export type MeaningLanguage = 'ES' | 'EN'
+
+export interface VocabularyWord {
+  id: string
+  /** El mismo id que usa el curso: el progreso de la biblioteca y el suyo son uno. */
+  learningItemId: string
+  /** Forma escrita canonica: el kanji si lo lleva, el kana si no. */
+  lemma: string
+  kana: string
+  romaji: string
+  meanings: string[]
+  /** HIRAGANA o KATAKANA. Decide en que apartado aparece la palabra. */
+  script: CharacterScript
+  learningItemType: ContentItemType
+  partOfSpeech: string | null
+  jlptLevel: JlptLevel | null
+  tags: string[]
+  kanaCharacterIds: string[]
+  kanjiIds: string[]
+  audioText: string | null
+  source: WordSource
+  sourceRef: string | null
+  license: string | null
+}
+
+export interface WordCatalog {
+  schemaVersion: number
+  version: string
+  checksum: string
+  words: VocabularyWord[]
+}
+
+export interface KanjiReading {
+  kana: string
+  romaji: string
+}
+
+export interface KanjiRadical {
+  symbol: string
+  meaning: string
+}
+
+export interface KanjiCharacter {
+  id: string
+  symbol: string
+  learningItemId: string
+  meanings: string[]
+  /** Si es EN, el significado no tenia traduccion y se cayo al ingles. */
+  meaningsLanguage: MeaningLanguage
+  onyomi: KanjiReading[]
+  kunyomi: KanjiReading[]
+  strokeCount: number
+  radical: KanjiRadical | null
+  /** Grado escolar: 1-6 kyoiku, 8 el resto del joyo. Es lo que agrupa la pantalla. */
+  grade: number | null
+  frequencyRank: number | null
+  /** Escala antigua de KANJIDIC2, de 4 niveles e incompleta. Dato, no estructura. */
+  jlptLevel: number | null
+  learningItemType: ContentItemType
+  /** Palabras que lo usan; lo deriva el exportador. */
+  wordIds: string[]
+  source: WordSource
+  sourceRef: string | null
+  license: string | null
+}
+
+export interface KanjiCatalog {
+  schemaVersion: number
+  version: string
+  checksum: string
+  kanji: KanjiCharacter[]
 }
 
 /** El ejercicio de exposicion no se responde: solo se lee y se continua. */

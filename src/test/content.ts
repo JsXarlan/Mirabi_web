@@ -1,7 +1,13 @@
 import { readFileSync } from 'node:fs'
 import { join } from 'node:path'
 
-import type { CharacterCatalog, ContentExercise, CoursePack } from '../core/content/types'
+import type {
+  CharacterCatalog,
+  ContentExercise,
+  CoursePack,
+  KanjiCatalog,
+  WordCatalog,
+} from '../core/content/types'
 import { ANSWERABLE_TYPES, isRuntimeCompatible } from '../core/content/types'
 import { useMirabiStore } from '../core/store/useMirabiStore'
 
@@ -17,6 +23,8 @@ const read = <T>(name: string): T =>
 
 export const coursePack = read<CoursePack>('course.json')
 export const characterCatalog = read<CharacterCatalog>('characters.json')
+export const wordCatalog = read<WordCatalog>('words.json')
+export const kanjiCatalog = read<KanjiCatalog>('kanji.json')
 
 /** Deja el store como recien instalado, con el contenido ya cargado. */
 export function freshStore() {
@@ -31,6 +39,10 @@ export function freshStore() {
   })
   useMirabiStore.getState().resetProgress()
   useMirabiStore.getState().setContent(coursePack, characterCatalog)
+  // Los catalogos entran igual que en la app: despues del curso. Asi los tests
+  // que ya existen ejercitan tambien el estado nuevo.
+  useMirabiStore.getState().setWordCatalog(wordCatalog)
+  useMirabiStore.getState().setKanjiCatalog(kanjiCatalog)
   return useMirabiStore.getState()
 }
 

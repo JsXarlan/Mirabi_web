@@ -1,4 +1,4 @@
-import type { CharacterCatalog, CoursePack } from '../content/types'
+import type { CharacterCatalog, CoursePack, KanjiCatalog, WordCatalog } from '../content/types'
 import { hasKana, toRomaji } from './romaji'
 
 /**
@@ -26,6 +26,8 @@ function prettify(id: string): string {
 export function buildItemLabels(
   pack: CoursePack,
   catalog: CharacterCatalog | null,
+  words: WordCatalog | null = null,
+  kanji: KanjiCatalog | null = null,
 ): Map<string, ItemLabel> {
   const labels = new Map<string, ItemLabel>()
 
@@ -53,6 +55,22 @@ export function buildItemLabels(
         secondary: hasKana(candidate) ? toRomaji(candidate, catalog) : null,
       })
     }
+  }
+
+  /*
+   * Los catalogos curados van al final y pisan sin condiciones: su nombre esta
+   * escrito a proposito, mientras que el del bucle de arriba se rasca del texto
+   * de un ejercicio. Ante la misma palabra, gana el dato.
+   */
+  for (const word of words?.words ?? []) {
+    labels.set(word.learningItemId, { primary: word.lemma, secondary: word.romaji })
+  }
+
+  for (const item of kanji?.kanji ?? []) {
+    labels.set(item.learningItemId, {
+      primary: item.symbol,
+      secondary: item.meanings[0] ?? null,
+    })
   }
 
   return labels
