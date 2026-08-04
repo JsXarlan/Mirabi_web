@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 
 import type { KanjiCharacter } from '../../core/content/types'
 import { findKanji, kanjiByGrade } from '../../core/content/loader'
@@ -7,6 +7,7 @@ import { MASTERY_VALUE } from '../../core/domain/models'
 import type { MasteryScore } from '../../core/domain/models'
 import { useMirabiStore } from '../../core/store/useMirabiStore'
 import {
+  MirabiButton,
   MirabiCard,
   MirabiDonutProgress,
   MirabiEmpty,
@@ -46,6 +47,7 @@ function gradeLabel(grade: number): string {
 }
 
 export function KanjiScreen() {
+  const navigate = useNavigate()
   const kanji = useMirabiStore((state) => state.kanji)
   const kanjiIndex = useMirabiStore((state) => state.kanjiIndex)
   const learningProgress = useMirabiStore((state) => state.learningProgress)
@@ -88,14 +90,22 @@ export function KanjiScreen() {
 
   return (
     <Screen title="Kanji">
-      <MirabiCard className="mb-5 flex items-center gap-5 p-5">
-        <MirabiDonutProgress percentage={stats.percentage} />
-        <div className="min-w-0">
-          <p className="text-sm font-bold">Dominio general</p>
-          <p className="mt-1 text-xs text-[var(--on-surface-variant)]">
-            {stats.mastered} de {stats.total} kanji dominados
-          </p>
+      <MirabiCard className="mb-5 p-5">
+        <div className="flex items-center gap-5">
+          <MirabiDonutProgress percentage={stats.percentage} />
+          <div className="min-w-0">
+            <p className="text-sm font-bold">Dominio general</p>
+            <p className="mt-1 text-xs text-[var(--on-surface-variant)]">
+              {stats.mastered} de {stats.total} kanji dominados
+            </p>
+          </div>
         </div>
+        <MirabiButton
+          className="mt-4"
+          onClick={() => navigate(`/caracteres/kanji/practica?grado=${activeGrade ?? kanjiIndex.grades[0]}`)}
+        >
+          Practicar {gradeLabel(activeGrade ?? kanjiIndex.grades[0])}
+        </MirabiButton>
       </MirabiCard>
 
       <MirabiSearchField

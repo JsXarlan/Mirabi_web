@@ -58,6 +58,19 @@ export function ReviewScreen() {
   const learningProgress = useMirabiStore((state) => state.learningProgress)
   const totalReviewsCompleted = useMirabiStore((state) => state.totalReviewsCompleted)
   const streakDays = useMirabiStore((state) => state.streakDays)
+  const words = useMirabiStore((state) => state.words)
+  const kanji = useMirabiStore((state) => state.kanji)
+
+  /*
+   * La sesion de repaso congela su lista de pasos al montarse y solo la
+   * reconstruye desde pack/catalog/words/kanji si entra antes de que los
+   * catalogos de palabras y kanji terminen de cargar, esos pasos se
+   * descartarian en silencio -no fallarian, simplemente desaparecerian de la
+   * cola-. Se bloquea el boton de entrada en vez de tocar las dependencias
+   * de esa sesion, que reiniciaria una sesion en curso cada vez que un
+   * catalogo perezoso terminara de llegar.
+   */
+  const catalogsReady = words !== null && kanji !== null
 
   const forecast = forecastReviews(reviewItems, now)
   const plan = buildReviewPlan(reviewItems, undefined, now)
@@ -115,9 +128,10 @@ export function ReviewScreen() {
           <MirabiButton
             className="mt-3"
             variant="secondary"
+            disabled={!catalogsReady}
             onClick={() => navigate('/repaso/sesion?adelantar=1')}
           >
-            Repasar igualmente
+            {catalogsReady ? 'Repasar igualmente' : 'Cargando biblioteca…'}
           </MirabiButton>
         )}
       </Screen>
@@ -149,8 +163,12 @@ export function ReviewScreen() {
             </p>
           </div>
         </div>
-        <MirabiButton className="mt-4" onClick={() => navigate('/repaso/sesion')}>
-          Comenzar repaso ({plan.items.length})
+        <MirabiButton
+          className="mt-4"
+          disabled={!catalogsReady}
+          onClick={() => navigate('/repaso/sesion')}
+        >
+          {catalogsReady ? `Comenzar repaso (${plan.items.length})` : 'Cargando biblioteca…'}
         </MirabiButton>
       </MirabiCard>
 

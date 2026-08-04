@@ -33,6 +33,14 @@ export type ContentReferenceType =
   | 'AUDIO'
   | 'FEEDBACK'
   | 'CHECKPOINT'
+  /*
+   * Sin equivalente en el Kotlin que exporta course.json: alli
+   * ContentReferenceType no tiene KANJI y el mapeo cae en KANA. Se anade solo
+   * aqui porque los ejercicios de kanji se generan enteramente en el cliente
+   * (kanjiExercises.ts) y necesitan referenciarse a si mismos con su propio
+   * tipo; ningun course.json real emite este valor.
+   */
+  | 'KANJI'
 
 export type LessonType =
   | 'CONCEPT_INTRO'

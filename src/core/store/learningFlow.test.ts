@@ -3,12 +3,16 @@ import { beforeEach, describe, expect, it } from 'vitest'
 import { useMirabiStore } from './useMirabiStore'
 import { intervalsFor } from '../domain/review'
 import { catalogKanaId } from '../domain/kanaIds'
+import { buildKanjiExercise } from '../domain/kanjiExercises'
+import { buildWordExercise } from '../domain/wordExercises'
 import {
   answerableSteps,
   characterCatalog,
   coursePack,
   freshStore,
+  kanjiCatalog,
   lessonById,
+  wordCatalog,
   wrongAnswerFor,
 } from '../../test/content'
 
@@ -188,6 +192,70 @@ describe('kana del curso y del catálogo', () => {
     // El progreso se guarda con el id del catalogo, que es el que lee la pantalla.
     expect(store().masteryOf(catalogId)).toBe('FAMILIAR')
     expect(store().learningProgress[catalogId]).toBeDefined()
+  })
+})
+
+describe('práctica de palabras y kanji', () => {
+  /*
+   * El test mas importante de la biblioteca: practicarla y acertar en una
+   * leccion tienen que mover la misma fila de progreso, no dos. Si un dia una
+   * palabra acuñada colisiona con un id del curso que significa otra cosa,
+   * es aqui donde se notaria -el dominio subiria con la respuesta equivocada
+   * mezclada con la correcta-.
+   */
+  it('practicar una palabra en la biblioteca y acertarla en el curso suman al mismo progreso', () => {
+    const courseVocabIds = new Set(
+      coursePack.lessons
+        .flatMap((lesson) => lesson.exercises)
+        .filter((exercise) => exercise.learningItemType === 'VOCABULARY')
+        .map((exercise) => exercise.learningItemId),
+    )
+    const word = wordCatalog.words.find((item) => courseVocabIds.has(item.learningItemId))!
+    expect(word, 'ninguna palabra de la biblioteca comparte id con el curso').toBeDefined()
+
+    expect(store().masteryOf(word.learningItemId)).toBe('UNKNOWN')
+
+    const wordExercise = buildWordExercise(word, wordCatalog)
+    store().answerExercise(wordExercise, wordExercise.correctAnswer!)
+    expect(store().masteryOf(word.learningItemId)).toBe('FAMILIAR')
+
+    const courseExercise = coursePack.lessons
+      .flatMap((lesson) => lesson.exercises)
+      .find(
+        (exercise) =>
+          exercise.learningItemId === word.learningItemId && exercise.correctAnswer !== null,
+      )!
+    store().answerExercise(courseExercise, courseExercise.correctAnswer!)
+
+    // Dos aciertos sobre la misma fila: sube un escalón más, no arranca otra.
+    expect(store().masteryOf(word.learningItemId)).toBe('LEARNING')
+    expect(Object.keys(store().learningProgress)).toHaveLength(1)
+  })
+
+  it('practicar una palabra la programa en el repaso con la categoría de vocabulario', () => {
+    const word = wordCatalog.words[0]
+    const exercise = buildWordExercise(word, wordCatalog)
+
+    store().answerExercise(exercise, wrongAnswerFor(exercise))
+
+    const [item] = store().reviewItems
+    expect(item.learningItemId).toBe(word.learningItemId)
+    expect(item.srsCategory).toBe('CORE_VOCABULARY')
+    expect(item.status).toBe('PENDING')
+  })
+
+  it('practicar un kanji mueve su propio progreso, no el de la palabra que lo usa', () => {
+    const kanji = kanjiCatalog.kanji.find((item) => item.wordIds.length > 0)!
+    expect(kanji, 'ningún kanji de la semilla enlaza con una palabra').toBeDefined()
+
+    const exercise = buildKanjiExercise(kanji, kanjiCatalog)
+    store().answerExercise(exercise, exercise.correctAnswer!)
+
+    expect(store().masteryOf(kanji.learningItemId)).toBe('FAMILIAR')
+    // La palabra que lo usa no se ve afectada: son elementos de aprendizaje distintos.
+    const [wordId] = kanji.wordIds
+    const word = wordCatalog.words.find((item) => item.id === wordId)!
+    expect(store().masteryOf(word.learningItemId)).toBe('UNKNOWN')
   })
 })
 

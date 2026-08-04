@@ -6,6 +6,7 @@ import { findWords, wordsByScript } from '../../core/content/loader'
 import type { MasteryScore } from '../../core/domain/models'
 import { useMirabiStore } from '../../core/store/useMirabiStore'
 import {
+  MirabiButton,
   MirabiCard,
   MirabiEmpty,
   MirabiFilterChips,
@@ -15,13 +16,14 @@ import {
 } from '../../ui/components'
 import { AudioButton } from '../lesson/ExerciseView'
 import { MASTERY_LABEL, MASTERY_STYLE } from './masteryStyle'
+import { slugOf } from './scriptSlug'
 
 /**
  * Pestaña de biblioteca dentro de CharacterScriptScreen.
  *
- * Solo consulta: buscar, filtrar por etiqueta y ver la ficha. La práctica
- * llega en una fase posterior, cuando las palabras entren en el SRS por la
- * misma puerta que el kana.
+ * Buscar, filtrar, ver la ficha y practicar: las palabras entran en el SRS
+ * por la misma puerta que el kana, asi que la practica es un ejercicio de
+ * verdad (wordExercises.ts), no una pregunta de pantalla.
  */
 export function WordsTab({
   script,
@@ -230,6 +232,13 @@ function WordSheet({
           </div>
         </>
       )}
+
+      <MirabiButton
+        className="mt-5"
+        onClick={() => navigate(`/caracteres/${slugOf(word.script)}/practica?modo=palabras`)}
+      >
+        Practicar
+      </MirabiButton>
     </MirabiSheet>
   )
 }

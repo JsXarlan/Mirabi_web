@@ -42,6 +42,7 @@ import { PlacementScreen } from './features/onboarding/PlacementScreen'
 import { WeakPointsScreen } from './features/analysis/WeakPointsScreen'
 import { WorldExamScreen } from './features/exam/WorldExamScreen'
 import { KanjiScreen } from './features/kanji/KanjiScreen'
+import { KanjiPracticeScreen } from './features/kanji/KanjiPracticeScreen'
 
 /**
  * Palabras y kanji se piden despues del curso y sin esperarlos.
@@ -217,6 +218,7 @@ export default function App() {
       <Route path="/caracteres" element={<CharactersScreen />} />
       {/* Estatico antes que :script, aunque el ranking de React Router ya lo garantiza. */}
       <Route path="/caracteres/kanji" element={<KanjiScreen />} />
+      <Route path="/caracteres/kanji/practica" element={<KanjiPracticeScreen />} />
       <Route path="/caracteres/:script" element={<CharacterScriptScreen />} />
       <Route path="/caracteres/:script/practica" element={<CharacterPracticeScreen />} />
       <Route path="/repaso" element={<ReviewScreen />} />

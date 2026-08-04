@@ -96,9 +96,13 @@ export function CharacterScriptScreen() {
         <MirabiProgressBar progress={stats.percentage / 100} />
         <MirabiButton
           className="mt-4"
-          onClick={() => navigate(`/caracteres/${slugOf(scriptKey)}/practica`)}
+          onClick={() =>
+            navigate(
+              `/caracteres/${slugOf(scriptKey)}/practica${tab === 'palabras' ? '?modo=palabras' : ''}`,
+            )
+          }
         >
-          Practicar {title}
+          {tab === 'palabras' ? 'Practicar palabras' : `Practicar ${title}`}
         </MirabiButton>
       </MirabiCard>
 

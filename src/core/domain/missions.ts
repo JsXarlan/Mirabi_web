@@ -42,8 +42,12 @@ export function generateDailyMissions(
     },
     {
       id: 'daily_characters',
-      title: 'Practica 5 caracteres',
-      description: 'Practica kana disponibles',
+      title: 'Practica 5 elementos',
+      // El nombre del target (PRACTICE_CHARACTERS) se queda igual: nace de la
+      // practica de kana y palabras y kanji entran por la misma puerta
+      // (completeCharacterPractice), asi que cambiar el tipo no aportaria
+      // nada y si obligaria a migrar progreso guardado.
+      description: 'Practica kana, palabras o kanji',
       type: 'DAILY',
       targetType: 'PRACTICE_CHARACTERS',
       targetValue: 5,

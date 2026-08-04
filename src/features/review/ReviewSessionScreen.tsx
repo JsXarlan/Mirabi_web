@@ -3,8 +3,8 @@ import { useNavigate, useSearchParams } from 'react-router-dom'
 
 import type { ContentExercise, RomajiPolicy } from '../../core/content/types'
 import type { ReviewItem } from '../../core/domain/models'
-import { kanaExerciseFromId } from '../../core/domain/kanaExercises'
 import { DEFAULT_REVIEW_CONFIG, buildReviewPlan } from '../../core/domain/review'
+import { syntheticExerciseFromId } from '../../core/domain/syntheticExercises'
 import { validateAnswer } from '../../core/domain/answers'
 import { yukiReaction } from '../../core/domain/yuki'
 import { useMirabiStore } from '../../core/store/useMirabiStore'
@@ -27,6 +27,8 @@ export function ReviewSessionScreen() {
   const [params] = useSearchParams()
   const pack = useMirabiStore((state) => state.pack)
   const catalog = useMirabiStore((state) => state.catalog)
+  const words = useMirabiStore((state) => state.words)
+  const kanji = useMirabiStore((state) => state.kanji)
   const reviewItems = useMirabiStore((state) => state.reviewItems)
   const completeReviewSession = useMirabiStore((state) => state.completeReviewSession)
 
@@ -51,13 +53,25 @@ export function ReviewSessionScreen() {
         if (!item.sourceExerciseId) return null
         const found = byExerciseId.get(item.sourceExerciseId)
         if (found) return { item, exercise: found.exercise, romajiPolicy: found.policy }
-        // Los kana practicados fuera del curso no viven en el pack: su ejercicio
-        // se reconstruye desde el catalogo, identico al que se fallo.
-        const kana = kanaExerciseFromId(item.sourceExerciseId, catalog)
-        return kana ? { item, exercise: kana, romajiPolicy: 'NONE' as RomajiPolicy } : null
+        // El kana, las palabras y el kanji practicados fuera del curso no viven
+        // en el pack: su ejercicio se reconstruye desde el catalogo que le toca,
+        // identico al que se fallo.
+        const synthetic = syntheticExerciseFromId(item.sourceExerciseId, {
+          characters: catalog,
+          words,
+          kanji,
+        })
+        return synthetic ? { item, exercise: synthetic, romajiPolicy: 'NONE' as RomajiPolicy } : null
       })
       .filter((step): step is ReviewStep => step !== null)
-    // La sesion se congela al entrar: responder no debe reordenar la lista en curso.
+    /*
+     * La sesion se congela al entrar: responder no debe reordenar la lista en
+     * curso. catalog/words/kanji quedan fuera a proposito por el mismo motivo
+     * -si entraran, cargar palabras a medio repaso reconstruiria la lista-,
+     * no porque no se necesiten: ReviewScreen bloquea el botón de entrada
+     * hasta que los tres catalogos estan listos, así que en la practica ya
+     * están disponibles la primera vez que este memo corre.
+     */
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pack, includeNotDue])
 
