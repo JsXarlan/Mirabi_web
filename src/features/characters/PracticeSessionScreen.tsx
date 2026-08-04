@@ -31,6 +31,7 @@ export interface PracticeCard {
 export function PracticeSessionScreen({
   title,
   question,
+  optionsLabel,
   cards,
   onExit,
   onComplete,
@@ -41,6 +42,13 @@ export function PracticeSessionScreen({
   title: string
   /** Pregunta fija bajo la carta, p.ej. "¿Cómo se lee?" o "¿Qué significa?". */
   question: string
+  /**
+   * Nombre accesible del grupo de opciones. Especifico al contenido -antes de
+   * generalizar esta pantalla, kana practicaba con aria-label="Lecturas"-; sin
+   * el se caeria en un generico "Opciones" que le dice menos a quien usa un
+   * lector de pantalla.
+   */
+  optionsLabel: string
   cards: PracticeCard[]
   onExit: () => void
   /** Se llama una vez, al terminar la ultima carta, antes de mostrar el resultado. */
@@ -137,7 +145,16 @@ export function PracticeSessionScreen({
     )
   }
 
-  const isCorrect = answered && answer === card.exercise.correctAnswer
+  /*
+   * `answer` siempre es una copia literal de `option.text`, y la opcion
+   * correcta lleva el mismo texto que `correctAnswer` -mismo string, no dos
+   * copias que puedan divergir-, asi que hoy esta comparacion es segura sin
+   * recortar. Se recorta de todas formas, con el mismo criterio que
+   * validateAnswer (answers.ts): si este componente alguna vez sirviera un
+   * paso de texto libre en vez de opcion multiple, seguiria de acuerdo con lo
+   * que answerExercise registra como acierto.
+   */
+  const isCorrect = answered && answer!.trim() === card.exercise.correctAnswer?.trim()
 
   return (
     <SessionScreen
@@ -154,7 +171,7 @@ export function PracticeSessionScreen({
         )}
       </div>
 
-      <div className="mt-8 grid grid-cols-2 gap-2.5" role="radiogroup" aria-label="Opciones">
+      <div className="mt-8 grid grid-cols-2 gap-2.5" role="radiogroup" aria-label={optionsLabel}>
         {card.exercise.options.map((option, index) => {
           const selected = answer === option.text
           const revealCorrect = answered && option.text === card.exercise.correctAnswer

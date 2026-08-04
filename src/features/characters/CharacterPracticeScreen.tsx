@@ -103,6 +103,7 @@ export function CharacterPracticeScreen() {
     <PracticeSessionScreen
       title={wordsMode ? `Práctica de palabras: ${title}` : `Práctica de ${title}`}
       question={wordsMode ? '¿Qué significa?' : '¿Cómo se lee?'}
+      optionsLabel={wordsMode ? 'Significados' : 'Lecturas'}
       cards={cards}
       onExit={() => navigate(backTo)}
       onComplete={(tally) => completeCharacterPractice(tally.correct, tally.wrong)}

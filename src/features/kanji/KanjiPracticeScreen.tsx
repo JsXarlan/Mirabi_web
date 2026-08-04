@@ -47,6 +47,7 @@ export function KanjiPracticeScreen() {
     <PracticeSessionScreen
       title="Práctica de kanji"
       question="¿Qué significa?"
+      optionsLabel="Significados"
       cards={cards}
       onExit={() => navigate('/caracteres/kanji')}
       onComplete={(tally) => completeCharacterPractice(tally.correct, tally.wrong)}
