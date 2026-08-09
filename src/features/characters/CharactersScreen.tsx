@@ -11,7 +11,7 @@ import {
   SectionTitle,
 } from '../../ui/components'
 import { Screen } from '../../ui/Layout'
-import { useKanjiMastery } from '../kanji/KanjiScreen'
+import { useKanjiMastery } from '../kanji/kanjiMastery'
 import { slugOf, titleOf } from './scriptSlug'
 
 /** Dominio medio de un conjunto de kana, en 0..100. */

@@ -75,6 +75,7 @@ export function WordsTab({
       {tags.length > 0 && (
         <MirabiFilterChips
           className="mb-4"
+          ariaLabel="Etiquetas"
           allLabel="Todas"
           value={tag}
           onChange={setTag}

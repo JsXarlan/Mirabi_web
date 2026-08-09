@@ -3,7 +3,6 @@ import { useNavigate, useSearchParams } from 'react-router-dom'
 
 import type { KanjiCharacter } from '../../core/content/types'
 import { findKanji, kanjiByGrade } from '../../core/content/loader'
-import { MASTERY_VALUE } from '../../core/domain/models'
 import type { MasteryScore } from '../../core/domain/models'
 import { useMirabiStore } from '../../core/store/useMirabiStore'
 import {
@@ -20,26 +19,7 @@ import {
 import { Screen } from '../../ui/Layout'
 import { AudioButton } from '../lesson/ExerciseView'
 import { MASTERY_LABEL, MASTERY_STYLE } from '../characters/masteryStyle'
-
-/** Dominio medio del jōyō completo. Hermano de useScriptMastery: misma forma,
- * otra fuente, porque el catalogo de kanji vive aparte del de kana. */
-export function useKanjiMastery(): { total: number; mastered: number; percentage: number } {
-  const kanji = useMirabiStore((state) => state.kanji)
-  const learningProgress = useMirabiStore((state) => state.learningProgress)
-
-  const items = kanji?.kanji ?? []
-  if (items.length === 0) return { total: 0, mastered: 0, percentage: 0 }
-
-  let sum = 0
-  let mastered = 0
-  for (const item of items) {
-    const mastery = learningProgress[item.learningItemId]?.mastery ?? 'UNKNOWN'
-    sum += MASTERY_VALUE[mastery]
-    if (mastery === 'MASTERED' || mastery === 'EXPERT') mastered += 1
-  }
-
-  return { total: items.length, mastered, percentage: sum / items.length }
-}
+import { useKanjiMastery } from './kanjiMastery'
 
 /** Etiqueta del grado escolar: 1-6 son primaria, el 8 es el resto del jōyō. */
 function gradeLabel(grade: number): string {
@@ -119,6 +99,7 @@ export function KanjiScreen() {
       {!query.trim() && (
         <MirabiFilterChips
           className="mb-4"
+          ariaLabel="Grado"
           value={activeGrade === null ? null : String(activeGrade)}
           onChange={(value) => setGrade(value === null ? null : Number(value))}
           options={kanjiIndex.grades.map((value) => ({

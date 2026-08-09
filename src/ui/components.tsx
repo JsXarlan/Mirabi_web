@@ -332,16 +332,19 @@ export function MirabiFilterChips<T extends string>({
   onChange,
   options,
   allLabel,
+  ariaLabel,
   className,
 }: {
   value: T | null
   onChange: (value: T | null) => void
   options: { value: T; label: string }[]
   allLabel?: string
+  /** Nombre accesible del grupo: sin el, un lector de pantalla anuncia un "grupo de radio" sin contexto. */
+  ariaLabel: string
   className?: string
 }) {
   return (
-    <div role="radiogroup" className={cx('flex flex-wrap gap-2', className)}>
+    <div role="radiogroup" aria-label={ariaLabel} className={cx('flex flex-wrap gap-2', className)}>
       {allLabel && <FilterChip active={value === null} label={allLabel} onClick={() => onChange(null)} />}
       {options.map((option) => (
         <FilterChip
