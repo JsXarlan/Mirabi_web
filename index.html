@@ -2,6 +2,14 @@
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
+    <!--
+      Sin backend ni HTML dinamico, pero GitHub Pages no deja mandar
+      cabeceras propias: esta meta es la unica forma de tener CSP.
+    -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; connect-src 'self'; object-src 'none'; base-uri 'self'"
+    />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="theme-color" content="#7B5FD0" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#171632" media="(prefers-color-scheme: dark)" />

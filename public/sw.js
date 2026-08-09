@@ -55,6 +55,21 @@ async function staleWhileRevalidate(request, cacheName) {
   throw new Error('Sin red y sin copia en cache')
 }
 
+/**
+ * Cache primero, sin revalidar. Solo para lo que lleva hash en el nombre: si
+ * el nombre coincide, el contenido tambien, asi que pedirlo otra vez a la red
+ * en cada carga no cambia nada y solo gasta datos.
+ */
+async function cacheFirst(request, cacheName) {
+  const cache = await caches.open(cacheName)
+  const cached = await cache.match(request)
+  if (cached) return cached
+
+  const response = await fetch(request)
+  if (response.ok) cache.put(request, response.clone())
+  return response
+}
+
 /*
  * Recordatorio diario. Solo llega donde el navegador implementa Periodic
  * Background Sync (Chromium con la app instalada); en el resto, la app avisa
@@ -109,6 +124,6 @@ self.addEventListener('fetch', (event) => {
 
   // Los assets llevan hash en el nombre: si el nombre coincide, el contenido tambien.
   if (url.pathname.includes('/assets/') || /\.(js|css|svg|woff2?)$/.test(url.pathname)) {
-    event.respondWith(staleWhileRevalidate(request, ASSET_CACHE))
+    event.respondWith(cacheFirst(request, ASSET_CACHE))
   }
 })
