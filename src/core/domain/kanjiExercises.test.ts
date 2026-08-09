@@ -34,16 +34,15 @@ describe('ejercicio de kanji', () => {
     expect(distractores).not.toContain('cosa')
   })
 
-  it('los distractores salen del mismo grado escolar', () => {
-    // Por texto y no por objeto: dos kanji de grados distintos pueden
-    // compartir significado[0] (ocurre 109 veces en el jōyō), asi que
-    // reconstruir «que kanji dio este distractor» seria ambiguo. Lo que
-    // importa fijar es que el texto sea alcanzable desde el grado correcto,
-    // que es justo lo que declara el pool del generador.
+  it('los distractores salen del mismo radical (confundibles) o del mismo grado escolar', () => {
+    // Por texto y no por objeto: dos kanji distintos pueden compartir
+    // significado[0] (ocurre 109 veces en el jōyō), asi que reconstruir «que
+    // kanji dio este distractor» seria ambiguo. Lo que importa fijar es que
+    // el texto sea alcanzable desde alguno de los dos pools del generador.
     const grade = aKanji.grade ?? 8
-    const sameGradeMeanings = new Set(
+    const reachableMeanings = new Set(
       kanjiCatalog.kanji
-        .filter((item) => (item.grade ?? 8) === grade)
+        .filter((item) => item.radical?.number === aKanji.radical?.number || (item.grade ?? 8) === grade)
         .map((item) => item.meanings[0]),
     )
 
@@ -53,8 +52,30 @@ describe('ejercicio de kanji', () => {
       .map((option) => option.text)
 
     for (const text of distractors) {
-      expect(sameGradeMeanings.has(text), `distractor ajeno al grado ${grade}: ${text}`).toBe(true)
+      expect(reachableMeanings.has(text), `distractor inalcanzable: ${text}`).toBe(true)
     }
+  })
+
+  it('prefiere kanji con el mismo radical como distractores «confundibles» antes que uno al azar', () => {
+    // El radical del arbol (木) tiene decenas de kanji en el jōyō: alcanza de
+    // sobra para llenar los tres distractores sin caer al pool de respaldo.
+    const arbol = kanjiCatalog.kanji.find((item) => item.symbol === '未')!
+    expect(arbol.radical, 'el jōyō de prueba no trae 未 con radical').toBeDefined()
+
+    const exercise = buildKanjiExercise(arbol, kanjiCatalog)
+    const distractors = exercise.options.filter((option) => option.text !== exercise.correctAnswer)
+    for (const distractor of distractors) {
+      expect(distractor.distractorReason).toContain('radical')
+    }
+  })
+
+  it('la posición de la respuesta correcta varía entre kanji, no siempre es la primera', () => {
+    const positions = kanjiCatalog.kanji.slice(0, 20).map((kanji) => {
+      const exercise = buildKanjiExercise(kanji, kanjiCatalog)
+      return exercise.options.findIndex((option) => option.text === exercise.correctAnswer)
+    })
+
+    expect(new Set(positions).size).toBeGreaterThan(1)
   })
 
   it('es determinista: el mismo kanji genera siempre las mismas opciones', () => {

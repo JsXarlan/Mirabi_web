@@ -8,6 +8,7 @@ import {
   matchesSpokenText,
 } from '../../core/audio/speechRecognition'
 import { hasKana, resolveRomaji, toRomaji } from '../../core/domain/romaji'
+import { shuffle } from '../../core/domain/seededRandom'
 import { useMirabiStore } from '../../core/store/useMirabiStore'
 import { MirabiCard } from '../../ui/components'
 import { useBackspaceKey, useDigitKeys } from '../../ui/keys'
@@ -21,19 +22,6 @@ function useSpeechReady(): boolean {
   const [ready, setReady] = useState(isSpeechAvailable)
   useEffect(() => onVoicesReady(() => setReady(isSpeechAvailable())), [])
   return ready
-}
-
-/** Baraja estable por ejercicio: el orden no debe cambiar en cada render. */
-function shuffled<T>(values: T[], seed: string): T[] {
-  const items = [...values]
-  let hash = 0
-  for (let i = 0; i < seed.length; i += 1) hash = (hash * 31 + seed.charCodeAt(i)) | 0
-  for (let i = items.length - 1; i > 0; i -= 1) {
-    hash = (hash * 1103515245 + 12345) & 0x7fffffff
-    const j = hash % (i + 1)
-    ;[items[i], items[j]] = [items[j], items[i]]
-  }
-  return items
 }
 
 export function AudioButton({
@@ -376,7 +364,7 @@ function OptionsStep({
   romajiVisible,
   note,
 }: StepProps) {
-  const options = useMemo(() => shuffled(exercise.options, exercise.id), [exercise])
+  const options = useMemo(() => shuffle(exercise.options, exercise.id), [exercise])
 
   const pick = useCallback(
     (index: number) => {
@@ -455,7 +443,7 @@ function OrderSentenceStep({
   note,
 }: StepProps) {
   const tokens = useMemo(
-    () => shuffled((exercise.correctAnswer ?? '').split(' ').filter(Boolean), exercise.id),
+    () => shuffle((exercise.correctAnswer ?? '').split(' ').filter(Boolean), exercise.id),
     [exercise],
   )
 

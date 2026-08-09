@@ -1,5 +1,5 @@
 import type { CharacterCatalog, ContentExercise, KanaCharacter } from '../content/types'
-import { nextRandom, seedOf } from './seededRandom'
+import { pickDistinct, seedOf, shuffle } from './seededRandom'
 
 /**
  * Ejercicios de kana sinteticos.
@@ -26,20 +26,33 @@ export function buildKanaExercise(
   character: KanaCharacter,
   catalog: CharacterCatalog,
 ): ContentExercise {
-  // Los distractores salen del mismo silabario: la confusion tiene que ser real.
-  const pool = catalog.characters
-    .filter((other) => other.script === character.script && other.romaji !== character.romaji)
+  const others = catalog.characters.filter(
+    (other) => other.script === character.script && other.romaji !== character.romaji,
+  )
+
+  /*
+   * Alternativas inteligentes: dentro de una fila del silabario (か-き-く-け-こ)
+   * la unica diferencia es la vocal, que es exactamente donde se confunde de
+   * verdad -el mismo patron que ya usan las lecciones curadas para "e" vs "i".
+   * Fuera de la fila, cualquier otro caracter mide mucho menos.
+   */
+  const confusablePool = others
+    .filter((other) => other.group === character.group)
     .map((other) => other.romaji)
+  const fallbackPool = others.map((other) => other.romaji)
 
-  const distractors: string[] = []
   let seed = seedOf(character.learningItemId)
-  while (distractors.length < OPTIONS_PER_ITEM - 1 && pool.length > 0) {
-    seed = nextRandom(seed)
-    const [candidate] = pool.splice(seed % pool.length, 1)
-    if (!distractors.includes(candidate)) distractors.push(candidate)
-  }
+  const confusable = pickDistinct(confusablePool, OPTIONS_PER_ITEM - 1, seed)
+  seed = confusable.seed
+  const fallback = pickDistinct(
+    fallbackPool.filter((text) => !confusable.picked.includes(text)),
+    OPTIONS_PER_ITEM - 1 - confusable.picked.length,
+    seed,
+  )
+  const distractors = [...confusable.picked, ...fallback.picked]
+  const confusableSet = new Set(confusable.picked)
 
-  const texts = [character.romaji, ...distractors]
+  const texts = shuffle([character.romaji, ...distractors], character.learningItemId)
 
   return {
     id: `${KANA_EXERCISE_PREFIX}${character.learningItemId}`,
@@ -68,7 +81,12 @@ export function buildKanaExercise(
     options: texts.map((text, index) => ({
       id: `${KANA_EXERCISE_PREFIX}${character.learningItemId}-${index}`,
       text,
-      distractorReason: text === character.romaji ? null : 'Ese es el sonido de otro carácter.',
+      distractorReason:
+        text === character.romaji
+          ? null
+          : confusableSet.has(text)
+            ? 'Comparte fila con el correcto: solo cambia la vocal.'
+            : 'Ese es el sonido de otro carácter.',
       referencedItemId: null,
     })),
   }

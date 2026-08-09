@@ -52,6 +52,34 @@ describe('ejercicio de palabra', () => {
     expect(exercise.options).toHaveLength(4)
   })
 
+  it('la posición de la respuesta correcta varía entre palabras, no siempre es la primera', () => {
+    const positions = wordCatalog.words.slice(0, 20).map((word) => {
+      const exercise = buildWordExercise(word, wordCatalog)
+      return exercise.options.findIndex((option) => option.text === exercise.correctAnswer)
+    })
+
+    expect(new Set(positions).size).toBeGreaterThan(1)
+  })
+
+  it('prefiere una palabra que comparte kanji o etiqueta como distractor «confundible»', () => {
+    const withKanji = wordCatalog.words.find((word) => word.kanjiIds.length > 0)
+    if (!withKanji) return // el catálogo de prueba puede no traer kanji enlazados
+
+    const sameKanji = wordCatalog.words.some(
+      (other) =>
+        other.id !== withKanji.id &&
+        other.meanings[0] !== withKanji.meanings[0] &&
+        other.kanjiIds.some((id) => withKanji.kanjiIds.includes(id)),
+    )
+    if (!sameKanji) return // sin otra palabra que comparta kanji, no hay nada que preferir
+
+    const exercise = buildWordExercise(withKanji, wordCatalog)
+    const reasons = exercise.options
+      .filter((option) => option.text !== exercise.correctAnswer)
+      .map((option) => option.distractorReason)
+    expect(reasons.some((reason) => reason?.includes('kanji') || reason?.includes('tema'))).toBe(true)
+  })
+
   it('el id se reconoce y se reconstruye igual que el original', () => {
     const built = buildWordExercise(aWord, wordCatalog)
     expect(isWordExerciseId(built.id)).toBe(true)

@@ -1,5 +1,5 @@
 import type { ContentExercise, VocabularyWord, WordCatalog } from '../content/types'
-import { nextRandom, seedOf } from './seededRandom'
+import { pickDistinct, seedOf, shuffle } from './seededRandom'
 
 /**
  * Ejercicios de palabras sinteticos, calcados de kanaExercises.ts.
@@ -24,26 +24,38 @@ export function isWordExerciseId(exerciseId: string): boolean {
 export function buildWordExercise(word: VocabularyWord, catalog: WordCatalog): ContentExercise {
   const correctAnswer = word.meanings[0]
 
-  // Los distractores salen del mismo apartado: confundir una palabra de
-  // hiragana con una de katakana no mide nada real. Se excluye tambien
-  // cualquier significado igual al correcto: dos palabras pueden ser
-  // sinonimos, y una opcion identica a la correcta no se puede responder.
-  const pool = catalog.words
+  // Se excluye cualquier significado igual al correcto: dos palabras pueden
+  // ser sinonimos, y una opcion identica a la correcta no se puede responder.
+  const others = catalog.words.filter(
+    (other) => other.script === word.script && other.id !== word.id && other.meanings[0] !== correctAnswer,
+  )
+
+  /*
+   * Alternativas inteligentes: una palabra que comparte kanji o etiqueta con
+   * la correcta -misma familia semantica, mismo campo- se confunde de verdad;
+   * cualquier otra palabra del mismo silabario mide bastante menos.
+   */
+  const confusablePool = others
     .filter(
       (other) =>
-        other.script === word.script && other.id !== word.id && other.meanings[0] !== correctAnswer,
+        other.kanjiIds.some((id) => word.kanjiIds.includes(id)) ||
+        other.tags.some((tag) => word.tags.includes(tag)),
     )
     .map((other) => other.meanings[0])
+  const fallbackPool = others.map((other) => other.meanings[0])
 
-  const distractors: string[] = []
   let seed = seedOf(word.learningItemId)
-  while (distractors.length < OPTIONS_PER_ITEM - 1 && pool.length > 0) {
-    seed = nextRandom(seed)
-    const [candidate] = pool.splice(seed % pool.length, 1)
-    if (!distractors.includes(candidate)) distractors.push(candidate)
-  }
+  const confusable = pickDistinct(confusablePool, OPTIONS_PER_ITEM - 1, seed)
+  seed = confusable.seed
+  const fallback = pickDistinct(
+    fallbackPool.filter((text) => !confusable.picked.includes(text)),
+    OPTIONS_PER_ITEM - 1 - confusable.picked.length,
+    seed,
+  )
+  const distractors = [...confusable.picked, ...fallback.picked]
+  const confusableSet = new Set(confusable.picked)
 
-  const texts = [correctAnswer, ...distractors]
+  const texts = shuffle([correctAnswer, ...distractors], word.learningItemId)
 
   return {
     id: `${WORD_EXERCISE_PREFIX}${word.id}`,
@@ -72,7 +84,12 @@ export function buildWordExercise(word: VocabularyWord, catalog: WordCatalog): C
     options: texts.map((text, index) => ({
       id: `${WORD_EXERCISE_PREFIX}${word.id}-${index}`,
       text,
-      distractorReason: text === correctAnswer ? null : 'Ese es el significado de otra palabra.',
+      distractorReason:
+        text === correctAnswer
+          ? null
+          : confusableSet.has(text)
+            ? 'Comparte kanji o tema con la palabra correcta: se confunden fácil.'
+            : 'Ese es el significado de otra palabra.',
       referencedItemId: null,
     })),
   }
