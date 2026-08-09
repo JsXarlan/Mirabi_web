@@ -12,6 +12,7 @@ import {
 import type { ThemePreference } from '../../core/store/useMirabiStore'
 import { XP_PER_GOAL_MINUTE, useMirabiStore } from '../../core/store/useMirabiStore'
 import { isSpeechAvailable } from '../../core/audio/speech'
+import { REMINDER_HOUR_OPTIONS, usualPracticeHour } from '../../core/domain/practiceHours'
 import { MirabiButton, MirabiCard, SectionTitle } from '../../ui/components'
 import { Screen } from '../../ui/Layout'
 
@@ -40,6 +41,8 @@ export function SettingsScreen() {
   const reminderEnabled = useMirabiStore((state) => state.reminderEnabled)
   const reminderHour = useMirabiStore((state) => state.reminderHour)
   const setReminder = useMirabiStore((state) => state.setReminder)
+  const recentActivityHours = useMirabiStore((state) => state.recentActivityHours)
+  const suggestedHour = usualPracticeHour(recentActivityHours)
 
   const [name, setName] = useState(displayName ?? '')
   const [confirmingReset, setConfirmingReset] = useState(false)
@@ -236,13 +239,28 @@ export function SettingsScreen() {
               onChange={(event) => setReminder(true, Number(event.target.value))}
               className="mt-1 w-full rounded-[16px] border border-[var(--outline)] bg-[var(--surface)] px-4 py-3 outline-none focus:border-[var(--primary)]"
             >
-              {[8, 12, 15, 18, 20, 21, 22].map((hour) => (
+              {REMINDER_HOUR_OPTIONS.map((hour) => (
                 <option key={hour} value={hour}>
                   {String(hour).padStart(2, '0')}:00
                 </option>
               ))}
             </select>
           </label>
+        )}
+
+        {reminderEnabled && suggestedHour !== null && suggestedHour !== reminderHour && (
+          <div className="mt-3 flex items-center justify-between gap-3 rounded-[16px] bg-[var(--surface-variant)] px-4 py-3">
+            <span className="text-xs text-[var(--on-surface-variant)]">
+              Sueles practicar sobre las {String(suggestedHour).padStart(2, '0')}:00
+            </span>
+            <button
+              type="button"
+              onClick={() => setReminder(true, suggestedHour)}
+              className="shrink-0 rounded-full bg-[var(--primary)] px-3 py-1.5 text-xs font-semibold text-[var(--on-primary)]"
+            >
+              Usar esa hora
+            </button>
+          </div>
         )}
       </MirabiCard>
 

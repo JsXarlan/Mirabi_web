@@ -15,6 +15,7 @@ import {
   validateWordCatalog,
 } from './core/content/validate'
 import { epochDayOf } from './core/domain/models'
+import { streakStatus } from './core/domain/rewards'
 import { shouldRemindOnOpen, showReminderNotification } from './core/notifications'
 import { useMirabiStore } from './core/store/useMirabiStore'
 import { AchievementToast } from './features/profile/AchievementToast'
@@ -154,14 +155,15 @@ function useOpenReminder() {
 
   useEffect(() => {
     const now = new Date()
+    const today = epochDayOf(now.getTime())
     const shouldRemind = shouldRemindOnOpen({
       enabled,
       reminderHour,
       lastActivityEpochDay,
-      today: epochDayOf(now.getTime()),
+      today,
       now,
     })
-    if (shouldRemind) showReminderNotification(streakDays)
+    if (shouldRemind) showReminderNotification(streakStatus(streakDays, lastActivityEpochDay, today))
     // Solo al montar: recordar dos veces en la misma visita es ruido.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])

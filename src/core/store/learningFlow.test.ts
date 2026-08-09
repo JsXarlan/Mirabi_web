@@ -65,6 +65,9 @@ describe('una lección completa', () => {
 
     expect(state.achievementUnlocks.first_lesson).toBeDefined()
     expect(state.achievementToastQueue.map((u) => u.achievementId)).toContain('first_lesson')
+
+    // Primera actividad del dia: queda una sola muestra para sugerir horario.
+    expect(state.recentActivityHours.length).toBe(1)
   })
 
   it('no vuelve a pagar el logro al repetir la leccion', () => {

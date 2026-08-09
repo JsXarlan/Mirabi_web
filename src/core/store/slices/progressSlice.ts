@@ -63,6 +63,8 @@ export interface ProgressOnlyState {
   streakDays: number
   lastActivityEpochDay: number | null
   activeDays: number[]
+  /** Hora local de la primera actividad de cada dia, para sugerir un horario de recordatorio. */
+  recentActivityHours: number[]
 
   lessonProgress: Record<string, LessonProgress>
   learningProgress: Record<string, LearningProgress>
@@ -165,6 +167,7 @@ export const initialProgressOnly: ProgressOnlyState = {
   streakDays: 0,
   lastActivityEpochDay: null,
   activeDays: [],
+  recentActivityHours: [],
 
   lessonProgress: {},
   learningProgress: {},
@@ -217,6 +220,7 @@ export const createProgressSlice: StateCreator<MirabiStore, [], [], ProgressSlic
   function rolledOver(
     state: MirabiStore,
     today: number,
+    now: number,
   ): Partial<ProgressOnlyState> & {
     missionEpochDay?: number
     missionProgress?: Record<string, MissionProgress>
@@ -227,6 +231,9 @@ export const createProgressSlice: StateCreator<MirabiStore, [], [], ProgressSlic
     if (state.activityEpochDay !== today) {
       patch.activityEpochDay = today
       patch.dailyActivity = { ...EMPTY_DAILY }
+      // Para sugerir un horario de recordatorio: solo la primera actividad
+      // del dia cuenta, no cada leccion/repaso que se haga despues.
+      patch.recentActivityHours = [...state.recentActivityHours, new Date(now).getHours()].slice(-60)
     }
     if (state.missionEpochDay !== today) {
       patch.missionEpochDay = today
@@ -259,7 +266,7 @@ export const createProgressSlice: StateCreator<MirabiStore, [], [], ProgressSlic
     const now = Date.now()
     const today = epochDayOf(now)
     const state = get()
-    const rollover = rolledOver(state, today)
+    const rollover = rolledOver(state, today, now)
 
     const baseActivity = rollover.dailyActivity ?? state.dailyActivity
     const baseMissions = rollover.missionProgress ?? state.missionProgress

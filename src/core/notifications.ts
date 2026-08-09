@@ -13,6 +13,8 @@
  * un recordatorio que la persona cree tener y no llega es peor que ninguno.
  */
 
+import type { StreakStatus } from './domain/rewards'
+
 export type ReminderSupport = 'BACKGROUND' | 'ON_OPEN' | 'UNSUPPORTED'
 
 interface PeriodicSyncManager {
@@ -106,11 +108,25 @@ export function shouldRemindOnOpen(input: {
   return input.now.getHours() >= input.reminderHour
 }
 
-export function showReminderNotification(streakDays: number): void {
+/**
+ * El aviso urge mas cuando la racha se apaga hoy mismo (`atRisk`) que cuando
+ * ya no hay nada que salvar (`lost`, o nunca hubo racha).
+ */
+export function reminderMessageFor(status: StreakStatus): string {
+  if (status.atRisk) {
+    const days = status.days === 1 ? '1 día' : `${status.days} días`
+    return `Tu racha de ${days} se apaga hoy. Una lección corta la salva.`
+  }
+  if (status.lost) {
+    return 'Tu racha se reinició, pero hoy es un buen día para empezar otra.'
+  }
+  if (status.days > 0) {
+    return `Llevas ${status.days} ${status.days === 1 ? 'día' : 'días'} seguidos. Una lección corta lo mantiene.`
+  }
+  return 'Una lección corta y hoy también cuenta.'
+}
+
+export function showReminderNotification(status: StreakStatus): void {
   if (!notificationsAvailable() || Notification.permission !== 'granted') return
-  const body =
-    streakDays > 0
-      ? `Llevas ${streakDays} ${streakDays === 1 ? 'día' : 'días'} seguidos. Una lección corta lo mantiene.`
-      : 'Una lección corta y hoy también cuenta.'
-  new Notification('Mirabi', { body, icon: './icon.svg', tag: REMINDER_TAG })
+  new Notification('Mirabi', { body: reminderMessageFor(status), icon: './icon.svg', tag: REMINDER_TAG })
 }
