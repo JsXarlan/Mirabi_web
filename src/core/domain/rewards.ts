@@ -157,3 +157,42 @@ export function updateStreak(
     wasReset: lastActivityEpochDay !== null && activityEpochDay > lastActivityEpochDay + 1,
   }
 }
+
+export interface StreakShieldResult {
+  streakDays: number
+  shielded: boolean
+}
+
+/**
+ * El escudo se gasta solo cuando la racha se habría perdido, y la mantiene viva
+ * continuando desde `previousStreakDays` en vez de reiniciar a 1.
+ */
+export function applyStreakShield(
+  previousStreakDays: number,
+  streak: StreakUpdateResult,
+  shields: number,
+): StreakShieldResult {
+  const shielded = streak.wasReset && shields > 0
+  return {
+    streakDays: shielded ? previousStreakDays + 1 : streak.consecutiveDays,
+    shielded,
+  }
+}
+
+export interface XpBoostResult {
+  xpEarned: number
+  boosted: boolean
+}
+
+/** Solo las sesiones que lo consumen (`consumesBoost`) pueden duplicar el XP. */
+export function applyXpBoost(
+  xpEarned: number,
+  boostSessions: number,
+  consumesBoost: boolean,
+): XpBoostResult {
+  const boosted = consumesBoost && xpEarned > 0 && boostSessions > 0
+  return {
+    xpEarned: boosted ? xpEarned * 2 : xpEarned,
+    boosted,
+  }
+}
