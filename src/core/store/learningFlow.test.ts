@@ -60,8 +60,24 @@ describe('una lección completa', () => {
 
     const lessonMission = state.todayMissions().find((m) => m.definition.id === 'daily_lesson')
     expect(lessonMission?.progress.completed).toBe(true)
-    // 2 de la leccion + 5 de la mision diaria, cobrada automaticamente.
-    expect(state.sakura).toBe(7)
+    // 2 de la leccion + 5 de la mision diaria + 3 del logro "Primer paso", todo cobrado automaticamente.
+    expect(state.sakura).toBe(10)
+
+    expect(state.achievementUnlocks.first_lesson).toBeDefined()
+    expect(state.achievementToastQueue.map((u) => u.achievementId)).toContain('first_lesson')
+  })
+
+  it('no vuelve a pagar el logro al repetir la leccion', () => {
+    completeLessonPerfectly(FIRST_LESSON)
+    const sakuraAfterFirst = store().sakura
+
+    completeLessonPerfectly(FIRST_LESSON)
+
+    expect(store().sakura).toBeGreaterThan(sakuraAfterFirst) // paga XP/Sakura de leccion otra vez...
+    expect(
+      store()
+        .achievementToastQueue.filter((u) => u.achievementId === 'first_lesson').length,
+    ).toBe(1) // ...pero el logro no se vuelve a encolar ni a pagar.
   })
 
   it('no vuelve a pagar el bonus de unidad ni cuenta dos veces al repetir', () => {

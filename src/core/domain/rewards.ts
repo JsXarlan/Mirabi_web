@@ -9,6 +9,7 @@ export type RewardSource =
   | 'WORLD_COMPLETED'
   | 'DAILY_MISSION_COMPLETED'
   | 'WEEKLY_MISSION_COMPLETED'
+  | 'ACHIEVEMENT_UNLOCKED'
 
 export type RewardMultiplier = 'NONE' | 'PLUS_X2' | 'AD_REWARD_X2'
 
@@ -30,6 +31,7 @@ export interface RewardPolicyConfig {
   worldCompletedSakura: number
   dailyMissionSakura: number
   weeklyMissionSakura: number
+  achievementUnlockedSakura: number
 }
 
 export const DEFAULT_REWARD_CONFIG: RewardPolicyConfig = {
@@ -44,6 +46,7 @@ export const DEFAULT_REWARD_CONFIG: RewardPolicyConfig = {
   worldCompletedSakura: 15,
   dailyMissionSakura: 5,
   weeklyMissionSakura: 15,
+  achievementUnlockedSakura: 3,
 }
 
 export interface RewardBreakdown {
@@ -86,6 +89,8 @@ function valuesFor(source: RewardSource, config: RewardPolicyConfig): [number, n
       return [0, 0, config.dailyMissionSakura, 0]
     case 'WEEKLY_MISSION_COMPLETED':
       return [0, 0, config.weeklyMissionSakura, 0]
+    case 'ACHIEVEMENT_UNLOCKED':
+      return [0, 0, config.achievementUnlockedSakura, 0]
   }
 }
 

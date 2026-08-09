@@ -2,6 +2,12 @@ import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
 import type { RewardResult } from '../domain/rewards'
+import {
+  createAchievementsSlice,
+  initialAchievementsState,
+  type AchievementsSlice,
+  type AchievementsState,
+} from './slices/achievementsSlice'
 import { createContentSlice, type ContentSlice } from './slices/contentSlice'
 import {
   createMissionsSlice,
@@ -65,15 +71,16 @@ interface RootActions {
   importProgress: (raw: string) => boolean
 }
 
-export type MirabiStore = ContentSlice & ProgressSlice & MissionsSlice & RootActions
+export type MirabiStore = ContentSlice & ProgressSlice & MissionsSlice & AchievementsSlice & RootActions
 
 /** Lo que se guarda en localStorage: todo salvo el contenido, que se recarga del JSON. */
-type PersistedState = ProgressOnlyState & MissionsState & typeof initialPreferences
+type PersistedState = ProgressOnlyState & MissionsState & AchievementsState & typeof initialPreferences
 
 const initialPersisted: PersistedState = {
   ...initialPreferences,
   ...initialProgressOnly,
   ...initialMissionsState,
+  ...initialAchievementsState,
 }
 
 export const useMirabiStore = create<MirabiStore>()(
@@ -83,10 +90,20 @@ export const useMirabiStore = create<MirabiStore>()(
         ...createContentSlice(set, get, store),
         ...createProgressSlice(set, get, store),
         ...createMissionsSlice(set, get, store),
+        ...createAchievementsSlice(set, get, store),
 
         // Borra el aprendizaje, no la configuracion: el tema, el nombre y el
         // objetivo diario no son progreso y volver al onboarding sorprende.
-        resetProgress: () => set({ ...initialProgressOnly, ...initialMissionsState }),
+        // achievementToastQueue no vive en initialAchievementsState (es
+        // transitorio, no se persiste) asi que hay que vaciarlo a mano, o un
+        // aviso sin ver sobrevive al reset.
+        resetProgress: () =>
+          set({
+            ...initialProgressOnly,
+            ...initialMissionsState,
+            ...initialAchievementsState,
+            achievementToastQueue: [],
+          }),
 
         exportProgress: () => {
           const state = get()

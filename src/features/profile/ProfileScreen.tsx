@@ -21,31 +21,6 @@ import {
 import { Screen } from '../../ui/Layout'
 import { Yuki } from '../../ui/Yuki'
 
-/** Logros del MVP: hitos simples y verificables con el estado local. */
-function achievements(input: {
-  lessons: number
-  reviews: number
-  conversations: number
-  streak: number
-  masteredKana: number
-}) {
-  return [
-    { id: 'first_lesson', title: 'Primer paso', icon: '👣', unlocked: input.lessons >= 1 },
-    { id: 'ten_lessons', title: '10 lecciones', icon: '📘', unlocked: input.lessons >= 10 },
-    { id: 'first_review', title: 'Primer repaso', icon: '🔁', unlocked: input.reviews >= 1 },
-    {
-      id: 'first_conversation',
-      title: 'Primera conversación',
-      icon: '💬',
-      unlocked: input.conversations >= 1,
-    },
-    { id: 'streak_3', title: 'Racha de 3', icon: '🔥', unlocked: input.streak >= 3 },
-    { id: 'streak_7', title: 'Racha de 7', icon: '🏮', unlocked: input.streak >= 7 },
-    { id: 'kana_25', title: '25 kana dominados', icon: 'あ', unlocked: input.masteredKana >= 25 },
-    { id: 'kana_all', title: 'Hiragana completo', icon: '🌸', unlocked: input.masteredKana >= 71 },
-  ]
-}
-
 export function ProfileScreen() {
   const displayName = useMirabiStore((state) => state.displayName)
   const totalXp = useMirabiStore((state) => state.totalXp)
@@ -64,6 +39,7 @@ export function ProfileScreen() {
 
   const courseMap = useMirabiStore((state) => state.courseMap)()
   const pending = useMirabiStore((state) => state.dueReviewItems)()
+  const achievementsList = useMirabiStore((state) => state.achievementsList)()
 
   const today = epochDayOf(Date.now())
   // Misma verdad que en Inicio: la racha vale lo que vale hoy.
@@ -83,20 +59,6 @@ export function ProfileScreen() {
     dailyActivity,
     learningStats: stats,
     streakActive: streakDays > 0,
-  })
-
-  const masteredKana = tracked.filter(
-    (item) =>
-      item.learningItemType === 'KANA' &&
-      (item.mastery === 'MASTERED' || item.mastery === 'EXPERT'),
-  ).length
-
-  const unlocked = achievements({
-    lessons: totalLessonsCompleted,
-    reviews: totalReviewsCompleted,
-    conversations: totalConversationsCompleted,
-    streak: streakDays,
-    masteredKana,
   })
 
   const last28 = Array.from({ length: 28 }, (_, offset) => today - 27 + offset)
@@ -205,19 +167,20 @@ export function ProfileScreen() {
 
       <SectionTitle>Logros</SectionTitle>
       <div className="mb-5 grid grid-cols-4 gap-2">
-        {unlocked.map((achievement) => (
+        {achievementsList.map(({ definition, unlock }) => (
           <div
-            key={achievement.id}
+            key={definition.id}
+            title={unlock ? `Desbloqueado el ${new Date(unlock.unlockedAtEpochMillis).toLocaleDateString()}` : undefined}
             className={`flex flex-col items-center gap-1 rounded-[16px] p-3 text-center ${
-              achievement.unlocked
+              unlock
                 ? 'bg-[var(--primary-container)] text-[var(--on-primary-container)]'
                 : 'bg-[var(--surface-variant)] text-[var(--on-surface-variant)] opacity-55'
             }`}
           >
             <span aria-hidden className="font-jp text-xl">
-              {achievement.icon}
+              {definition.icon}
             </span>
-            <span className="text-[10px] leading-tight font-semibold">{achievement.title}</span>
+            <span className="text-[10px] leading-tight font-semibold">{definition.title}</span>
           </div>
         ))}
       </div>

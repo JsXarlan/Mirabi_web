@@ -13,6 +13,7 @@ import type {
   SubscriptionType,
 } from '../../domain/models'
 import { epochDayOf, levelFromXp, nextMastery } from '../../domain/models'
+import { evaluateAchievements, type AchievementSignals, type AchievementUnlock } from '../../domain/achievements'
 import { validateAnswer } from '../../domain/answers'
 import { canonicalLearningItemId } from '../../domain/kanaIds'
 import type { LearningMotivation } from '../../domain/motivation'
@@ -326,10 +327,34 @@ export const createProgressSlice: StateCreator<MirabiStore, [], [], ProgressSlic
       ? state.activeDays
       : [...state.activeDays, today].slice(-60)
 
+    // Logros: se detectan aca, con el estado ya al dia (XP, racha y misiones
+    // de esta misma transaccion), para que un hito no tarde una pantalla mas
+    // en aparecer de lo que tarda en cumplirse.
+    const masteredKana = Object.values(state.learningProgress).filter(
+      (item) => item.learningItemType === 'KANA' && (item.mastery === 'MASTERED' || item.mastery === 'EXPERT'),
+    ).length
+    const signals: AchievementSignals = {
+      lessons: state.totalLessonsCompleted,
+      reviews: state.totalReviewsCompleted,
+      conversations: state.totalConversationsCompleted,
+      streak: streakDays,
+      masteredKana,
+    }
+    const newlyUnlocked = evaluateAchievements(signals, new Set(Object.keys(state.achievementUnlocks)))
+    let achievementSakura = 0
+    const achievementUnlocks = { ...state.achievementUnlocks }
+    const newUnlockRecords: AchievementUnlock[] = []
+    for (const achievement of newlyUnlocked) {
+      achievementSakura += calculateReward('ACHIEVEMENT_UNLOCKED', DEFAULT_REWARD_CONFIG).sakuraEarned
+      const unlock: AchievementUnlock = { achievementId: achievement.id, unlockedAtEpochMillis: now }
+      achievementUnlocks[achievement.id] = unlock
+      newUnlockRecords.push(unlock)
+    }
+
     set({
       ...rollover,
       totalXp,
-      sakura: state.sakura + reward.sakuraEarned + missionSakura,
+      sakura: state.sakura + reward.sakuraEarned + missionSakura + achievementSakura,
       streakDays,
       streakShields: shielded ? state.streakShields - 1 : state.streakShields,
       xpBoostSessions: boosted ? state.xpBoostSessions - 1 : state.xpBoostSessions,
@@ -337,12 +362,14 @@ export const createProgressSlice: StateCreator<MirabiStore, [], [], ProgressSlic
       activeDays,
       dailyActivity: {
         ...nextActivity,
-        sakuraEarnedToday: nextActivity.sakuraEarnedToday + missionSakura,
+        sakuraEarnedToday: nextActivity.sakuraEarnedToday + missionSakura + achievementSakura,
       },
       missionProgress: nextMissions,
       missionEpochDay: today,
       weeklyProgress: nextWeekly,
       missionEpochWeek: epochWeekOf(today),
+      achievementUnlocks,
+      achievementToastQueue: [...state.achievementToastQueue, ...newUnlockRecords],
     })
 
     return {
@@ -481,7 +508,12 @@ export const createProgressSlice: StateCreator<MirabiStore, [], [], ProgressSlic
         completedAtEpochMillis: now,
       }
 
-      set({ lessonProgress: { ...state.lessonProgress, [lessonId]: lessonProgress } })
+      set({
+        lessonProgress: { ...state.lessonProgress, [lessonId]: lessonProgress },
+        // Antes de award(): si esta leccion cruza un umbral de logro, la
+        // deteccion de ahi adentro necesita ver el conteo ya al dia.
+        ...(isFirstCompletion ? { totalLessonsCompleted: state.totalLessonsCompleted + 1 } : {}),
+      })
 
       const reward = calculateReward(
         isPerfect ? 'PERFECT_LESSON' : 'LESSON_COMPLETED',
@@ -520,10 +552,6 @@ export const createProgressSlice: StateCreator<MirabiStore, [], [], ProgressSlic
           set({ awardedWorldBonuses: [...latest.awardedWorldBonuses, unit.worldId] })
           award(worldBonus, {}, {})
         }
-      }
-
-      if (isFirstCompletion) {
-        set({ totalLessonsCompleted: get().totalLessonsCompleted + 1 })
       }
 
       return {

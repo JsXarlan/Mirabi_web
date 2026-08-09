@@ -17,6 +17,7 @@ import {
 import { epochDayOf } from './core/domain/models'
 import { shouldRemindOnOpen, showReminderNotification } from './core/notifications'
 import { useMirabiStore } from './core/store/useMirabiStore'
+import { AchievementToast } from './features/profile/AchievementToast'
 import { MirabiError, MirabiLoading } from './ui/components'
 
 // Ruta critica -curso, leccion, repaso-: se queda en el bundle inicial porque
@@ -254,6 +255,7 @@ export default function App() {
 
   return (
     <Suspense fallback={<MirabiLoading />}>
+      <AchievementToast />
       <Routes>
         <Route path="/" element={<HomeScreen />} />
         <Route path="/curso" element={<CourseScreen />} />
