@@ -299,6 +299,21 @@ export interface KanjiCatalog {
   kanji: KanjiCharacter[]
 }
 
+/** Un trazo por elemento de `paths`, en orden; `viewBox` es el de la fuente SVG. */
+export interface KanaStrokeEntry {
+  paths: string[]
+  viewBox: string
+}
+
+export interface KanaStrokeCatalog {
+  schemaVersion: number
+  version: string
+  source: string
+  license: string
+  /** Por learningItemId, igual que characters.json. */
+  strokes: Record<string, KanaStrokeEntry>
+}
+
 /** El ejercicio de exposicion no se responde: solo se lee y se continua. */
 export const isTeachingExercise = (exercise: ContentExercise): boolean =>
   exercise.type === 'PRESENTATION' || !exercise.isEvaluable

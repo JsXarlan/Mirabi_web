@@ -5,6 +5,7 @@ import type {
   CharacterCatalog,
   ContentExercise,
   CoursePack,
+  KanaStrokeCatalog,
   KanjiCatalog,
   WordCatalog,
 } from '../core/content/types'
@@ -25,6 +26,7 @@ export const coursePack = read<CoursePack>('course.json')
 export const characterCatalog = read<CharacterCatalog>('characters.json')
 export const wordCatalog = read<WordCatalog>('words.json')
 export const kanjiCatalog = read<KanjiCatalog>('kanji.json')
+export const kanaStrokeCatalog = read<KanaStrokeCatalog>('kana-strokes.json')
 
 /** Deja el store como recien instalado, con el contenido ya cargado. */
 export function freshStore() {

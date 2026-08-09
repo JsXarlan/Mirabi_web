@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import { validateCatalog, validateKanjiCatalog, validateWordCatalog } from './validate'
+import { validateCatalog, validateKanaStrokeCatalog, validateKanjiCatalog, validateWordCatalog } from './validate'
 import {
   buildKanjiIndex,
   buildWordIndex,
@@ -9,7 +9,7 @@ import {
   findWords,
   wordsByScript,
 } from './loader'
-import { characterCatalog, coursePack, kanjiCatalog, wordCatalog } from '../../test/content'
+import { characterCatalog, coursePack, kanaStrokeCatalog, kanjiCatalog, wordCatalog } from '../../test/content'
 
 /**
  * Los catalogos de palabras y kanji, comprobados contra los ficheros reales que
@@ -33,6 +33,21 @@ describe('catálogos servidos', () => {
       expect(typeof catalog.schemaVersion).toBe('number')
       expect(catalog.version).toMatch(/^\d+\.\d+\.\d+$/)
       expect(catalog.checksum.length).toBeGreaterThan(0)
+    }
+  })
+})
+
+describe('trazos de kana', () => {
+  it('pasa su validación contra el catálogo de caracteres', () => {
+    expect(validateKanaStrokeCatalog(kanaStrokeCatalog, characterCatalog).errors).toEqual([])
+  })
+
+  it('trae un trazo por cada kana del catálogo', () => {
+    const kana = characterCatalog.characters.filter(
+      (character) => character.script === 'HIRAGANA' || character.script === 'KATAKANA',
+    )
+    for (const character of kana) {
+      expect(kanaStrokeCatalog.strokes[character.learningItemId]).toBeDefined()
     }
   })
 })

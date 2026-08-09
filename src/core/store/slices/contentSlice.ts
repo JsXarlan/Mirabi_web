@@ -1,6 +1,6 @@
 import type { StateCreator } from 'zustand'
 
-import type { CharacterCatalog, CoursePack, KanjiCatalog, WordCatalog } from '../../content/types'
+import type { CharacterCatalog, CoursePack, KanaStrokeCatalog, KanjiCatalog, WordCatalog } from '../../content/types'
 import {
   buildCourseIndex,
   buildKanjiIndex,
@@ -33,12 +33,15 @@ export interface ContentSlice {
   kanji: KanjiCatalog | null
   wordIndex: WordIndex | null
   kanjiIndex: KanjiIndex | null
+  /** Solo la pide quien entra a practicar escritura: no llega con el prewarm del resto. */
+  kanaStrokes: KanaStrokeCatalog | null
   contentWarning: string | null
 
   setContent: (pack: CoursePack, catalog: CharacterCatalog) => void
   setContentError: (message: string) => void
   setWordCatalog: (words: WordCatalog) => void
   setKanjiCatalog: (kanji: KanjiCatalog) => void
+  setKanaStrokeCatalog: (strokes: KanaStrokeCatalog) => void
   setContentWarning: (message: string) => void
 
   courseMap: () => CourseMap | null
@@ -61,6 +64,7 @@ export const createContentSlice: StateCreator<MirabiStore, [], [], ContentSlice>
   kanji: null,
   wordIndex: null,
   kanjiIndex: null,
+  kanaStrokes: null,
   contentWarning: null,
 
   setContent: (pack, catalog) => {
@@ -98,6 +102,7 @@ export const createContentSlice: StateCreator<MirabiStore, [], [], ContentSlice>
         : state.labels,
     })
   },
+  setKanaStrokeCatalog: (strokes) => set({ kanaStrokes: strokes }),
   setContentWarning: (message) => set({ contentWarning: message }),
 
   courseMap: () => {

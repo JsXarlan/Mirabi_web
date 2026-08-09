@@ -119,6 +119,12 @@ export interface ProgressActions {
   completeLesson: (lessonId: string, correct: number, wrong: number) => LessonOutcome
   completeReviewSession: (results: { item: ReviewItem; isCorrect: boolean }[]) => SessionOutcome
   completeCharacterPractice: (correct: number, wrong: number) => SessionOutcome
+  /**
+   * Cierra una sesion de escritura: mueve el dominio del kana escrito, igual
+   * que cualquier otra practica, pero sin tocar reviewItems/SRS todavia (no
+   * hay ContentExercise reconstruible para un trazo fallado).
+   */
+  completeWritingPractice: (results: { learningItemId: string; gotIt: boolean }[]) => SessionOutcome
   completeConversation: (lessonId: string, correct: number, wrong: number) => SessionOutcome
   completeWorldExam: (worldId: string, correct: number, wrong: number) => SessionOutcome
 
@@ -633,6 +639,50 @@ export const createProgressSlice: StateCreator<MirabiStore, [], [], ProgressSlic
       // Las respuestas ya las conto answerExercise carta a carta: sumarlas
       // aqui otra vez inflaria la precision global.
       // La practica de kana no es una leccion: paga como repaso.
+      return sessionOutcome(
+        correct,
+        wrong,
+        calculateReward('REVIEW_COMPLETED', DEFAULT_REWARD_CONFIG, multiplierFor(state.subscriptionType)),
+        {},
+        { PRACTICE_CHARACTERS: total },
+      )
+    },
+
+    completeWritingPractice: (results) => {
+      const state = get()
+      const now = Date.now()
+      const correct = results.filter((result) => result.gotIt).length
+      const wrong = results.length - correct
+      const total = results.length
+
+      const learningProgress = { ...state.learningProgress }
+      for (const { learningItemId, gotIt } of results) {
+        const previous: LearningProgress = learningProgress[learningItemId] ?? {
+          learningItemId,
+          learningItemType: 'KANA',
+          mastery: 'UNKNOWN',
+          correctAnswers: 0,
+          wrongAnswers: 0,
+          lastAnsweredAtEpochMillis: null,
+          updatedAtEpochMillis: now,
+        }
+        learningProgress[learningItemId] = {
+          ...previous,
+          mastery: nextMastery(previous.mastery, gotIt),
+          correctAnswers: previous.correctAnswers + (gotIt ? 1 : 0),
+          wrongAnswers: previous.wrongAnswers + (gotIt ? 0 : 1),
+          lastAnsweredAtEpochMillis: now,
+          updatedAtEpochMillis: now,
+        }
+      }
+
+      set({
+        learningProgress,
+        totalAnswers: state.totalAnswers + total,
+        correctAnswers: state.correctAnswers + correct,
+      })
+
+      // Paga como repaso, igual que la practica de kanji/kana existente.
       return sessionOutcome(
         correct,
         wrong,

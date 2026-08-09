@@ -342,6 +342,19 @@ export function SettingsScreen() {
           </a>
           , bajo licencia CC BY-SA 4.0. Los significados en español los compiló Francisco Gutiérrez.
         </p>
+        <p className="mt-3 text-sm font-semibold">Trazos de escritura</p>
+        <p className="mt-1 text-xs text-[var(--on-surface-variant)]">
+          El orden y la forma de los trazos de hiragana y katakana vienen de{' '}
+          <a
+            className="font-semibold text-[var(--primary)] underline"
+            href="https://kanjivg.tagaini.net/"
+            target="_blank"
+            rel="noreferrer noopener"
+          >
+            KanjiVG
+          </a>
+          , de Ulrich Apel, bajo licencia CC BY-SA 3.0.
+        </p>
       </MirabiCard>
     </Screen>
   )

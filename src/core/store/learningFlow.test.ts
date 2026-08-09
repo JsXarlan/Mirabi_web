@@ -278,6 +278,32 @@ describe('práctica de palabras y kanji', () => {
   })
 })
 
+describe('práctica de escritura', () => {
+  it('mueve el dominio, paga como un repaso y avanza la misión de caracteres, sin tocar el SRS', () => {
+    const [a, b] = characterCatalog.characters.filter((item) => item.script === 'HIRAGANA')
+
+    const outcome = store().completeWritingPractice([
+      { learningItemId: a.learningItemId, gotIt: true },
+      { learningItemId: b.learningItemId, gotIt: false },
+    ])
+
+    expect(store().masteryOf(a.learningItemId)).toBe('FAMILIAR')
+    expect(store().masteryOf(b.learningItemId)).toBe('UNKNOWN') // fallar no baja de UNKNOWN
+    expect(outcome.correctAnswers).toBe(1)
+    expect(outcome.wrongAnswers).toBe(1)
+    expect(outcome.reward.xpEarned).toBeGreaterThan(0) // paga como REVIEW_COMPLETED
+
+    const charactersMission = store()
+      .todayMissions()
+      .find((m) => m.definition.id === 'daily_characters')
+    expect(charactersMission?.progress.currentProgress).toBe(2)
+
+    // Limite explicito de esta v1: no hay ContentExercise reconstruible para
+    // un trazo fallado, asi que todavia no entra en repaso espaciado.
+    expect(store().reviewItems).toHaveLength(0)
+  })
+})
+
 describe('puntos débiles', () => {
   it('cuenta los fallos por tipo de error declarado en el contenido', () => {
     const exercise = coursePack.lessons

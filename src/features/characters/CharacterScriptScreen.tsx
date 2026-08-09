@@ -104,6 +104,15 @@ export function CharacterScriptScreen() {
         >
           {tab === 'palabras' ? 'Practicar palabras' : `Practicar ${title}`}
         </MirabiButton>
+        {tab === 'caracteres' && (
+          <MirabiButton
+            className="mt-2"
+            variant="secondary"
+            onClick={() => navigate(`/caracteres/${slugOf(scriptKey)}/escritura`)}
+          >
+            Practicar escritura
+          </MirabiButton>
+        )}
       </MirabiCard>
 
       <MirabiTabs

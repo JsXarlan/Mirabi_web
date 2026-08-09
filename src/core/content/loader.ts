@@ -2,6 +2,7 @@ import type {
   CharacterCatalog,
   CoursePack,
   KanaCharacter,
+  KanaStrokeCatalog,
   KanjiCatalog,
   KanjiCharacter,
   VocabularyWord,
@@ -21,6 +22,7 @@ let coursePromise: Promise<CoursePack> | null = null
 let charactersPromise: Promise<CharacterCatalog> | null = null
 let wordsPromise: Promise<WordCatalog> | null = null
 let kanjiPromise: Promise<KanjiCatalog> | null = null
+let kanaStrokesPromise: Promise<KanaStrokeCatalog> | null = null
 
 async function fetchJson<T>(path: string): Promise<T> {
   const response = await fetch(`${base}content/${path}`)
@@ -93,6 +95,12 @@ export function loadWordCatalog(): Promise<WordCatalog> {
 export function loadKanjiCatalog(): Promise<KanjiCatalog> {
   kanjiPromise ??= fetchJson<KanjiCatalog>('kanji.json')
   return kanjiPromise
+}
+
+/** Solo la pide quien entra a practicar escritura: no vale la pena prewarmearla. */
+export function loadKanaStrokeCatalog(): Promise<KanaStrokeCatalog> {
+  kanaStrokesPromise ??= fetchJson<KanaStrokeCatalog>('kana-strokes.json')
+  return kanaStrokesPromise
 }
 
 export function wordsByScript(

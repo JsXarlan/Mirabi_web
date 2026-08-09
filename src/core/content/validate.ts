@@ -1,4 +1,4 @@
-import type { CharacterCatalog, CoursePack, KanjiCatalog, WordCatalog } from './types'
+import type { CharacterCatalog, CoursePack, KanaStrokeCatalog, KanjiCatalog, WordCatalog } from './types'
 import { ANSWERABLE_TYPES, isTeachingExercise } from './types'
 
 /**
@@ -180,6 +180,37 @@ export function validateKanjiCatalog(
         errors.push(
           `El kanji ${item.id} lista ${item.wordIds.length} palabras y las palabras declaran ${declared.size}.`,
         )
+      }
+    }
+  }
+
+  return { ok: errors.length === 0, errors: errors.slice(0, 5) }
+}
+
+/** Igual que palabras y kanji: falla suave, no apaga el curso. */
+export function validateKanaStrokeCatalog(
+  strokes: KanaStrokeCatalog,
+  characters: CharacterCatalog | null,
+): ContentValidation {
+  const errors: string[] = []
+
+  errors.push(...schemaErrors('El catálogo de trazos', strokes.schemaVersion))
+  if (Object.keys(strokes.strokes).length === 0) errors.push('El catálogo de trazos está vacío.')
+
+  for (const [learningItemId, entry] of Object.entries(strokes.strokes)) {
+    if (entry.paths.length === 0) errors.push(`${learningItemId} no tiene ningún trazo.`)
+    if (!entry.viewBox) errors.push(`${learningItemId} no declara viewBox.`)
+  }
+
+  if (characters) {
+    const kanaIds = new Set(
+      characters.characters
+        .filter((character) => character.script === 'HIRAGANA' || character.script === 'KATAKANA')
+        .map((character) => character.learningItemId),
+    )
+    for (const learningItemId of Object.keys(strokes.strokes)) {
+      if (!kanaIds.has(learningItemId)) {
+        errors.push(`El trazo ${learningItemId} no corresponde a ningún kana del catálogo.`)
       }
     }
   }

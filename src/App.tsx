@@ -60,6 +60,9 @@ const KanjiScreen = lazy(() => import('./features/kanji/KanjiScreen').then((m) =
 const KanjiPracticeScreen = lazy(() =>
   import('./features/kanji/KanjiPracticeScreen').then((m) => ({ default: m.KanjiPracticeScreen })),
 )
+const WritingPracticeScreen = lazy(() =>
+  import('./features/characters/WritingPracticeScreen').then((m) => ({ default: m.WritingPracticeScreen })),
+)
 
 /**
  * Palabras y kanji se piden despues del curso y sin esperarlos.
@@ -271,6 +274,7 @@ export default function App() {
         <Route path="/caracteres/kanji/practica" element={<KanjiPracticeScreen />} />
         <Route path="/caracteres/:script" element={<CharacterScriptScreen />} />
         <Route path="/caracteres/:script/practica" element={<CharacterPracticeScreen />} />
+        <Route path="/caracteres/:script/escritura" element={<WritingPracticeScreen />} />
         <Route path="/repaso" element={<ReviewScreen />} />
         <Route path="/repaso/sesion" element={<ReviewSessionScreen />} />
         <Route path="/conversaciones" element={<ConversationsScreen />} />
