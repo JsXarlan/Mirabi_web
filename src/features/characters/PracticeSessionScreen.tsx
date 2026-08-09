@@ -8,7 +8,7 @@ import { MirabiButton, MirabiCard, MirabiStatChip } from '../../ui/components'
 import { useDigitKeys, useEnterKey } from '../../ui/keys'
 import { SessionScreen } from '../../ui/Layout'
 import { Yuki } from '../../ui/Yuki'
-import { AudioButton } from '../lesson/ExerciseView'
+import { AudioButton, PronunciationButton } from '../lesson/ExerciseView'
 
 /**
  * Motor de sesion de practica rapida, extraido de CharacterPracticeScreen.
@@ -167,7 +167,10 @@ export function PracticeSessionScreen({
         <p className="mb-4 text-sm text-[var(--on-surface-variant)]">{question}</p>
         {card.display}
         {answered && card.exercise.audioText && (
-          <AudioButton className="mt-5 inline-flex items-center" text={card.exercise.audioText} />
+          <div className="mt-5 flex flex-wrap items-center justify-center gap-2">
+            <AudioButton className="inline-flex items-center" text={card.exercise.audioText} />
+            <PronunciationButton className="inline-flex items-center" expectedText={card.exercise.audioText} />
+          </div>
         )}
       </div>
 

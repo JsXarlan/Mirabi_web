@@ -2,6 +2,11 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 import type { ContentExercise, RomajiPolicy } from '../../core/content/types'
 import { isSpeechAvailable, onVoicesReady, speakJapanese } from '../../core/audio/speech'
+import {
+  isSpeechRecognitionAvailable,
+  listenJapanese,
+  matchesSpokenText,
+} from '../../core/audio/speechRecognition'
 import { hasKana, resolveRomaji, toRomaji } from '../../core/domain/romaji'
 import { useMirabiStore } from '../../core/store/useMirabiStore'
 import { MirabiCard } from '../../ui/components'
@@ -69,6 +74,77 @@ export function AudioButton({
           🐢 Lento
         </button>
       )}
+    </span>
+  )
+}
+
+type PronunciationState = 'idle' | 'listening' | 'match' | 'mismatch' | 'error'
+
+/** Boton de "di esto en voz alta" con feedback inmediato via Web Speech API. */
+export function PronunciationButton({
+  expectedText,
+  className,
+}: {
+  expectedText: string
+  className?: string
+}) {
+  const available = useMemo(isSpeechRecognitionAvailable, [])
+  const [state, setState] = useState<PronunciationState>('idle')
+  const [heard, setHeard] = useState('')
+  const stopRef = useRef<(() => void) | null>(null)
+  const resetTimerRef = useRef<number | null>(null)
+
+  useEffect(
+    () => () => {
+      stopRef.current?.()
+      if (resetTimerRef.current) window.clearTimeout(resetTimerRef.current)
+    },
+    [],
+  )
+
+  if (!available) return null
+
+  const listen = () => {
+    if (state === 'listening') return
+    setState('listening')
+    setHeard('')
+    stopRef.current = listenJapanese((outcome) => {
+      stopRef.current = null
+      if (outcome.status === 'result') {
+        setHeard(outcome.transcript)
+        setState(matchesSpokenText(outcome.transcript, expectedText) ? 'match' : 'mismatch')
+      } else if (outcome.status === 'no-match') {
+        setState('mismatch')
+      } else {
+        setState('error')
+      }
+      resetTimerRef.current = window.setTimeout(() => setState('idle'), 2500)
+    })
+  }
+
+  return (
+    <span className={className}>
+      <button
+        type="button"
+        onClick={listen}
+        disabled={state === 'listening'}
+        aria-label="Practicar pronunciación"
+        className={[
+          'flex h-9 w-9 items-center justify-center rounded-full text-base transition',
+          state === 'listening'
+            ? 'bg-[var(--secondary)] text-[var(--on-secondary)]'
+            : 'bg-[var(--surface-variant)]',
+        ].join(' ')}
+      >
+        {state === 'listening' ? '🎙️' : '🎤'}
+      </button>
+      <span role="status" aria-live="polite" className="ml-2 text-xs text-[var(--on-surface-variant)]">
+        {state === 'listening' && 'Escuchando…'}
+        {state === 'match' && '✅ Bien dicho'}
+        {state === 'mismatch' &&
+          (heard ? `Se oyó "${heard}", probá de nuevo` : 'No se entendió, probá de nuevo')}
+        {state === 'error' && 'No se pudo usar el micrófono'}
+      </span>
     </span>
   )
 }
