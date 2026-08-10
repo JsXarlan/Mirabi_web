@@ -1,3 +1,4 @@
+import { kanjiByGrade } from '../../core/content/loader'
 import { MASTERY_VALUE } from '../../core/domain/models'
 import { useMirabiStore } from '../../core/store/useMirabiStore'
 
@@ -26,4 +27,37 @@ export function useKanjiMastery(): { total: number; mastered: number; percentage
   }
 
   return { total: items.length, mastered, percentage: sum / items.length }
+}
+
+export interface GradeMastery {
+  grade: number
+  total: number
+  mastered: number
+  percentage: number
+}
+
+/** Igual que useKanjiMastery pero desglosado por grado, para el resumen de la pantalla. */
+export function useKanjiMasteryByGrade(): GradeMastery[] {
+  const kanji = useMirabiStore((state) => state.kanji)
+  const kanjiIndex = useMirabiStore((state) => state.kanjiIndex)
+  const learningProgress = useMirabiStore((state) => state.learningProgress)
+
+  if (!kanji || !kanjiIndex) return []
+
+  return kanjiIndex.grades.map((grade) => {
+    const items = kanjiByGrade(kanji, grade)
+    let sum = 0
+    let mastered = 0
+    for (const item of items) {
+      const mastery = learningProgress[item.learningItemId]?.mastery ?? 'UNKNOWN'
+      sum += MASTERY_VALUE[mastery]
+      if (mastery === 'MASTERED' || mastery === 'EXPERT') mastered += 1
+    }
+    return {
+      grade,
+      total: items.length,
+      mastered,
+      percentage: items.length === 0 ? 0 : sum / items.length,
+    }
+  })
 }

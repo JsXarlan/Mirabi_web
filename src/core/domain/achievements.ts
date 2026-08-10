@@ -6,6 +6,7 @@ export interface AchievementSignals {
   conversations: number
   streak: number
   masteredKana: number
+  masteredKanji: number
 }
 
 export interface AchievementDefinition {
@@ -29,6 +30,9 @@ export const ACHIEVEMENTS: AchievementDefinition[] = [
   { id: 'streak_7', title: 'Racha de 7', icon: '🏮', check: (s) => s.streak >= 7 },
   { id: 'kana_25', title: '25 kana dominados', icon: 'あ', check: (s) => s.masteredKana >= 25 },
   { id: 'kana_all', title: 'Hiragana completo', icon: '🌸', check: (s) => s.masteredKana >= 71 },
+  { id: 'kanji_25', title: '25 kanji dominados', icon: '木', check: (s) => s.masteredKanji >= 25 },
+  { id: 'kanji_100', title: '100 kanji dominados', icon: '本', check: (s) => s.masteredKanji >= 100 },
+  { id: 'kanji_500', title: '500 kanji dominados', icon: '学', check: (s) => s.masteredKanji >= 500 },
 ]
 
 export interface AchievementUnlock {

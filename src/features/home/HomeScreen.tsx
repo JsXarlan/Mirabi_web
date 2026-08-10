@@ -42,6 +42,7 @@ export function HomeScreen() {
   const totalConversationsCompleted = useMirabiStore((state) => state.totalConversationsCompleted)
   const activeDays = useMirabiStore((state) => state.activeDays)
   const catalog = useMirabiStore((state) => state.catalog)
+  const kanji = useMirabiStore((state) => state.kanji)
   const index = useMirabiStore((state) => state.index)
 
   const courseMap = useMirabiStore((state) => state.courseMap)()
@@ -78,6 +79,18 @@ export function HomeScreen() {
     const character = withExample[today % withExample.length]
     return character.examples[0]
   }, [catalog, today])
+
+  /*
+   * Mismo patron que dailyPhrase: estable dentro del dia, distinto cada dia.
+   * El catalogo de kanji llega tarde (prewarm ocioso, ver App.tsx), asi que
+   * en la primera visita del dia esta seccion sencillamente no aparece hasta
+   * que termina de cargar -no es un fallo, es lo mismo que ya hace la
+   * biblioteca con la tarjeta de Kanji en CharactersScreen-.
+   */
+  const dailyKanji = useMemo(() => {
+    if (!kanji || kanji.kanji.length === 0) return null
+    return kanji.kanji[today % kanji.kanji.length]
+  }, [kanji, today])
 
   // La racha se muestra tal y como esta hoy, no como quedo el ultimo dia activo.
   const streak = streakStatus(streakDays, lastActivityEpochDay, today)
@@ -269,6 +282,23 @@ export function HomeScreen() {
                 </button>
               )}
             </div>
+          </MirabiCard>
+        </>
+      )}
+
+      {dailyKanji && (
+        <>
+          <SectionTitle>Kanji del día</SectionTitle>
+          {/* Tarjeta clicable entera: MirabiCard con onClick renderiza un
+              <button>, asi que aca no puede ir el AudioButton anidado como en
+              la Frase del dia -boton dentro de boton no es HTML valido-. El
+              audio ya esta a un toque, dentro de la ficha que abre. */}
+          <MirabiCard
+            className="mb-5 p-5"
+            onClick={() => navigate(`/caracteres/kanji?kanji=${dailyKanji.id}`)}
+          >
+            <p className="font-jp text-4xl font-semibold">{dailyKanji.symbol}</p>
+            <p className="mt-1 text-sm">{dailyKanji.meanings[0]}</p>
           </MirabiCard>
         </>
       )}

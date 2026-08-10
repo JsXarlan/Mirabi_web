@@ -346,12 +346,16 @@ export const createProgressSlice: StateCreator<MirabiStore, [], [], ProgressSlic
     const masteredKana = Object.values(state.learningProgress).filter(
       (item) => item.learningItemType === 'KANA' && (item.mastery === 'MASTERED' || item.mastery === 'EXPERT'),
     ).length
+    const masteredKanji = Object.values(state.learningProgress).filter(
+      (item) => item.learningItemType === 'KANJI' && (item.mastery === 'MASTERED' || item.mastery === 'EXPERT'),
+    ).length
     const signals: AchievementSignals = {
       lessons: state.totalLessonsCompleted,
       reviews: state.totalReviewsCompleted,
       conversations: state.totalConversationsCompleted,
       streak: streakDays,
       masteredKana,
+      masteredKanji,
     }
     const newlyUnlocked = evaluateAchievements(signals, new Set(Object.keys(state.achievementUnlocks)))
     let achievementSakura = 0

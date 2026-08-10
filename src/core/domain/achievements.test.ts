@@ -5,7 +5,14 @@ import type { AchievementSignals } from './achievements'
 
 /** Logros: se disparan una sola vez, en el momento exacto en que se cruza el umbral. */
 
-const ZERO: AchievementSignals = { lessons: 0, reviews: 0, conversations: 0, streak: 0, masteredKana: 0 }
+const ZERO: AchievementSignals = {
+  lessons: 0,
+  reviews: 0,
+  conversations: 0,
+  streak: 0,
+  masteredKana: 0,
+  masteredKanji: 0,
+}
 
 describe('evaluateAchievements', () => {
   it('sin señales, no desbloquea nada', () => {
@@ -35,6 +42,7 @@ describe('evaluateAchievements', () => {
       conversations: 0,
       streak: 3,
       masteredKana: 0,
+      masteredKanji: 0,
     }
 
     const unlocked = evaluateAchievements(signals, new Set())
@@ -47,6 +55,9 @@ describe('evaluateAchievements', () => {
   it('el umbral es inclusivo (>=), no estricto', () => {
     expect(evaluateAchievements({ ...ZERO, streak: 7 }, new Set()).map((a) => a.id)).toContain('streak_7')
     expect(evaluateAchievements({ ...ZERO, masteredKana: 71 }, new Set()).map((a) => a.id)).toContain('kana_all')
+    expect(evaluateAchievements({ ...ZERO, masteredKanji: 100 }, new Set()).map((a) => a.id)).toContain(
+      'kanji_100',
+    )
   })
 
   it('todos los logros tienen id unico', () => {
