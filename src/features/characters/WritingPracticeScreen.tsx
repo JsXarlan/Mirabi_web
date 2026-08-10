@@ -1,10 +1,15 @@
 import { useEffect, useMemo, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 
-import { loadKanaStrokeCatalog } from '../../core/content/loader'
-import { validateKanaStrokeCatalog } from '../../core/content/validate'
+import { kanjiByGrade, loadKanaStrokeCatalog, loadKanjiStrokeCatalog } from '../../core/content/loader'
+import { validateKanaStrokeCatalog, validateKanjiStrokeCatalog } from '../../core/content/validate'
 import { yukiReaction } from '../../core/domain/yuki'
-import { buildWritingCard, selectWritingSession, type WritingCard } from '../../core/domain/writingExercises'
+import {
+  buildKanaWritingCard,
+  buildKanjiWritingCard,
+  selectWritingSession,
+  type WritingCard,
+} from '../../core/domain/writingExercises'
 import { useMirabiStore } from '../../core/store/useMirabiStore'
 import { MirabiButton, MirabiEmpty, MirabiError, MirabiLoading, MirabiStatChip } from '../../ui/components'
 import { SessionScreen } from '../../ui/Layout'
@@ -12,14 +17,22 @@ import { Yuki } from '../../ui/Yuki'
 import { scriptFromSlug, titleOf } from './scriptSlug'
 import { WritingCanvas } from './WritingCanvas'
 
+const DEFAULT_KANJI_GRADE = 1
+
 export function WritingPracticeScreen() {
   const { script } = useParams<{ script: string }>()
   const navigate = useNavigate()
+  const [params] = useSearchParams()
   const scriptKey = scriptFromSlug(script)
+  const isKanji = scriptKey === 'KANJI'
+  const grade = Number(params.get('grado') ?? DEFAULT_KANJI_GRADE)
 
   const catalog = useMirabiStore((state) => state.catalog)
+  const kanji = useMirabiStore((state) => state.kanji)
   const kanaStrokes = useMirabiStore((state) => state.kanaStrokes)
+  const kanjiStrokes = useMirabiStore((state) => state.kanjiStrokes)
   const setKanaStrokeCatalog = useMirabiStore((state) => state.setKanaStrokeCatalog)
+  const setKanjiStrokeCatalog = useMirabiStore((state) => state.setKanjiStrokeCatalog)
   const masteryOf = useMirabiStore((state) => state.masteryOf)
   const completeWritingPractice = useMirabiStore((state) => state.completeWritingPractice)
 
@@ -27,6 +40,28 @@ export function WritingPracticeScreen() {
   const [reloadToken, setReloadToken] = useState(0)
 
   useEffect(() => {
+    if (isKanji) {
+      if (kanjiStrokes) return
+      let cancelled = false
+      setLoadError(null)
+      loadKanjiStrokeCatalog()
+        .then((strokes) => {
+          if (cancelled) return
+          const check = validateKanjiStrokeCatalog(strokes, kanji)
+          if (!check.ok) {
+            setLoadError(check.errors.join(' '))
+            return
+          }
+          setKanjiStrokeCatalog(strokes)
+        })
+        .catch((error: unknown) => {
+          if (!cancelled) setLoadError(error instanceof Error ? error.message : 'No se pudo cargar.')
+        })
+      return () => {
+        cancelled = true
+      }
+    }
+
     if (kanaStrokes) return
     let cancelled = false
     setLoadError(null)
@@ -46,17 +81,33 @@ export function WritingPracticeScreen() {
     return () => {
       cancelled = true
     }
-  }, [kanaStrokes, catalog, setKanaStrokeCatalog, reloadToken])
+  }, [
+    isKanji,
+    kanaStrokes,
+    kanjiStrokes,
+    catalog,
+    kanji,
+    setKanaStrokeCatalog,
+    setKanjiStrokeCatalog,
+    reloadToken,
+  ])
 
   const cards = useMemo(() => {
-    if (!catalog || !kanaStrokes || scriptKey === null) return []
+    if (scriptKey === null) return []
+    if (isKanji) {
+      if (!kanji || !kanjiStrokes) return []
+      return selectWritingSession(kanjiByGrade(kanji, grade), masteryOf)
+        .map((item) => buildKanjiWritingCard(item, kanjiStrokes.strokes))
+        .filter((card): card is WritingCard => card !== null)
+    }
+    if (!catalog || !kanaStrokes) return []
     const characters = catalog.characters.filter((character) => character.script === scriptKey)
     return selectWritingSession(characters, masteryOf)
-      .map((character) => buildWritingCard(character, kanaStrokes))
+      .map((character) => buildKanaWritingCard(character, kanaStrokes.strokes))
       .filter((card): card is WritingCard => card !== null)
     // Se arma una sola vez por sesion: rebarajar a media practica seria confuso.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [catalog, kanaStrokes, scriptKey])
+  }, [catalog, kanaStrokes, kanji, kanjiStrokes, scriptKey, isKanji, grade])
 
   const [currentIndex, setCurrentIndex] = useState(0)
   const [tally, setTally] = useState({ correct: 0, wrong: 0 })
@@ -113,7 +164,7 @@ export function WritingPracticeScreen() {
     )
   }
 
-  if (!kanaStrokes) {
+  if ((isKanji && (!kanji || !kanjiStrokes)) || (!isKanji && !kanaStrokes)) {
     return (
       <SessionScreen title={title} progress={0} onExit={exit}>
         <MirabiLoading message="Preparando los trazos…" />
@@ -161,7 +212,7 @@ export function WritingPracticeScreen() {
     <SessionScreen title={title} progress={currentIndex / cards.length} onExit={exit} hint="Trazá y autoevaluate">
       <div className="flex flex-1 flex-col items-center justify-center">
         <p className="mb-4 text-sm text-[var(--on-surface-variant)]">
-          Escribí <span className="font-jp text-base font-bold">{card.romaji}</span> en el recuadro
+          Escribí <span className="font-jp text-base font-bold">{card.prompt}</span> en el recuadro
         </p>
         <WritingCanvas card={card} />
       </div>

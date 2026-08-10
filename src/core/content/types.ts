@@ -314,6 +314,21 @@ export interface KanaStrokeCatalog {
   strokes: Record<string, KanaStrokeEntry>
 }
 
+/**
+ * Mismo origen y misma forma de entrada que KanaStrokeCatalog (ambos vienen de
+ * KanjiVG, que cubre todo Unicode CJK, no solo kana), pero en fichero propio:
+ * el catalogo de kanji ya vive aparte del de kana (ver kanji.json vs
+ * characters.json) y mezclarlos aqui habria roto esa separacion sin necesidad.
+ */
+export interface KanjiStrokeCatalog {
+  schemaVersion: number
+  version: string
+  source: string
+  license: string
+  /** Por learningItemId, igual que kanji.json. */
+  strokes: Record<string, KanaStrokeEntry>
+}
+
 /** El ejercicio de exposicion no se responde: solo se lee y se continua. */
 export const isTeachingExercise = (exercise: ContentExercise): boolean =>
   exercise.type === 'PRESENTATION' || !exercise.isEvaluable

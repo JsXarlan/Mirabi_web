@@ -1,4 +1,11 @@
-import type { CharacterCatalog, CoursePack, KanaStrokeCatalog, KanjiCatalog, WordCatalog } from './types'
+import type {
+  CharacterCatalog,
+  CoursePack,
+  KanaStrokeCatalog,
+  KanjiCatalog,
+  KanjiStrokeCatalog,
+  WordCatalog,
+} from './types'
 import { ANSWERABLE_TYPES, isTeachingExercise } from './types'
 
 /**
@@ -211,6 +218,33 @@ export function validateKanaStrokeCatalog(
     for (const learningItemId of Object.keys(strokes.strokes)) {
       if (!kanaIds.has(learningItemId)) {
         errors.push(`El trazo ${learningItemId} no corresponde a ningún kana del catálogo.`)
+      }
+    }
+  }
+
+  return { ok: errors.length === 0, errors: errors.slice(0, 5) }
+}
+
+/** Igual que validateKanaStrokeCatalog pero contra el catalogo de kanji. */
+export function validateKanjiStrokeCatalog(
+  strokes: KanjiStrokeCatalog,
+  kanji: KanjiCatalog | null,
+): ContentValidation {
+  const errors: string[] = []
+
+  errors.push(...schemaErrors('El catálogo de trazos de kanji', strokes.schemaVersion))
+  if (Object.keys(strokes.strokes).length === 0) errors.push('El catálogo de trazos de kanji está vacío.')
+
+  for (const [learningItemId, entry] of Object.entries(strokes.strokes)) {
+    if (entry.paths.length === 0) errors.push(`${learningItemId} no tiene ningún trazo.`)
+    if (!entry.viewBox) errors.push(`${learningItemId} no declara viewBox.`)
+  }
+
+  if (kanji) {
+    const kanjiIds = new Set(kanji.kanji.map((item) => item.learningItemId))
+    for (const learningItemId of Object.keys(strokes.strokes)) {
+      if (!kanjiIds.has(learningItemId)) {
+        errors.push(`El trazo ${learningItemId} no corresponde a ningún kanji del catálogo.`)
       }
     }
   }

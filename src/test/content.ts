@@ -7,6 +7,7 @@ import type {
   CoursePack,
   KanaStrokeCatalog,
   KanjiCatalog,
+  KanjiStrokeCatalog,
   WordCatalog,
 } from '../core/content/types'
 import { ANSWERABLE_TYPES, isRuntimeCompatible } from '../core/content/types'
@@ -27,6 +28,7 @@ export const characterCatalog = read<CharacterCatalog>('characters.json')
 export const wordCatalog = read<WordCatalog>('words.json')
 export const kanjiCatalog = read<KanjiCatalog>('kanji.json')
 export const kanaStrokeCatalog = read<KanaStrokeCatalog>('kana-strokes.json')
+export const kanjiStrokeCatalog = read<KanjiStrokeCatalog>('kanji-strokes.json')
 
 /** Deja el store como recien instalado, con el contenido ya cargado. */
 export function freshStore() {

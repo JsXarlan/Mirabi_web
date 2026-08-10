@@ -1,4 +1,4 @@
-import type { KanaCharacter, KanaStrokeCatalog } from '../content/types'
+import type { KanaCharacter, KanaStrokeEntry, KanjiCharacter } from '../content/types'
 import type { MasteryScore } from './models'
 import { MASTERY_VALUE } from './models'
 
@@ -12,34 +12,53 @@ export interface WritingCard {
   id: string
   learningItemId: string
   symbol: string
-  romaji: string
+  /**
+   * Lo que se pide escribir antes de trazar. Para kana es el romaji ("a"); para
+   * kanji es el significado ("agua"), nunca la lectura -kanjiExercises.ts ya
+   * documenta por que un kanji aislado no tiene una lectura correcta unica-.
+   */
+  prompt: string
   strokePaths: string[]
   viewBox: string
 }
 
-/** Nulo cuando el catalogo de trazos todavia no cubre ese caracter. */
-export function buildWritingCard(character: KanaCharacter, strokes: KanaStrokeCatalog): WritingCard | null {
-  const entry = strokes.strokes[character.learningItemId]
+function cardFrom(
+  id: string,
+  learningItemId: string,
+  symbol: string,
+  prompt: string,
+  strokes: Record<string, KanaStrokeEntry>,
+): WritingCard | null {
+  const entry = strokes[learningItemId]
   if (!entry) return null
-  return {
-    id: character.id,
-    learningItemId: character.learningItemId,
-    symbol: character.symbol,
-    romaji: character.romaji,
-    strokePaths: entry.paths,
-    viewBox: entry.viewBox,
-  }
+  return { id, learningItemId, symbol, prompt, strokePaths: entry.paths, viewBox: entry.viewBox }
+}
+
+/** Nulo cuando el catalogo de trazos todavia no cubre ese caracter. */
+export function buildKanaWritingCard(
+  character: KanaCharacter,
+  strokes: Record<string, KanaStrokeEntry>,
+): WritingCard | null {
+  return cardFrom(character.id, character.learningItemId, character.symbol, character.romaji, strokes)
+}
+
+/** Nulo cuando el catalogo de trazos todavia no cubre ese kanji. */
+export function buildKanjiWritingCard(
+  kanji: KanjiCharacter,
+  strokes: Record<string, KanaStrokeEntry>,
+): WritingCard | null {
+  return cardFrom(kanji.id, kanji.learningItemId, kanji.symbol, kanji.meanings[0], strokes)
 }
 
 const SESSION_SIZE = 8
 
-/** Los caracteres con menos dominio primero, igual que la practica de kanji. */
-export function selectWritingSession(
-  characters: KanaCharacter[],
+/** Los elementos con menos dominio primero, igual que la practica de kanji. */
+export function selectWritingSession<T extends { learningItemId: string }>(
+  items: T[],
   masteryOf: (learningItemId: string) => MasteryScore,
   sessionSize: number = SESSION_SIZE,
-): KanaCharacter[] {
-  return [...characters]
+): T[] {
+  return [...items]
     .sort((a, b) => MASTERY_VALUE[masteryOf(a.learningItemId)] - MASTERY_VALUE[masteryOf(b.learningItemId)])
     .slice(0, sessionSize)
 }

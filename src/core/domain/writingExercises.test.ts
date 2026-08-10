@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 
-import { buildWritingCard, selectWritingSession } from './writingExercises'
-import type { KanaCharacter, KanaStrokeCatalog } from '../content/types'
+import { buildKanaWritingCard, buildKanjiWritingCard, selectWritingSession } from './writingExercises'
+import type { KanaCharacter, KanaStrokeEntry, KanjiCharacter } from '../content/types'
 import type { MasteryScore } from './models'
 
 /** Seleccion y armado de la sesion de escritura, sin la UI ni el catalogo real. */
@@ -20,32 +20,70 @@ function kana(overrides: Partial<KanaCharacter> = {}): KanaCharacter {
   }
 }
 
-const STROKES: KanaStrokeCatalog = {
-  schemaVersion: 1,
-  version: 'test',
-  source: 'KanjiVG',
-  license: 'CC BY-SA 3.0',
-  strokes: {
-    'kana-hiragana-a': { paths: ['M1,1 L2,2'], viewBox: '0 0 109 109' },
-  },
+function kanji(overrides: Partial<KanjiCharacter> = {}): KanjiCharacter {
+  return {
+    id: 'kanji-6C34',
+    symbol: '水',
+    learningItemId: 'kanji-6C34',
+    meanings: ['agua'],
+    meaningsLanguage: 'ES',
+    onyomi: [],
+    kunyomi: [],
+    strokeCount: 4,
+    radical: null,
+    grade: 1,
+    frequencyRank: null,
+    jlptLevel: null,
+    learningItemType: 'KANJI',
+    wordIds: [],
+    source: 'MIRABI',
+    sourceRef: null,
+    license: null,
+    ...overrides,
+  }
 }
 
-describe('buildWritingCard', () => {
+const STROKES: Record<string, KanaStrokeEntry> = {
+  'kana-hiragana-a': { paths: ['M1,1 L2,2'], viewBox: '0 0 109 109' },
+  'kanji-6C34': { paths: ['M3,3 L4,4'], viewBox: '0 0 109 109' },
+}
+
+describe('buildKanaWritingCard', () => {
   it('arma la tarjeta cuando el catalogo de trazos tiene el caracter', () => {
-    const card = buildWritingCard(kana(), STROKES)
+    const card = buildKanaWritingCard(kana(), STROKES)
 
     expect(card).toEqual({
       id: 'kana-hiragana-a',
       learningItemId: 'kana-hiragana-a',
       symbol: 'あ',
-      romaji: 'a',
+      prompt: 'a',
       strokePaths: ['M1,1 L2,2'],
       viewBox: '0 0 109 109',
     })
   })
 
   it('devuelve null si el catalogo de trazos no cubre ese caracter', () => {
-    const card = buildWritingCard(kana({ learningItemId: 'kana-hiragana-i' }), STROKES)
+    const card = buildKanaWritingCard(kana({ learningItemId: 'kana-hiragana-i' }), STROKES)
+    expect(card).toBeNull()
+  })
+})
+
+describe('buildKanjiWritingCard', () => {
+  it('arma la tarjeta con el significado como pista, no la lectura', () => {
+    const card = buildKanjiWritingCard(kanji(), STROKES)
+
+    expect(card).toEqual({
+      id: 'kanji-6C34',
+      learningItemId: 'kanji-6C34',
+      symbol: '水',
+      prompt: 'agua',
+      strokePaths: ['M3,3 L4,4'],
+      viewBox: '0 0 109 109',
+    })
+  })
+
+  it('devuelve null si el catalogo de trazos no cubre ese kanji', () => {
+    const card = buildKanjiWritingCard(kanji({ learningItemId: 'kanji-9999' }), STROKES)
     expect(card).toBeNull()
   })
 })
@@ -75,5 +113,15 @@ describe('selectWritingSession', () => {
 
   it('sin caracteres, devuelve una sesion vacia', () => {
     expect(selectWritingSession([], () => 'UNKNOWN')).toEqual([])
+  })
+
+  it('funciona igual con kanji, generico sobre el tipo', () => {
+    const items = [
+      kanji({ id: 'a', learningItemId: 'a' }),
+      kanji({ id: 'b', learningItemId: 'b' }),
+    ]
+    const masteryOf = masteryFor({ a: 'EXPERT', b: 'UNKNOWN' })
+
+    expect(selectWritingSession(items, masteryOf).map((k) => k.id)).toEqual(['b', 'a'])
   })
 })
