@@ -92,6 +92,22 @@ export function buildKanjiExercise(kanji: KanjiCharacter, catalog: KanjiCatalog)
   }
 }
 
+/**
+ * Kanji con al menos otro kanji del mismo radical en el catalogo: el modo
+ * «confundibles» solo tiene sentido sobre ellos, porque buildKanjiExercise ya
+ * los usa como distractor preferido (ver el comentario de arriba) y aca se
+ * trata de entrenar justo esa confusion a proposito, no de toparse con ella
+ * de vez en cuando dentro de una practica por grado.
+ */
+export function confusableKanji(catalog: KanjiCatalog): KanjiCharacter[] {
+  const countByRadical = new Map<number, number>()
+  for (const item of catalog.kanji) {
+    if (!item.radical) continue
+    countByRadical.set(item.radical.number, (countByRadical.get(item.radical.number) ?? 0) + 1)
+  }
+  return catalog.kanji.filter((item) => item.radical && (countByRadical.get(item.radical.number) ?? 0) > 1)
+}
+
 /** Reconstruye el ejercicio desde su id, para que el repaso pueda mostrarlo. */
 export function kanjiExerciseFromId(
   exerciseId: string,

@@ -60,6 +60,20 @@ const KanjiScreen = lazy(() => import('./features/kanji/KanjiScreen').then((m) =
 const KanjiPracticeScreen = lazy(() =>
   import('./features/kanji/KanjiPracticeScreen').then((m) => ({ default: m.KanjiPracticeScreen })),
 )
+const ConfusablesPracticeScreen = lazy(() =>
+  import('./features/kanji/ConfusablesPracticeScreen').then((m) => ({ default: m.ConfusablesPracticeScreen })),
+)
+const RadicalsScreen = lazy(() =>
+  import('./features/kanji/RadicalsScreen').then((m) => ({ default: m.RadicalsScreen })),
+)
+const ReadingContextPracticeScreen = lazy(() =>
+  import('./features/kanji/ReadingContextPracticeScreen').then((m) => ({
+    default: m.ReadingContextPracticeScreen,
+  })),
+)
+const JukugoPracticeScreen = lazy(() =>
+  import('./features/kanji/JukugoPracticeScreen').then((m) => ({ default: m.JukugoPracticeScreen })),
+)
 const WritingPracticeScreen = lazy(() =>
   import('./features/characters/WritingPracticeScreen').then((m) => ({ default: m.WritingPracticeScreen })),
 )
@@ -272,6 +286,10 @@ export default function App() {
         {/* Estatico antes que :script, aunque el ranking de React Router ya lo garantiza. */}
         <Route path="/caracteres/kanji" element={<KanjiScreen />} />
         <Route path="/caracteres/kanji/practica" element={<KanjiPracticeScreen />} />
+        <Route path="/caracteres/kanji/confundibles" element={<ConfusablesPracticeScreen />} />
+        <Route path="/caracteres/kanji/radicales" element={<RadicalsScreen />} />
+        <Route path="/caracteres/kanji/lectura" element={<ReadingContextPracticeScreen />} />
+        <Route path="/caracteres/kanji/jukugo" element={<JukugoPracticeScreen />} />
         <Route path="/caracteres/:script" element={<CharacterScriptScreen />} />
         <Route path="/caracteres/:script/practica" element={<CharacterPracticeScreen />} />
         <Route path="/caracteres/:script/escritura" element={<WritingPracticeScreen />} />

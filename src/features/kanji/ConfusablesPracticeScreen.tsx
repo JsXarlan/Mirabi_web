@@ -1,27 +1,22 @@
 import { useMemo } from 'react'
-import { useNavigate, useSearchParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
-import { kanjiByFrequency, kanjiByGrade, kanjiByJlptLevel } from '../../core/content/loader'
 import { MASTERY_VALUE } from '../../core/domain/models'
-import { buildKanjiExercise } from '../../core/domain/kanjiExercises'
+import { buildKanjiExercise, confusableKanji } from '../../core/domain/kanjiExercises'
 import { useMirabiStore } from '../../core/store/useMirabiStore'
 import type { PracticeCard } from '../characters/PracticeSessionScreen'
 import { PracticeSessionScreen } from '../characters/PracticeSessionScreen'
 
 const SESSION_SIZE = 10
-const DEFAULT_GRADE = 1
-/** Techo del pool en modo frecuencia: practicar contra los 2.136 no dice nada, contra los mas usados si. */
-const FREQUENCY_POOL_SIZE = 200
 
-export function KanjiPracticeScreen() {
+/**
+ * Practica dedicada al kanji «que se confunden»: mismo motor que
+ * KanjiPracticeScreen, pero acotado a confusableKanji en vez de a un grado.
+ * buildKanjiExercise ya prefiere distractores del mismo radical cuando los
+ * hay, asi que aca esa preferencia se cumple siempre, no de vez en cuando.
+ */
+export function ConfusablesPracticeScreen() {
   const navigate = useNavigate()
-  const [params] = useSearchParams()
-  const modo = params.get('modo')
-  // Con 2.136 kanji, practicar «todos» no tiene sentido pedagogico: se acota
-  // al grado, nivel JLPT o los mas frecuentes que se estaba mirando, o al
-  // grado mas basico si se llega directo.
-  const grade = Number(params.get('grado') ?? DEFAULT_GRADE)
-  const jlptLevel = Number(params.get('nivel') ?? 0)
 
   const kanji = useMirabiStore((state) => state.kanji)
   const masteryOf = useMirabiStore((state) => state.masteryOf)
@@ -29,13 +24,7 @@ export function KanjiPracticeScreen() {
 
   const cards = useMemo(() => {
     if (!kanji) return []
-    const pool =
-      modo === 'frecuencia'
-        ? kanjiByFrequency(kanji, FREQUENCY_POOL_SIZE)
-        : modo === 'jlpt'
-          ? kanjiByJlptLevel(kanji, jlptLevel)
-          : kanjiByGrade(kanji, grade)
-    return [...pool]
+    return [...confusableKanji(kanji)]
       .sort(
         (a, b) =>
           MASTERY_VALUE[masteryOf(a.learningItemId)] - MASTERY_VALUE[masteryOf(b.learningItemId)],
@@ -52,11 +41,11 @@ export function KanjiPracticeScreen() {
       }))
     // Se construye una sola vez por sesion: rebarajar a media practica seria confuso.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [kanji, grade, modo, jlptLevel])
+  }, [kanji])
 
   return (
     <PracticeSessionScreen
-      title="Práctica de kanji"
+      title="Kanji que se confunden"
       question="¿Qué significa?"
       optionsLabel="Significados"
       cards={cards}

@@ -1,15 +1,30 @@
 import { describe, expect, it } from 'vitest'
 
-import { validateCatalog, validateKanaStrokeCatalog, validateKanjiCatalog, validateWordCatalog } from './validate'
+import {
+  validateCatalog,
+  validateKanaStrokeCatalog,
+  validateKanjiCatalog,
+  validateKanjiStrokeCatalog,
+  validateWordCatalog,
+} from './validate'
 import {
   buildKanjiIndex,
   buildWordIndex,
   cleanReading,
   findKanji,
   findWords,
+  kanjiByFrequency,
+  kanjiByJlptLevel,
   wordsByScript,
 } from './loader'
-import { characterCatalog, coursePack, kanaStrokeCatalog, kanjiCatalog, wordCatalog } from '../../test/content'
+import {
+  characterCatalog,
+  coursePack,
+  kanaStrokeCatalog,
+  kanjiCatalog,
+  kanjiStrokeCatalog,
+  wordCatalog,
+} from '../../test/content'
 
 /**
  * Los catalogos de palabras y kanji, comprobados contra los ficheros reales que
@@ -48,6 +63,18 @@ describe('trazos de kana', () => {
     )
     for (const character of kana) {
       expect(kanaStrokeCatalog.strokes[character.learningItemId]).toBeDefined()
+    }
+  })
+})
+
+describe('trazos de kanji', () => {
+  it('pasa su validación contra el catálogo de kanji', () => {
+    expect(validateKanjiStrokeCatalog(kanjiStrokeCatalog, kanjiCatalog).errors).toEqual([])
+  })
+
+  it('trae un trazo por cada kanji del catálogo', () => {
+    for (const item of kanjiCatalog.kanji) {
+      expect(kanjiStrokeCatalog.strokes[item.learningItemId], item.symbol).toBeDefined()
     }
   })
 })
@@ -307,5 +334,35 @@ describe('kanji', () => {
     const item = kanjiCatalog.kanji[0]
     expect(index.byId.get(item.id)).toBe(item)
     expect(index.bySymbol.get(item.symbol)).toBe(item)
+  })
+
+  it('kanjiByFrequency ordena de mas a menos frecuente y deja sin rango al final', () => {
+    const ordenado = kanjiByFrequency(kanjiCatalog)
+    expect(ordenado.length).toBe(kanjiCatalog.kanji.length)
+
+    const conRango = ordenado.filter((item) => item.frequencyRank !== null)
+    for (let i = 1; i < conRango.length; i++) {
+      expect(conRango[i].frequencyRank!).toBeGreaterThanOrEqual(conRango[i - 1].frequencyRank!)
+    }
+
+    const sinRango = ordenado.filter((item) => item.frequencyRank === null)
+    if (sinRango.length > 0 && conRango.length > 0) {
+      expect(ordenado.indexOf(sinRango[0])).toBeGreaterThan(ordenado.indexOf(conRango[conRango.length - 1]))
+    }
+  })
+
+  it('kanjiByFrequency respeta el límite pedido', () => {
+    expect(kanjiByFrequency(kanjiCatalog, 50)).toHaveLength(50)
+  })
+
+  it('el índice de JLPT va del nivel más fácil (4) al más difícil (1)', () => {
+    const index = buildKanjiIndex(kanjiCatalog)
+    expect(index.jlptLevels).toEqual([4, 3, 2, 1])
+  })
+
+  it('kanjiByJlptLevel solo trae kanji de ese nivel', () => {
+    const nivel4 = kanjiByJlptLevel(kanjiCatalog, 4)
+    expect(nivel4.length).toBeGreaterThan(0)
+    for (const item of nivel4) expect(item.jlptLevel).toBe(4)
   })
 })

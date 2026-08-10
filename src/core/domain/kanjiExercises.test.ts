@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import { buildKanjiExercise, isKanjiExerciseId, kanjiExerciseFromId } from './kanjiExercises'
+import { buildKanjiExercise, confusableKanji, isKanjiExerciseId, kanjiExerciseFromId } from './kanjiExercises'
 import { kanjiCatalog } from '../../test/content'
 
 /**
@@ -105,5 +105,41 @@ describe('ejercicio de kanji', () => {
   it('un id que no es de kanji no se reconoce', () => {
     expect(isKanjiExerciseId('word-practice-x')).toBe(false)
     expect(kanjiExerciseFromId('word-practice-x', kanjiCatalog)).toBeNull()
+  })
+})
+
+describe('confusableKanji', () => {
+  it('solo incluye kanji con radical y al menos otro kanji del mismo radical', () => {
+    const confusables = confusableKanji(kanjiCatalog)
+    expect(confusables.length).toBeGreaterThan(0)
+
+    const countByRadical = new Map<number, number>()
+    for (const item of kanjiCatalog.kanji) {
+      if (!item.radical) continue
+      countByRadical.set(item.radical.number, (countByRadical.get(item.radical.number) ?? 0) + 1)
+    }
+
+    for (const item of confusables) {
+      expect(item.radical).not.toBeNull()
+      expect(countByRadical.get(item.radical!.number)!).toBeGreaterThan(1)
+    }
+  })
+
+  it('未 (radical del árbol, con decenas de kanji) aparece en la lista', () => {
+    const confusables = confusableKanji(kanjiCatalog)
+    expect(confusables.some((item) => item.symbol === '未')).toBe(true)
+  })
+
+  it('deja fuera un kanji cuyo radical no comparte nadie más', () => {
+    const countByRadical = new Map<number, number>()
+    for (const item of kanjiCatalog.kanji) {
+      if (!item.radical) continue
+      countByRadical.set(item.radical.number, (countByRadical.get(item.radical.number) ?? 0) + 1)
+    }
+    const unico = kanjiCatalog.kanji.find((item) => item.radical && countByRadical.get(item.radical.number) === 1)
+    expect(unico, 'el jōyō de prueba no trae ningún radical con un solo kanji').toBeDefined()
+
+    const confusables = confusableKanji(kanjiCatalog)
+    expect(confusables.some((item) => item.id === unico!.id)).toBe(false)
   })
 })

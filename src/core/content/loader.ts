@@ -5,6 +5,7 @@ import type {
   KanaStrokeCatalog,
   KanjiCatalog,
   KanjiCharacter,
+  KanjiStrokeCatalog,
   VocabularyWord,
   WordCatalog,
 } from './types'
@@ -23,6 +24,7 @@ let charactersPromise: Promise<CharacterCatalog> | null = null
 let wordsPromise: Promise<WordCatalog> | null = null
 let kanjiPromise: Promise<KanjiCatalog> | null = null
 let kanaStrokesPromise: Promise<KanaStrokeCatalog> | null = null
+let kanjiStrokesPromise: Promise<KanjiStrokeCatalog> | null = null
 
 async function fetchJson<T>(path: string): Promise<T> {
   const response = await fetch(`${base}content/${path}`)
@@ -103,6 +105,12 @@ export function loadKanaStrokeCatalog(): Promise<KanaStrokeCatalog> {
   return kanaStrokesPromise
 }
 
+/** Igual que loadKanaStrokeCatalog pero para el jōyō: fichero propio, mismo motivo. */
+export function loadKanjiStrokeCatalog(): Promise<KanjiStrokeCatalog> {
+  kanjiStrokesPromise ??= fetchJson<KanjiStrokeCatalog>('kanji-strokes.json')
+  return kanjiStrokesPromise
+}
+
 export function wordsByScript(
   catalog: WordCatalog,
   script: VocabularyWord['script'],
@@ -177,6 +185,8 @@ export interface KanjiIndex {
   bySymbol: Map<string, KanjiCharacter>
   /** Grados presentes, ordenados; el 8 (resto del joyo) queda al final. */
   grades: number[]
+  /** Niveles JLPT (escala clasica de KANJIDIC2) presentes, del mas facil (4) al mas dificil (1). */
+  jlptLevels: number[]
   /**
    * Lecturas transcritas, para poder buscar «yama» y encontrar 山.
    *
@@ -195,6 +205,10 @@ export function buildKanjiIndex(
     .filter((grade): grade is number => grade !== null)
     .sort((a, b) => a - b)
 
+  const jlptLevels = [...new Set(catalog.kanji.map((item) => item.jlptLevel))]
+    .filter((level): level is number => level !== null)
+    .sort((a, b) => b - a)
+
   const romajiById = new Map<string, string>()
   if (characters) {
     for (const item of catalog.kanji) {
@@ -209,10 +223,32 @@ export function buildKanjiIndex(
     byId: new Map(catalog.kanji.map((item) => [item.id, item])),
     bySymbol: new Map(catalog.kanji.map((item) => [item.symbol, item])),
     grades,
+    jlptLevels,
     romajiById,
   }
 }
 
 export function kanjiByGrade(catalog: KanjiCatalog, grade: number): KanjiCharacter[] {
   return catalog.kanji.filter((item) => item.grade === grade)
+}
+
+/**
+ * `jlptLevel` es la escala clasica de KANJIDIC2 (1 el mas dificil, 4 el mas
+ * facil), incompleta y sin relacion directa con los N5-N1 del JLPT actual.
+ * Se expone igual, marcada como tal en la interfaz: es el unico dato de
+ * dificultad por examen que trae el catalogo.
+ */
+export function kanjiByJlptLevel(catalog: KanjiCatalog, level: number): KanjiCharacter[] {
+  return catalog.kanji.filter((item) => item.jlptLevel === level)
+}
+
+/**
+ * Los `limit` kanji de uso mas frecuente, segun `frequencyRank` (KANJIDIC2:
+ * 1 es el mas frecuente). Los que no traen el dato quedan al final, nunca
+ * mezclados entre los que si lo tienen.
+ */
+export function kanjiByFrequency(catalog: KanjiCatalog, limit: number = catalog.kanji.length): KanjiCharacter[] {
+  return [...catalog.kanji]
+    .sort((a, b) => (a.frequencyRank ?? Infinity) - (b.frequencyRank ?? Infinity))
+    .slice(0, limit)
 }
