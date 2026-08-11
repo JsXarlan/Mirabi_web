@@ -5,6 +5,10 @@ import { HashRouter } from 'react-router-dom'
 import App from './App'
 import { ErrorBoundary } from './ui/ErrorBoundary'
 import './index.css'
+// Fuente "tradicional" de la practica de escritura: autohospedada para que
+// funcione offline (el service worker cachea .woff2 igual que cualquier
+// otro asset). Solo se descarga si el estilo tradicional llega a usarse.
+import '@fontsource/yuji-syuku/japanese-400.css'
 
 // HashRouter: GitHub Pages sirve estatico y no puede reescribir rutas profundas.
 createRoot(document.getElementById('root')!).render(

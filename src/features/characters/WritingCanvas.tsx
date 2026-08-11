@@ -1,12 +1,34 @@
 import { useEffect, useRef, useState, type PointerEvent as ReactPointerEvent } from 'react'
 
 import type { WritingCard } from '../../core/domain/writingExercises'
+import type { WritingFontStyle } from '../../core/store/useMirabiStore'
 
 const SIZE = 260
+const PAIR_SIZE = 76
+
+/**
+ * Mismos trazos (el `d` de KanjiVG) en los dos estilos: lo unico que cambia es
+ * como se dibujan. "Digital" es el trazo geometrico uniforme de siempre;
+ * "tradicional" engorda el trazo y endurece las puntas para que se sienta mas
+ * a pincel, sin inventar geometria nueva.
+ */
+const STROKE_RENDER: Record<WritingFontStyle, { width: number; linecap: 'round' | 'butt'; linejoin: 'round' | 'miter' }> = {
+  digital: { width: 3, linecap: 'round', linejoin: 'round' },
+  traditional: { width: 5.5, linecap: 'butt', linejoin: 'miter' },
+}
 
 /** Un trazo se anima con un pequeño delay respecto al anterior, para leerse como secuencia. */
-function StrokePath({ d, delayMs }: { d: string; delayMs: number }) {
+function StrokePath({
+  d,
+  delayMs,
+  fontStyle,
+}: {
+  d: string
+  delayMs: number
+  fontStyle: WritingFontStyle
+}) {
   const ref = useRef<SVGPathElement>(null)
+  const render = STROKE_RENDER[fontStyle]
 
   useEffect(() => {
     const path = ref.current
@@ -25,7 +47,15 @@ function StrokePath({ d, delayMs }: { d: string; delayMs: number }) {
   }, [d, delayMs])
 
   return (
-    <path ref={ref} d={d} fill="none" stroke="var(--primary)" strokeWidth={3} strokeLinecap="round" strokeLinejoin="round" />
+    <path
+      ref={ref}
+      d={d}
+      fill="none"
+      stroke="var(--primary)"
+      strokeWidth={render.width}
+      strokeLinecap={render.linecap}
+      strokeLinejoin={render.linejoin}
+    />
   )
 }
 
@@ -36,7 +66,13 @@ function StrokePath({ d, delayMs }: { d: string; delayMs: number }) {
  * comparacion, no hay forma honesta de puntuar el dibujo. La persona traza,
  * pide ver la animacion si quiere confirmar, y se autoevalua.
  */
-export function WritingCanvas({ card }: { card: WritingCard }) {
+export function WritingCanvas({
+  card,
+  fontStyle = 'digital',
+}: {
+  card: WritingCard
+  fontStyle?: WritingFontStyle
+}) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const drawingRef = useRef(false)
   const [showStrokes, setShowStrokes] = useState(false)
@@ -86,19 +122,21 @@ export function WritingCanvas({ card }: { card: WritingCard }) {
     drawingRef.current = false
   }
 
+  const fontClass = fontStyle === 'traditional' ? 'font-jp-traditional' : 'font-jp'
+
   return (
     <div>
       <div className="relative mx-auto" style={{ width: SIZE, height: SIZE }}>
         <span
           aria-hidden
-          className="font-jp pointer-events-none absolute inset-0 flex select-none items-center justify-center text-[170px] leading-none opacity-10"
+          className={`${fontClass} pointer-events-none absolute inset-0 flex select-none items-center justify-center text-[170px] leading-none opacity-10`}
         >
           {card.symbol}
         </span>
         {showStrokes && (
           <svg viewBox={card.viewBox} className="pointer-events-none absolute inset-0 h-full w-full">
             {card.strokePaths.map((d, index) => (
-              <StrokePath key={`${card.id}-${index}`} d={d} delayMs={index * 500} />
+              <StrokePath key={`${card.id}-${index}`} d={d} delayMs={index * 500} fontStyle={fontStyle} />
             ))}
           </svg>
         )}
@@ -112,6 +150,27 @@ export function WritingCanvas({ card }: { card: WritingCard }) {
           onPointerUp={stopDrawing}
           onPointerLeave={stopDrawing}
         />
+        {card.pair && (
+          <div
+            className="absolute -right-3 -bottom-3 flex items-center justify-center rounded-[12px] border-2 border-[var(--outline)] bg-[var(--surface)]"
+            style={{ width: PAIR_SIZE, height: PAIR_SIZE }}
+            aria-label={`Tambien se traza el kana chico ${card.pair.symbol}`}
+          >
+            <span
+              aria-hidden
+              className={`${fontClass} pointer-events-none absolute inset-0 flex select-none items-center justify-center text-[46px] leading-none opacity-10`}
+            >
+              {card.pair.symbol}
+            </span>
+            {showStrokes && (
+              <svg viewBox={card.pair.viewBox} className="pointer-events-none absolute inset-0 h-full w-full">
+                {card.pair.strokePaths.map((d, index) => (
+                  <StrokePath key={`${card.id}-pair-${index}`} d={d} delayMs={index * 500} fontStyle={fontStyle} />
+                ))}
+              </svg>
+            )}
+          </div>
+        )}
       </div>
       <div className="mt-3 flex justify-center gap-2">
         <button

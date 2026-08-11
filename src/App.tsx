@@ -77,6 +77,13 @@ const JukugoPracticeScreen = lazy(() =>
 const WritingPracticeScreen = lazy(() =>
   import('./features/characters/WritingPracticeScreen').then((m) => ({ default: m.WritingPracticeScreen })),
 )
+const WordsScreen = lazy(() => import('./features/words/WordsScreen').then((m) => ({ default: m.WordsScreen })))
+const WordFlashcardScreen = lazy(() =>
+  import('./features/words/WordFlashcardScreen').then((m) => ({ default: m.WordFlashcardScreen })),
+)
+const WordQuizScreen = lazy(() =>
+  import('./features/words/WordQuizScreen').then((m) => ({ default: m.WordQuizScreen })),
+)
 
 /**
  * Palabras y kanji se piden despues del curso y sin esperarlos.
@@ -293,6 +300,9 @@ export default function App() {
         <Route path="/caracteres/:script" element={<CharacterScriptScreen />} />
         <Route path="/caracteres/:script/practica" element={<CharacterPracticeScreen />} />
         <Route path="/caracteres/:script/escritura" element={<WritingPracticeScreen />} />
+        <Route path="/palabras" element={<WordsScreen />} />
+        <Route path="/palabras/estudio" element={<WordFlashcardScreen />} />
+        <Route path="/palabras/practica" element={<WordQuizScreen />} />
         <Route path="/repaso" element={<ReviewScreen />} />
         <Route path="/repaso/sesion" element={<ReviewSessionScreen />} />
         <Route path="/conversaciones" element={<ConversationsScreen />} />

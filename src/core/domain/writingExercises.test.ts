@@ -1,8 +1,16 @@
 import { describe, expect, it } from 'vitest'
 
-import { buildKanaWritingCard, buildKanjiWritingCard, selectWritingSession } from './writingExercises'
-import type { KanaCharacter, KanaStrokeEntry, KanjiCharacter } from '../content/types'
+import {
+  buildKanaWritingCard,
+  buildKanjiWritingCard,
+  buildYoonWritingCard,
+  selectWritingSession,
+} from './writingExercises'
+import type { CharacterCatalog, KanaCharacter, KanaStrokeEntry, KanjiCharacter } from '../content/types'
 import type { MasteryScore } from './models'
+import type { YoonCombination } from './yoon'
+import { YOON_COMBINATIONS } from './yoon'
+import { characterCatalog, kanaStrokeCatalog } from '../../test/content'
 
 /** Seleccion y armado de la sesion de escritura, sin la UI ni el catalogo real. */
 
@@ -66,6 +74,24 @@ describe('buildKanaWritingCard', () => {
     const card = buildKanaWritingCard(kana({ learningItemId: 'kana-hiragana-i' }), STROKES)
     expect(card).toBeNull()
   })
+
+  it.each([
+    'kana-hiragana-small-ya',
+    'kana-hiragana-small-yu',
+    'kana-hiragana-small-yo',
+    'kana-hiragana-small-tsu',
+    'kana-katakana-small-ya',
+    'kana-katakana-small-yu',
+    'kana-katakana-small-yo',
+    'kana-katakana-small-tsu',
+    'kana-katakana-chouonpu',
+  ])('arma tarjeta para %s contra el catalogo real', (id) => {
+    const character = characterCatalog.characters.find((item) => item.id === id)
+    expect(character).toBeDefined()
+    const card = buildKanaWritingCard(character as KanaCharacter, kanaStrokeCatalog.strokes)
+    expect(card).not.toBeNull()
+    expect(card?.strokePaths.length).toBeGreaterThan(0)
+  })
 })
 
 describe('buildKanjiWritingCard', () => {
@@ -85,6 +111,63 @@ describe('buildKanjiWritingCard', () => {
   it('devuelve null si el catalogo de trazos no cubre ese kanji', () => {
     const card = buildKanjiWritingCard(kanji({ learningItemId: 'kanji-9999' }), STROKES)
     expect(card).toBeNull()
+  })
+})
+
+describe('buildYoonWritingCard', () => {
+  const kya = YOON_COMBINATIONS.find((combo) => combo.id === 'yoon-hiragana-kya') as YoonCombination
+
+  it('arma la tarjeta principal desde la base y el kana chico en pair', () => {
+    const catalog: CharacterCatalog = {
+      schemaVersion: 1,
+      version: 'test',
+      checksum: 'test',
+      characters: [
+        kana({ id: 'kana-hiragana-ki', symbol: 'き', romaji: 'ki', group: 'K', learningItemId: 'kana-hiragana-ki' }),
+        kana({
+          id: 'kana-hiragana-small-ya',
+          symbol: 'ゃ',
+          romaji: 'ya (chica)',
+          group: 'COMBINATIONS',
+          learningItemId: 'kana-hiragana-small-ya',
+        }),
+      ],
+    }
+    const strokes: Record<string, KanaStrokeEntry> = {
+      'kana-hiragana-ki': { paths: ['M1,1 L2,2'], viewBox: '0 0 109 109' },
+      'kana-hiragana-small-ya': { paths: ['M3,3 L4,4'], viewBox: '0 0 109 109' },
+    }
+
+    const card = buildYoonWritingCard(kya, catalog, strokes)
+
+    expect(card).toEqual({
+      id: 'yoon-hiragana-kya',
+      learningItemId: 'yoon-hiragana-kya',
+      symbol: 'き',
+      prompt: 'kya',
+      strokePaths: ['M1,1 L2,2'],
+      viewBox: '0 0 109 109',
+      pair: {
+        learningItemId: 'kana-hiragana-small-ya',
+        symbol: 'ゃ',
+        strokePaths: ['M3,3 L4,4'],
+        viewBox: '0 0 109 109',
+      },
+    })
+  })
+
+  it('devuelve null si falta la base, el kana chico, o el trazo de cualquiera', () => {
+    const emptyCatalog: CharacterCatalog = { schemaVersion: 1, version: 'test', checksum: 'test', characters: [] }
+    expect(buildYoonWritingCard(kya, emptyCatalog, {})).toBeNull()
+    expect(buildYoonWritingCard(kya, characterCatalog, {})).toBeNull()
+  })
+
+  it('arma tarjeta para las 66 combinaciones reales contra el catalogo real', () => {
+    for (const combo of YOON_COMBINATIONS) {
+      const card = buildYoonWritingCard(combo, characterCatalog, kanaStrokeCatalog.strokes)
+      expect(card, combo.id).not.toBeNull()
+      expect(card?.pair).toBeDefined()
+    }
   })
 })
 

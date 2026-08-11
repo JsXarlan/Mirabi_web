@@ -23,6 +23,12 @@ import {
   type ProgressOnlyState,
   type ProgressSlice,
 } from './slices/progressSlice'
+import {
+  createWordsProgressSlice,
+  initialWordsProgressState,
+  type WordsProgressSlice,
+  type WordsProgressState,
+} from './slices/wordsProgressSlice'
 
 /**
  * Store combinado a partir de slices de Zustand: cada archivo en `slices/`
@@ -32,6 +38,9 @@ import {
  */
 
 export type ThemePreference = 'light' | 'dark' | 'system'
+
+/** Estilo de fuente y trazo en la practica de escritura: ver WritingCanvas.tsx. */
+export type WritingFontStyle = 'traditional' | 'digital'
 
 // Los tipos viven con la regla que los usa; el store solo los reexporta para
 // que las pantallas sigan teniendo un unico sitio del que importar.
@@ -71,16 +80,26 @@ interface RootActions {
   importProgress: (raw: string) => boolean
 }
 
-export type MirabiStore = ContentSlice & ProgressSlice & MissionsSlice & AchievementsSlice & RootActions
+export type MirabiStore = ContentSlice &
+  ProgressSlice &
+  MissionsSlice &
+  AchievementsSlice &
+  WordsProgressSlice &
+  RootActions
 
 /** Lo que se guarda en localStorage: todo salvo el contenido, que se recarga del JSON. */
-type PersistedState = ProgressOnlyState & MissionsState & AchievementsState & typeof initialPreferences
+type PersistedState = ProgressOnlyState &
+  MissionsState &
+  AchievementsState &
+  WordsProgressState &
+  typeof initialPreferences
 
 const initialPersisted: PersistedState = {
   ...initialPreferences,
   ...initialProgressOnly,
   ...initialMissionsState,
   ...initialAchievementsState,
+  ...initialWordsProgressState,
 }
 
 export const useMirabiStore = create<MirabiStore>()(
@@ -91,6 +110,7 @@ export const useMirabiStore = create<MirabiStore>()(
         ...createProgressSlice(set, get, store),
         ...createMissionsSlice(set, get, store),
         ...createAchievementsSlice(set, get, store),
+        ...createWordsProgressSlice(set, get, store),
 
         // Borra el aprendizaje, no la configuracion: el tema, el nombre y el
         // objetivo diario no son progreso y volver al onboarding sorprende.
@@ -102,6 +122,7 @@ export const useMirabiStore = create<MirabiStore>()(
             ...initialProgressOnly,
             ...initialMissionsState,
             ...initialAchievementsState,
+            ...initialWordsProgressState,
             achievementToastQueue: [],
           }),
 

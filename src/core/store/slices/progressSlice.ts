@@ -36,7 +36,14 @@ import {
   generateDailyMissions,
   generateWeeklyMissions,
 } from '../../domain/missions'
-import type { MirabiStore, LessonOutcome, SessionOutcome, ShopItemId, ThemePreference } from '../useMirabiStore'
+import type {
+  MirabiStore,
+  LessonOutcome,
+  SessionOutcome,
+  ShopItemId,
+  ThemePreference,
+  WritingFontStyle,
+} from '../useMirabiStore'
 
 /** Preferencias del usuario: no son progreso, `resetProgress` no las toca. */
 export interface Preferences {
@@ -50,6 +57,8 @@ export interface Preferences {
   theme: ThemePreference
   audioEnabled: boolean
   subscriptionType: SubscriptionType
+  /** Tipo/trazo de la practica de escritura: ver WritingCanvas.tsx. */
+  writingFontStyle: WritingFontStyle
 
   reminderEnabled: boolean
   /** Hora local a partir de la cual se avisa si aun no se ha estudiado. */
@@ -108,6 +117,7 @@ export interface ProgressActions {
   }) => void
 
   setTheme: (theme: ThemePreference) => void
+  setWritingFontStyle: (style: WritingFontStyle) => void
   setAudioEnabled: (enabled: boolean) => void
   setDisplayName: (name: string) => void
   setDailyGoalMinutes: (minutes: number) => void
@@ -162,6 +172,7 @@ export const initialPreferences: Preferences = {
   theme: 'system',
   audioEnabled: true,
   subscriptionType: 'FREE',
+  writingFontStyle: 'digital',
 
   reminderEnabled: false,
   reminderHour: 20,
@@ -432,6 +443,7 @@ export const createProgressSlice: StateCreator<MirabiStore, [], [], ProgressSlic
       }),
 
     setTheme: (theme) => set({ theme }),
+    setWritingFontStyle: (writingFontStyle) => set({ writingFontStyle }),
     setAudioEnabled: (audioEnabled) => set({ audioEnabled }),
     setDisplayName: (displayName) => set({ displayName }),
     setDailyGoalMinutes: (dailyGoalMinutes) =>

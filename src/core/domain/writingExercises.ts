@@ -1,12 +1,21 @@
-import type { KanaCharacter, KanaStrokeEntry, KanjiCharacter } from '../content/types'
+import type { CharacterCatalog, KanaCharacter, KanaStrokeEntry, KanjiCharacter } from '../content/types'
 import type { MasteryScore } from './models'
 import { MASTERY_VALUE } from './models'
+import type { YoonCombination } from './yoon'
 
 /**
  * Practica de escritura, calcada del patron de kanjiExercises.ts pero sin
  * pasar por el pipeline de ContentExercise: no hay respuesta de texto que
  * corregir, solo un trazo que la persona autoevalua.
  */
+
+/** El kana chico de un yoon (ゃゅょ): se traza aparte, junto a la base. */
+export interface WritingCardPair {
+  learningItemId: string
+  symbol: string
+  strokePaths: string[]
+  viewBox: string
+}
 
 export interface WritingCard {
   id: string
@@ -20,6 +29,8 @@ export interface WritingCard {
   prompt: string
   strokePaths: string[]
   viewBox: string
+  /** Presente solo en un yoon (きゃ...): el kana chico que acompana a la base. */
+  pair?: WritingCardPair
 }
 
 function cardFrom(
@@ -48,6 +59,41 @@ export function buildKanjiWritingCard(
   strokes: Record<string, KanaStrokeEntry>,
 ): WritingCard | null {
   return cardFrom(kanji.id, kanji.learningItemId, kanji.symbol, kanji.meanings[0], strokes)
+}
+
+/**
+ * Tarjeta de un yoon (きゃ...): la base lleva el progreso propio de la
+ * combinacion (id sintetico `yoon-*`, no el de la base ni el del kana chico,
+ * que no se tocan), y el kana chico viaja en `pair` para que la UI lo dibuje
+ * al lado. Nulo si falta el catalogo o el trazo de cualquiera de los dos.
+ */
+export function buildYoonWritingCard(
+  combo: YoonCombination,
+  catalog: CharacterCatalog,
+  strokes: Record<string, KanaStrokeEntry>,
+): WritingCard | null {
+  const base = catalog.characters.find((character) => character.id === combo.baseCharacterId)
+  const small = catalog.characters.find((character) => character.id === combo.smallCharacterId)
+  if (!base || !small) return null
+
+  const baseStrokes = strokes[base.learningItemId]
+  const smallStrokes = strokes[small.learningItemId]
+  if (!baseStrokes || !smallStrokes) return null
+
+  return {
+    id: combo.id,
+    learningItemId: combo.id,
+    symbol: base.symbol,
+    prompt: combo.romaji,
+    strokePaths: baseStrokes.paths,
+    viewBox: baseStrokes.viewBox,
+    pair: {
+      learningItemId: small.learningItemId,
+      symbol: small.symbol,
+      strokePaths: smallStrokes.paths,
+      viewBox: smallStrokes.viewBox,
+    },
+  }
 }
 
 const SESSION_SIZE = 8

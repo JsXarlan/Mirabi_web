@@ -28,6 +28,9 @@
     'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
   --font-jp:
     'Hiragino Sans', 'Yu Gothic', 'Meiryo', 'Noto Sans JP', system-ui, sans-serif;
+  /* Estilo "tradicional" de la practica de escritura: tipo libro de texto, no gotico. Autohospedada, ver main.tsx. */
+  --font-jp-traditional:
+    'Yuji Syuku', 'Hiragino Mincho ProN', 'Yu Mincho', 'Noto Serif JP', serif;
 }
 
 /*

@@ -1,7 +1,7 @@
 {
     "schemaVersion": 1,
     "version": "1.0.0",
-    "checksum": "words-1.0.0-n185-k65",
+    "checksum": "words-1.0.0-n192-k65",
     "words": [
         {
             "id": "word-yama",
@@ -29,7 +29,12 @@
             "audioText": "やま",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": {
+                "text": "やまにのぼります。",
+                "romaji": "yama ni noborimasu.",
+                "meaning": "Subo a la montaña."
+            }
         },
         {
             "id": "word-mizu",
@@ -57,7 +62,12 @@
             "audioText": "みず",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": {
+                "text": "みずをのみます。",
+                "romaji": "mizu o nomimasu.",
+                "meaning": "Bebo agua."
+            }
         },
         {
             "id": "word-hito",
@@ -85,7 +95,8 @@
             "audioText": "ひと",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-nihon",
@@ -115,7 +126,12 @@
             "audioText": "にほん",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": {
+                "text": "にほんへいきたいです。",
+                "romaji": "nihon e ikitai desu.",
+                "meaning": "Quiero ir a Japón."
+            }
         },
         {
             "id": "word-neko",
@@ -141,7 +157,12 @@
             "audioText": "ねこ",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": {
+                "text": "ねこがすきです。",
+                "romaji": "neko ga suki desu.",
+                "meaning": "Me gustan los gatos."
+            }
         },
         {
             "id": "word-hana",
@@ -167,7 +188,8 @@
             "audioText": "はな",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-tsuki",
@@ -193,7 +215,8 @@
             "audioText": "つき",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-konnichiwa",
@@ -222,7 +245,8 @@
             "audioText": "こんにちは",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-sayounara",
@@ -251,7 +275,8 @@
             "audioText": "さようなら",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-arigatou",
@@ -280,7 +305,8 @@
             "audioText": "ありがとう",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-hajimemashite",
@@ -311,7 +337,8 @@
             "audioText": "はじめまして",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-yoroshiku",
@@ -340,7 +367,8 @@
             "audioText": "よろしく",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-ohayou",
@@ -368,7 +396,8 @@
             "audioText": "おはよう",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-oyasumi",
@@ -396,7 +425,8 @@
             "audioText": "おやすみ",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-konbanwa",
@@ -424,7 +454,8 @@
             "audioText": "こんばんは",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-sumimasen",
@@ -454,7 +485,8 @@
             "audioText": "すみません",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-douzo",
@@ -481,7 +513,8 @@
             "audioText": "どうぞ",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-itadakimasu",
@@ -512,7 +545,8 @@
             "audioText": "いただきます",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-gochisousama",
@@ -543,7 +577,8 @@
             "audioText": "ごちそうさま",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-desu",
@@ -569,7 +604,8 @@
             "audioText": "です",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-mizu o nomu",
@@ -598,7 +634,8 @@
             "audioText": "みずをのむ",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-haha",
@@ -625,7 +662,8 @@
             "audioText": "はは",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-otousan",
@@ -656,7 +694,8 @@
             "audioText": "おとうさん",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-okaasan",
@@ -687,7 +726,8 @@
             "audioText": "おかあさん",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-ani",
@@ -715,7 +755,8 @@
             "audioText": "あに",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-imouto",
@@ -745,7 +786,8 @@
             "audioText": "いもうと",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-ane",
@@ -773,7 +815,8 @@
             "audioText": "あね",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-tomodachi",
@@ -804,7 +847,12 @@
             "audioText": "ともだち",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": {
+                "text": "ともだちとはなします。",
+                "romaji": "tomodachi to hanashimasu.",
+                "meaning": "Hablo con mi amigo."
+            }
         },
         {
             "id": "word-sensei",
@@ -834,7 +882,8 @@
             "audioText": "せんせい",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-namae",
@@ -864,7 +913,8 @@
             "audioText": "なまえ",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-gakusei",
@@ -896,7 +946,8 @@
             "audioText": "がくせい",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-watashi",
@@ -925,7 +976,12 @@
             "audioText": "わたし",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": {
+                "text": "わたしはがくせいです。",
+                "romaji": "watashi wa gakusei desu.",
+                "meaning": "Yo soy estudiante."
+            }
         },
         {
             "id": "word-boku",
@@ -951,7 +1007,8 @@
             "audioText": "ぼく",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-kao",
@@ -979,7 +1036,8 @@
             "audioText": "かお",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-mimi",
@@ -1006,7 +1064,8 @@
             "audioText": "みみ",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-te",
@@ -1033,7 +1092,8 @@
             "audioText": "て",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-me",
@@ -1060,7 +1120,8 @@
             "audioText": "め",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-inu",
@@ -1088,7 +1149,12 @@
             "audioText": "いぬ",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": {
+                "text": "いぬとあそびます。",
+                "romaji": "inu to asobimasu.",
+                "meaning": "Juego con el perro."
+            }
         },
         {
             "id": "word-tori",
@@ -1116,7 +1182,8 @@
             "audioText": "とり",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-tako",
@@ -1143,7 +1210,8 @@
             "audioText": "たこ",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-mushi",
@@ -1171,7 +1239,8 @@
             "audioText": "むし",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-buta",
@@ -1198,7 +1267,8 @@
             "audioText": "ぶた",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-zou",
@@ -1224,7 +1294,8 @@
             "audioText": "ぞう",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-sushi",
@@ -1250,7 +1321,12 @@
             "audioText": "すし",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": {
+                "text": "すしをたべます。",
+                "romaji": "sushi o tabemasu.",
+                "meaning": "Como sushi."
+            }
         },
         {
             "id": "word-sakana",
@@ -1279,7 +1355,8 @@
             "audioText": "さかな",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-tabemasu",
@@ -1310,7 +1387,8 @@
             "audioText": "たべます",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-nomimasu",
@@ -1341,7 +1419,8 @@
             "audioText": "のみます",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-nomu",
@@ -1369,7 +1448,8 @@
             "audioText": "のむ",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-tamago",
@@ -1396,7 +1476,8 @@
             "audioText": "たまご",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-ocha",
@@ -1416,7 +1497,8 @@
             ],
             "kanaCharacterIds": [
                 "kana-hiragana-o",
-                "kana-hiragana-chi"
+                "kana-hiragana-chi",
+                "kana-hiragana-small-ya"
             ],
             "kanjiIds": [
                 "kanji-8336"
@@ -1424,7 +1506,8 @@
             "audioText": "おちゃ",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-gohan",
@@ -1453,7 +1536,8 @@
             "audioText": "ごはん",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-yasai",
@@ -1483,7 +1567,8 @@
             "audioText": "やさい",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-niku",
@@ -1511,7 +1596,8 @@
             "audioText": "にく",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-kudamono",
@@ -1542,7 +1628,8 @@
             "audioText": "くだもの",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-kaki",
@@ -1568,7 +1655,8 @@
             "audioText": "かき",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-sake",
@@ -1594,7 +1682,8 @@
             "audioText": "さけ",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-shio",
@@ -1622,7 +1711,8 @@
             "audioText": "しお",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-momo",
@@ -1647,7 +1737,8 @@
             "audioText": "もも",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-ringo",
@@ -1674,7 +1765,12 @@
             "audioText": "りんご",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": {
+                "text": "りんごをたべます。",
+                "romaji": "ringo o tabemasu.",
+                "meaning": "Como una manzana."
+            }
         },
         {
             "id": "word-bangohan",
@@ -1703,7 +1799,8 @@
             "audioText": "ばんごはん",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-oishii",
@@ -1731,7 +1828,12 @@
             "audioText": "おいしい",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": {
+                "text": "これはおいしいです。",
+                "romaji": "kore wa oishii desu.",
+                "meaning": "Esto está delicioso."
+            }
         },
         {
             "id": "word-kirai",
@@ -1758,7 +1860,8 @@
             "audioText": "きらい",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-karai",
@@ -1786,7 +1889,8 @@
             "audioText": "からい",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-suki",
@@ -1814,7 +1918,8 @@
             "audioText": "すき",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-hon",
@@ -1842,7 +1947,12 @@
             "audioText": "ほん",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": {
+                "text": "ほんをよみます。",
+                "romaji": "hon o yomimasu.",
+                "meaning": "Leo un libro."
+            }
         },
         {
             "id": "word-kagi",
@@ -1868,7 +1978,8 @@
             "audioText": "かぎ",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-denwa",
@@ -1898,7 +2009,12 @@
             "audioText": "でんわ",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": {
+                "text": "でんわをかけます。",
+                "romaji": "denwa o kakemasu.",
+                "meaning": "Hago una llamada."
+            }
         },
         {
             "id": "word-enpitsu",
@@ -1926,7 +2042,8 @@
             "audioText": "えんぴつ",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-shashin",
@@ -1946,13 +2063,15 @@
             ],
             "kanaCharacterIds": [
                 "kana-hiragana-shi",
+                "kana-hiragana-small-ya",
                 "kana-hiragana-n"
             ],
             "kanjiIds": [],
             "audioText": "しゃしん",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-tokei",
@@ -1982,7 +2101,12 @@
             "audioText": "とけい",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": {
+                "text": "とけいをみます。",
+                "romaji": "tokei o mimasu.",
+                "meaning": "Miro el reloj."
+            }
         },
         {
             "id": "word-zasshi",
@@ -2002,13 +2126,15 @@
             ],
             "kanaCharacterIds": [
                 "kana-hiragana-za",
+                "kana-hiragana-small-tsu",
                 "kana-hiragana-shi"
             ],
             "kanjiIds": [],
             "audioText": "ざっし",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-nuno",
@@ -2036,7 +2162,8 @@
             "audioText": "ぬの",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-gakkou",
@@ -2057,6 +2184,7 @@
             ],
             "kanaCharacterIds": [
                 "kana-hiragana-ga",
+                "kana-hiragana-small-tsu",
                 "kana-hiragana-ko",
                 "kana-hiragana-u"
             ],
@@ -2067,7 +2195,12 @@
             "audioText": "がっこう",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": {
+                "text": "まいにちがっこうへいきます。",
+                "romaji": "mainichi gakkou e ikimasu.",
+                "meaning": "Voy a la escuela todos los días."
+            }
         },
         {
             "id": "word-daigaku",
@@ -2099,7 +2232,8 @@
             "audioText": "だいがく",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-ginkou",
@@ -2127,7 +2261,8 @@
             "audioText": "ぎんこう",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-eki",
@@ -2155,7 +2290,12 @@
             "audioText": "えき",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": {
+                "text": "えきまであるきます。",
+                "romaji": "eki made arukimasu.",
+                "meaning": "Camino hasta la estación."
+            }
         },
         {
             "id": "word-machi",
@@ -2183,7 +2323,8 @@
             "audioText": "まち",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-uchi",
@@ -2209,7 +2350,8 @@
             "audioText": "うち",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-heya",
@@ -2238,7 +2380,8 @@
             "audioText": "へや",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-chikatetsu",
@@ -2267,7 +2410,8 @@
             "audioText": "ちかてつ",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-kumo",
@@ -2295,7 +2439,8 @@
             "audioText": "くも",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-hoshi",
@@ -2323,7 +2468,8 @@
             "audioText": "ほし",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-fuyu",
@@ -2352,7 +2498,8 @@
             "audioText": "ふゆ",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-yuki",
@@ -2381,7 +2528,8 @@
             "audioText": "ゆき",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-yoru",
@@ -2409,7 +2557,8 @@
             "audioText": "よる",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-asa",
@@ -2435,7 +2584,8 @@
             "audioText": "あさ",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-kesa",
@@ -2461,7 +2611,8 @@
             "audioText": "けさ",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-rainen",
@@ -2492,7 +2643,8 @@
             "audioText": "らいねん",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-jikan",
@@ -2522,7 +2674,8 @@
             "audioText": "じかん",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-arimasu",
@@ -2551,7 +2704,8 @@
             "audioText": "あります",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-imasu",
@@ -2579,7 +2733,8 @@
             "audioText": "います",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-chijimu",
@@ -2606,7 +2761,8 @@
             "audioText": "ちぢむ",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-tsuzuku",
@@ -2635,7 +2791,8 @@
             "audioText": "つづく",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-omoshiroi",
@@ -2667,7 +2824,8 @@
             "audioText": "おもしろい",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-takai",
@@ -2696,7 +2854,8 @@
             "audioText": "たかい",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-chiisai",
@@ -2725,7 +2884,8 @@
             "audioText": "ちいさい",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-kirei",
@@ -2752,7 +2912,8 @@
             "audioText": "きれい",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-genki",
@@ -2783,7 +2944,8 @@
             "audioText": "げんき",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-byouki",
@@ -2803,6 +2965,7 @@
             ],
             "kanaCharacterIds": [
                 "kana-hiragana-bi",
+                "kana-hiragana-small-yo",
                 "kana-hiragana-u",
                 "kana-hiragana-ki"
             ],
@@ -2813,7 +2976,8 @@
             "audioText": "びょうき",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-benri",
@@ -2843,7 +3007,8 @@
             "audioText": "べんり",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-guai",
@@ -2870,7 +3035,8 @@
             "audioText": "ぐあい",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-kore",
@@ -2896,7 +3062,8 @@
             "audioText": "これ",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-sore",
@@ -2922,7 +3089,8 @@
             "audioText": "それ",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-are",
@@ -2948,7 +3116,8 @@
             "audioText": "あれ",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-koko",
@@ -2973,7 +3142,8 @@
             "audioText": "ここ",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-soko",
@@ -2999,7 +3169,8 @@
             "audioText": "そこ",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-nan",
@@ -3028,7 +3199,8 @@
             "audioText": "なん",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-dou",
@@ -3054,7 +3226,8 @@
             "audioText": "どう",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-ikura",
@@ -3082,7 +3255,8 @@
             "audioText": "いくら",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-hai",
@@ -3108,7 +3282,8 @@
             "audioText": "はい",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-iie",
@@ -3134,7 +3309,8 @@
             "audioText": "いいえ",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-roku",
@@ -3160,7 +3336,8 @@
             "audioText": "ろく",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-futari",
@@ -3191,7 +3368,8 @@
             "audioText": "ふたり",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-hitori",
@@ -3222,7 +3400,8 @@
             "audioText": "ひとり",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-hitotsu",
@@ -3252,7 +3431,8 @@
             "audioText": "ひとつ",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-futatsu",
@@ -3282,7 +3462,8 @@
             "audioText": "ふたつ",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-en",
@@ -3311,7 +3492,8 @@
             "audioText": "えん",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-sai",
@@ -3338,7 +3520,8 @@
             "audioText": "さい",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-ue",
@@ -3366,7 +3549,8 @@
             "audioText": "うえ",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-seki",
@@ -3394,7 +3578,8 @@
             "audioText": "せき",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-zushi",
@@ -3420,7 +3605,8 @@
             "audioText": "ずし",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-pikapika",
@@ -3446,7 +3632,8 @@
             "audioText": "ぴかぴか",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-puro",
@@ -3472,7 +3659,8 @@
             "audioText": "ぷろ",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-poketto",
@@ -3494,13 +3682,15 @@
             "kanaCharacterIds": [
                 "kana-hiragana-po",
                 "kana-hiragana-ke",
+                "kana-hiragana-small-tsu",
                 "kana-hiragana-to"
             ],
             "kanjiIds": [],
             "audioText": "ぽけっと",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-kudasai",
@@ -3529,7 +3719,8 @@
             "audioText": "ください",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-ikimasu",
@@ -3559,7 +3750,8 @@
             "audioText": "いきます",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-karate",
@@ -3587,7 +3779,8 @@
             "audioText": "からて",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-tsunami",
@@ -3615,7 +3808,94 @@
             "audioText": "つなみ",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
+        },
+        {
+            "id": "word-kyaku",
+            "learningItemId": "vocab_kyaku",
+            "lemma": "きゃく",
+            "kana": "きゃく",
+            "romaji": "kyaku",
+            "meanings": [
+                "cliente"
+            ],
+            "script": "HIRAGANA",
+            "learningItemType": "VOCABULARY",
+            "partOfSpeech": null,
+            "jlptLevel": null,
+            "tags": [
+                "personas"
+            ],
+            "kanaCharacterIds": [
+                "kana-hiragana-ki",
+                "kana-hiragana-small-ya",
+                "kana-hiragana-ku"
+            ],
+            "kanjiIds": [],
+            "audioText": "きゃく",
+            "source": "MIRABI",
+            "sourceRef": null,
+            "license": null,
+            "exampleSentence": null
+        },
+        {
+            "id": "word-gyuunyuu",
+            "learningItemId": "vocab_gyuunyuu",
+            "lemma": "ぎゅうにゅう",
+            "kana": "ぎゅうにゅう",
+            "romaji": "gyuunyuu",
+            "meanings": [
+                "leche"
+            ],
+            "script": "HIRAGANA",
+            "learningItemType": "VOCABULARY",
+            "partOfSpeech": null,
+            "jlptLevel": null,
+            "tags": [
+                "comida"
+            ],
+            "kanaCharacterIds": [
+                "kana-hiragana-gi",
+                "kana-hiragana-small-yu",
+                "kana-hiragana-u",
+                "kana-hiragana-ni"
+            ],
+            "kanjiIds": [],
+            "audioText": "ぎゅうにゅう",
+            "source": "MIRABI",
+            "sourceRef": null,
+            "license": null,
+            "exampleSentence": null
+        },
+        {
+            "id": "word-toukyou",
+            "learningItemId": "vocab_toukyou",
+            "lemma": "とうきょう",
+            "kana": "とうきょう",
+            "romaji": "toukyou",
+            "meanings": [
+                "Tokio"
+            ],
+            "script": "HIRAGANA",
+            "learningItemType": "VOCABULARY",
+            "partOfSpeech": null,
+            "jlptLevel": null,
+            "tags": [
+                "lugares"
+            ],
+            "kanaCharacterIds": [
+                "kana-hiragana-to",
+                "kana-hiragana-u",
+                "kana-hiragana-ki",
+                "kana-hiragana-small-yo"
+            ],
+            "kanjiIds": [],
+            "audioText": "とうきょう",
+            "source": "MIRABI",
+            "sourceRef": null,
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-anime",
@@ -3643,7 +3923,8 @@
             "audioText": "アニメ",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-terebi",
@@ -3670,7 +3951,8 @@
             "audioText": "テレビ",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-kamera",
@@ -3697,7 +3979,8 @@
             "audioText": "カメラ",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-kaado",
@@ -3717,13 +4000,15 @@
             ],
             "kanaCharacterIds": [
                 "kana-katakana-ka",
+                "kana-katakana-chouonpu",
                 "kana-katakana-do"
             ],
             "kanjiIds": [],
             "audioText": "カード",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-nooto",
@@ -3744,13 +4029,15 @@
             ],
             "kanaCharacterIds": [
                 "kana-katakana-no",
+                "kana-katakana-chouonpu",
                 "kana-katakana-to"
             ],
             "kanjiIds": [],
             "audioText": "ノート",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-memo",
@@ -3777,7 +4064,8 @@
             "audioText": "メモ",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-pen",
@@ -3804,7 +4092,8 @@
             "audioText": "ペン",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-inku",
@@ -3832,7 +4121,8 @@
             "audioText": "インク",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-eakon",
@@ -3861,7 +4151,8 @@
             "audioText": "エアコン",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-doa",
@@ -3888,7 +4179,8 @@
             "audioText": "ドア",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-sofa",
@@ -3915,7 +4207,8 @@
             "audioText": "ソファ",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-beru",
@@ -3942,7 +4235,8 @@
             "audioText": "ベル",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-burogu",
@@ -3969,7 +4263,8 @@
             "audioText": "ブログ",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-saizu",
@@ -3996,7 +4291,8 @@
             "audioText": "サイズ",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-seeru",
@@ -4016,13 +4312,15 @@
             ],
             "kanaCharacterIds": [
                 "kana-katakana-se",
+                "kana-katakana-chouonpu",
                 "kana-katakana-ru"
             ],
             "kanjiIds": [],
             "audioText": "セール",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-hinto",
@@ -4049,7 +4347,8 @@
             "audioText": "ヒント",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-zakku",
@@ -4070,13 +4369,15 @@
             ],
             "kanaCharacterIds": [
                 "kana-katakana-za",
+                "kana-katakana-small-tsu",
                 "kana-katakana-ku"
             ],
             "kanjiIds": [],
             "audioText": "ザック",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-posuto",
@@ -4104,7 +4405,8 @@
             "audioText": "ポスト",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-zubon",
@@ -4132,7 +4434,8 @@
             "audioText": "ズボン",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-shatsu",
@@ -4153,13 +4456,15 @@
             ],
             "kanaCharacterIds": [
                 "kana-katakana-shi",
+                "kana-katakana-small-ya",
                 "kana-katakana-tsu"
             ],
             "kanjiIds": [],
             "audioText": "シャツ",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-uuru",
@@ -4179,13 +4484,15 @@
             ],
             "kanaCharacterIds": [
                 "kana-katakana-u",
+                "kana-katakana-chouonpu",
                 "kana-katakana-ru"
             ],
             "kanjiIds": [],
             "audioText": "ウール",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-koohii",
@@ -4206,13 +4513,15 @@
             ],
             "kanaCharacterIds": [
                 "kana-katakana-ko",
+                "kana-katakana-chouonpu",
                 "kana-katakana-hi"
             ],
             "kanjiIds": [],
             "audioText": "コーヒー",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-suupu",
@@ -4233,13 +4542,15 @@
             ],
             "kanaCharacterIds": [
                 "kana-katakana-su",
+                "kana-katakana-chouonpu",
                 "kana-katakana-pu"
             ],
             "kanjiIds": [],
             "audioText": "スープ",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-tomato",
@@ -4266,7 +4577,8 @@
             "audioText": "トマト",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-hamu",
@@ -4293,7 +4605,8 @@
             "audioText": "ハム",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-raamen",
@@ -4314,6 +4627,7 @@
             ],
             "kanaCharacterIds": [
                 "kana-katakana-ra",
+                "kana-katakana-chouonpu",
                 "kana-katakana-me",
                 "kana-katakana-n"
             ],
@@ -4321,7 +4635,8 @@
             "audioText": "ラーメン",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-biiru",
@@ -4342,13 +4657,15 @@
             ],
             "kanaCharacterIds": [
                 "kana-katakana-bi",
+                "kana-katakana-chouonpu",
                 "kana-katakana-ru"
             ],
             "kanjiIds": [],
             "audioText": "ビール",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-pan",
@@ -4375,7 +4692,8 @@
             "audioText": "パン",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-aisu",
@@ -4403,7 +4721,8 @@
             "audioText": "アイス",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-orenji",
@@ -4432,7 +4751,8 @@
             "audioText": "オレンジ",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-kiui",
@@ -4460,7 +4780,8 @@
             "audioText": "キウイ",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-keeki",
@@ -4481,13 +4802,15 @@
             ],
             "kanaCharacterIds": [
                 "kana-katakana-ke",
+                "kana-katakana-chouonpu",
                 "kana-katakana-ki"
             ],
             "kanjiIds": [],
             "audioText": "ケーキ",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-chiri",
@@ -4514,7 +4837,8 @@
             "audioText": "チリ",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-tsuna",
@@ -4541,7 +4865,8 @@
             "audioText": "ツナ",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-nasu",
@@ -4568,7 +4893,8 @@
             "audioText": "ナス",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-mame",
@@ -4594,7 +4920,8 @@
             "audioText": "マメ",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-remon",
@@ -4622,7 +4949,8 @@
             "audioText": "レモン",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-gamu",
@@ -4649,7 +4977,8 @@
             "audioText": "ガム",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-dezaato",
@@ -4671,13 +5000,15 @@
             "kanaCharacterIds": [
                 "kana-katakana-de",
                 "kana-katakana-za",
+                "kana-katakana-chouonpu",
                 "kana-katakana-to"
             ],
             "kanjiIds": [],
             "audioText": "デザート",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-konbini",
@@ -4706,7 +5037,8 @@
             "audioText": "コンビニ",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-jimu",
@@ -4733,7 +5065,8 @@
             "audioText": "ジム",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-biru",
@@ -4760,7 +5093,8 @@
             "audioText": "ビル",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-puuru",
@@ -4781,13 +5115,15 @@
             ],
             "kanaCharacterIds": [
                 "kana-katakana-pu",
+                "kana-katakana-chouonpu",
                 "kana-katakana-ru"
             ],
             "kanjiIds": [],
             "audioText": "プール",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-basu",
@@ -4814,7 +5150,8 @@
             "audioText": "バス",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-kurasu",
@@ -4842,7 +5179,8 @@
             "audioText": "クラス",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-tenisu",
@@ -4870,7 +5208,8 @@
             "audioText": "テニス",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-gorufu",
@@ -4898,7 +5237,8 @@
             "audioText": "ゴルフ",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-booru",
@@ -4919,13 +5259,15 @@
             ],
             "kanaCharacterIds": [
                 "kana-katakana-bo",
+                "kana-katakana-chouonpu",
                 "kana-katakana-ru"
             ],
             "kanjiIds": [],
             "audioText": "ボール",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-dansu",
@@ -4953,7 +5295,8 @@
             "audioText": "ダンス",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-piano",
@@ -4981,7 +5324,8 @@
             "audioText": "ピアノ",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-gitaa",
@@ -5002,13 +5346,15 @@
             ],
             "kanaCharacterIds": [
                 "kana-katakana-gi",
-                "kana-katakana-ta"
+                "kana-katakana-ta",
+                "kana-katakana-chouonpu"
             ],
             "kanjiIds": [],
             "audioText": "ギター",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-geemu",
@@ -5028,13 +5374,15 @@
             ],
             "kanaCharacterIds": [
                 "kana-katakana-ge",
+                "kana-katakana-chouonpu",
                 "kana-katakana-mu"
             ],
             "kanjiIds": [],
             "audioText": "ゲーム",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-guruupu",
@@ -5055,13 +5403,15 @@
             "kanaCharacterIds": [
                 "kana-katakana-gu",
                 "kana-katakana-ru",
+                "kana-katakana-chouonpu",
                 "kana-katakana-pu"
             ],
             "kanjiIds": [],
             "audioText": "グループ",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-zoon",
@@ -5081,13 +5431,15 @@
             ],
             "kanaCharacterIds": [
                 "kana-katakana-zo",
+                "kana-katakana-chouonpu",
                 "kana-katakana-n"
             ],
             "kanjiIds": [],
             "audioText": "ゾーン",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-risu",
@@ -5114,7 +5466,8 @@
             "audioText": "リス",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-rusu",
@@ -5140,7 +5493,8 @@
             "audioText": "ルス",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
         },
         {
             "id": "word-zero",
@@ -5167,7 +5521,127 @@
             "audioText": "ゼロ",
             "source": "MIRABI",
             "sourceRef": null,
-            "license": null
+            "license": null,
+            "exampleSentence": null
+        },
+        {
+            "id": "word-kyanpu",
+            "learningItemId": "vocab_kyanpu",
+            "lemma": "キャンプ",
+            "kana": "キャンプ",
+            "romaji": "kyanpu",
+            "meanings": [
+                "campamento"
+            ],
+            "script": "KATAKANA",
+            "learningItemType": "VOCABULARY",
+            "partOfSpeech": null,
+            "jlptLevel": null,
+            "tags": [
+                "prestamo",
+                "naturaleza"
+            ],
+            "kanaCharacterIds": [
+                "kana-katakana-ki",
+                "kana-katakana-small-ya",
+                "kana-katakana-n",
+                "kana-katakana-pu"
+            ],
+            "kanjiIds": [],
+            "audioText": "キャンプ",
+            "source": "MIRABI",
+            "sourceRef": null,
+            "license": null,
+            "exampleSentence": null
+        },
+        {
+            "id": "word-nyuusu",
+            "learningItemId": "vocab_nyuusu",
+            "lemma": "ニュース",
+            "kana": "ニュース",
+            "romaji": "nyuusu",
+            "meanings": [
+                "noticias"
+            ],
+            "script": "KATAKANA",
+            "learningItemType": "VOCABULARY",
+            "partOfSpeech": null,
+            "jlptLevel": null,
+            "tags": [
+                "prestamo",
+                "cultura"
+            ],
+            "kanaCharacterIds": [
+                "kana-katakana-ni",
+                "kana-katakana-small-yu",
+                "kana-katakana-chouonpu",
+                "kana-katakana-su"
+            ],
+            "kanjiIds": [],
+            "audioText": "ニュース",
+            "source": "MIRABI",
+            "sourceRef": null,
+            "license": null,
+            "exampleSentence": null
+        },
+        {
+            "id": "word-shoppu",
+            "learningItemId": "vocab_shoppu",
+            "lemma": "ショップ",
+            "kana": "ショップ",
+            "romaji": "shoppu",
+            "meanings": [
+                "tienda"
+            ],
+            "script": "KATAKANA",
+            "learningItemType": "VOCABULARY",
+            "partOfSpeech": null,
+            "jlptLevel": null,
+            "tags": [
+                "prestamo",
+                "lugares"
+            ],
+            "kanaCharacterIds": [
+                "kana-katakana-shi",
+                "kana-katakana-small-yo",
+                "kana-katakana-small-tsu",
+                "kana-katakana-pu"
+            ],
+            "kanjiIds": [],
+            "audioText": "ショップ",
+            "source": "MIRABI",
+            "sourceRef": null,
+            "license": null,
+            "exampleSentence": null
+        },
+        {
+            "id": "word-beddo",
+            "learningItemId": "vocab_beddo",
+            "lemma": "ベッド",
+            "kana": "ベッド",
+            "romaji": "beddo",
+            "meanings": [
+                "cama"
+            ],
+            "script": "KATAKANA",
+            "learningItemType": "VOCABULARY",
+            "partOfSpeech": null,
+            "jlptLevel": null,
+            "tags": [
+                "prestamo",
+                "objetos"
+            ],
+            "kanaCharacterIds": [
+                "kana-katakana-be",
+                "kana-katakana-small-tsu",
+                "kana-katakana-do"
+            ],
+            "kanjiIds": [],
+            "audioText": "ベッド",
+            "source": "MIRABI",
+            "sourceRef": null,
+            "license": null,
+            "exampleSentence": null
         }
     ]
 }

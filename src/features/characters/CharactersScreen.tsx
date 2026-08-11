@@ -12,7 +12,7 @@ import {
 } from '../../ui/components'
 import { Screen } from '../../ui/Layout'
 import { useKanjiMastery } from '../kanji/kanjiMastery'
-import { slugOf, titleOf } from './scriptSlug'
+import { isPracticableGroup, slugOf, titleOf } from './scriptSlug'
 
 /** Dominio medio de un conjunto de kana, en 0..100. */
 export function useScriptMastery(script: CharacterScript): {
@@ -23,7 +23,8 @@ export function useScriptMastery(script: CharacterScript): {
   const catalog = useMirabiStore((state) => state.catalog)
   const learningProgress = useMirabiStore((state) => state.learningProgress)
 
-  const characters = catalog?.characters.filter((item) => item.script === script) ?? []
+  const characters =
+    catalog?.characters.filter((item) => item.script === script && isPracticableGroup(item.group)) ?? []
   if (characters.length === 0) return { total: 0, mastered: 0, percentage: 0 }
 
   let sum = 0

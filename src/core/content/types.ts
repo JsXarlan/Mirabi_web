@@ -191,8 +191,10 @@ export type KanaGroup =
   | 'R'
   | 'W'
   | 'DAKUTEN'
+  /** Yoon: los kana pequenos ya/yu/yo que combinan con una consonante (kya, sha, cha...). */
   | 'COMBINATIONS'
-  | 'BASIC_KATAKANA'
+  /** Sokuon (small tsu) y chouonpu (alargamiento de vocal en katakana). */
+  | 'SPECIAL_MARKS'
 
 export interface CharacterExample {
   text: string
@@ -218,11 +220,29 @@ export interface CharacterCatalog {
   characters: KanaCharacter[]
 }
 
+/**
+ * Yoon (COMBINATIONS) y sokuon/chouonpu (SPECIAL_MARKS) no tienen una lectura
+ * propia que se pueda preguntar en el quiz de opcion multiple estandar -su
+ * romaji es un texto aclaratorio, no una respuesta valida-, asi que se
+ * excluyen del pool de practica, de sus distractores y del calculo de dominio
+ * general. Siguen disponibles en la practica de escritura, que es donde
+ * tienen sentido.
+ */
+export function isPracticableGroup(group: KanaGroup): boolean {
+  return group !== 'COMBINATIONS' && group !== 'SPECIAL_MARKS'
+}
+
 /** Espejo de VocabularyModels.kt y KanjiModels.kt. */
 
 export type WordSource = 'MIRABI' | 'JMDICT'
 export type JlptLevel = 'N5' | 'N4' | 'N3' | 'N2' | 'N1'
 export type MeaningLanguage = 'ES' | 'EN'
+
+export interface WordExampleSentence {
+  text: string
+  romaji: string
+  meaning: string
+}
 
 export interface VocabularyWord {
   id: string
@@ -245,6 +265,8 @@ export interface VocabularyWord {
   source: WordSource
   sourceRef: string | null
   license: string | null
+  /** Solo un subconjunto curado la trae por ahora (ver WordDetailSheet/WordFlashcardScreen). */
+  exampleSentence?: WordExampleSentence | null
 }
 
 export interface WordCatalog {

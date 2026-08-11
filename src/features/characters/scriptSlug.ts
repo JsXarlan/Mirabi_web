@@ -1,4 +1,24 @@
-import type { CharacterScript } from '../../core/content/types'
+import type { CharacterScript, KanaGroup } from '../../core/content/types'
+import { isPracticableGroup } from '../../core/content/types'
+
+export { isPracticableGroup }
+
+/** Etiquetas en español de cada fila/grupo, compartidas por la ficha de caracteres y la escritura. */
+export const GROUP_LABEL: Record<KanaGroup, string> = {
+  VOWELS: 'Vocales',
+  K: 'Serie K',
+  S: 'Serie S',
+  T: 'Serie T',
+  N: 'Serie N',
+  H: 'Serie H',
+  M: 'Serie M',
+  Y: 'Serie Y',
+  R: 'Serie R',
+  W: 'Serie W / n',
+  DAKUTEN: 'Dakuten y handakuten',
+  COMBINATIONS: 'Yōon (ya/yu/yo pequeños)',
+  SPECIAL_MARKS: 'Marcas especiales',
+}
 
 /**
  * Puente entre la ruta y el modelo.

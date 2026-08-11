@@ -9,7 +9,7 @@ import {
   type ReminderSupport,
 } from '../../core/notifications'
 
-import type { ThemePreference } from '../../core/store/useMirabiStore'
+import type { ThemePreference, WritingFontStyle } from '../../core/store/useMirabiStore'
 import { XP_PER_GOAL_MINUTE, useMirabiStore } from '../../core/store/useMirabiStore'
 import { isSpeechAvailable } from '../../core/audio/speech'
 import { REMINDER_HOUR_OPTIONS, usualPracticeHour } from '../../core/domain/practiceHours'
@@ -22,11 +22,18 @@ const THEMES: { value: ThemePreference; label: string }[] = [
   { value: 'system', label: 'Sistema' },
 ]
 
+const WRITING_FONT_STYLES: { value: WritingFontStyle; label: string }[] = [
+  { value: 'digital', label: 'Digital' },
+  { value: 'traditional', label: 'Tradicional' },
+]
+
 const GOALS = [5, 10, 15, 20]
 
 export function SettingsScreen() {
   const theme = useMirabiStore((state) => state.theme)
   const setTheme = useMirabiStore((state) => state.setTheme)
+  const writingFontStyle = useMirabiStore((state) => state.writingFontStyle)
+  const setWritingFontStyle = useMirabiStore((state) => state.setWritingFontStyle)
   const audioEnabled = useMirabiStore((state) => state.audioEnabled)
   const setAudioEnabled = useMirabiStore((state) => state.setAudioEnabled)
   const displayName = useMirabiStore((state) => state.displayName)
@@ -144,6 +151,30 @@ export function SettingsScreen() {
             </button>
           ))}
         </div>
+      </MirabiCard>
+
+      <SectionTitle>Escritura</SectionTitle>
+      <MirabiCard className="mb-5 p-2">
+        <div className="flex gap-1">
+          {WRITING_FONT_STYLES.map((option) => (
+            <button
+              key={option.value}
+              type="button"
+              onClick={() => setWritingFontStyle(option.value)}
+              className={[
+                'flex-1 rounded-[14px] py-2.5 text-sm font-semibold transition',
+                writingFontStyle === option.value
+                  ? 'bg-[var(--primary)] text-[var(--on-primary)]'
+                  : 'text-[var(--on-surface-variant)]',
+              ].join(' ')}
+            >
+              {option.label}
+            </button>
+          ))}
+        </div>
+        <p className="mt-3 px-2 text-xs text-[var(--on-surface-variant)]">
+          Tipo de letra y trazo de la práctica de escritura: digital (geométrico) o tradicional (estilo pincel).
+        </p>
       </MirabiCard>
 
       <SectionTitle>Audio</SectionTitle>

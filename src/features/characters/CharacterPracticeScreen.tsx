@@ -10,7 +10,7 @@ import { buildWordExercise } from '../../core/domain/wordExercises'
 import { useMirabiStore } from '../../core/store/useMirabiStore'
 import type { PracticeCard } from './PracticeSessionScreen'
 import { PracticeSessionScreen } from './PracticeSessionScreen'
-import { scriptFromSlug, titleOf } from './scriptSlug'
+import { isPracticableGroup, scriptFromSlug, titleOf } from './scriptSlug'
 
 const SESSION_SIZE = 10
 
@@ -84,7 +84,9 @@ export function CharacterPracticeScreen() {
 
   const characterCards = useMemo(() => {
     if (!catalog || scriptKey === null || wordsMode) return []
-    const characters = catalog.characters.filter((item) => item.script === scriptKey)
+    const characters = catalog.characters.filter(
+      (item) => item.script === scriptKey && isPracticableGroup(item.group),
+    )
     return buildCharacterSession(characters, catalog, masteryOf)
     // Se construye una sola vez por sesion: rebarajar a media practica seria confuso.
     // eslint-disable-next-line react-hooks/exhaustive-deps

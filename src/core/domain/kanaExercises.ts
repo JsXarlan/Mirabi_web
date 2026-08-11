@@ -1,4 +1,4 @@
-import type { CharacterCatalog, ContentExercise, KanaCharacter } from '../content/types'
+import { isPracticableGroup, type CharacterCatalog, type ContentExercise, type KanaCharacter } from '../content/types'
 import { pickDistinct, seedOf, shuffle } from './seededRandom'
 
 /**
@@ -27,7 +27,10 @@ export function buildKanaExercise(
   catalog: CharacterCatalog,
 ): ContentExercise {
   const others = catalog.characters.filter(
-    (other) => other.script === character.script && other.romaji !== character.romaji,
+    (other) =>
+      other.script === character.script &&
+      other.romaji !== character.romaji &&
+      isPracticableGroup(other.group),
   )
 
   /*

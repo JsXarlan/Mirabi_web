@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 
-import type { KanaCharacter, KanaGroup } from '../../core/content/types'
+import type { KanaCharacter } from '../../core/content/types'
 import type { MasteryScore } from '../../core/domain/models'
 import { useMirabiStore } from '../../core/store/useMirabiStore'
 import {
@@ -17,24 +17,8 @@ import { Screen } from '../../ui/Layout'
 import { AudioButton } from '../lesson/ExerciseView'
 import { useScriptMastery } from './CharactersScreen'
 import { MASTERY_LABEL, MASTERY_STYLE } from './masteryStyle'
-import { scriptFromSlug, slugOf, titleOf } from './scriptSlug'
+import { GROUP_LABEL, scriptFromSlug, slugOf, titleOf } from './scriptSlug'
 import { WordsTab } from './WordsTab'
-
-const GROUP_LABEL: Record<KanaGroup, string> = {
-  VOWELS: 'Vocales',
-  K: 'Serie K',
-  S: 'Serie S',
-  T: 'Serie T',
-  N: 'Serie N',
-  H: 'Serie H',
-  M: 'Serie M',
-  Y: 'Serie Y',
-  R: 'Serie R',
-  W: 'Serie W / n',
-  DAKUTEN: 'Dakuten y handakuten',
-  COMBINATIONS: 'Combinaciones',
-  BASIC_KATAKANA: 'Katakana básico',
-}
 
 type Tab = 'caracteres' | 'palabras'
 
@@ -128,7 +112,19 @@ export function CharacterScriptScreen() {
       {tab === 'caracteres' ? (
         groups.map((group) => (
           <section key={group} className="mb-6">
-            <SectionTitle>{GROUP_LABEL[group]}</SectionTitle>
+            <SectionTitle
+              action={
+                <button
+                  type="button"
+                  onClick={() => navigate(`/caracteres/${slugOf(scriptKey)}/escritura?grupo=${group}`)}
+                  className="text-xs font-semibold text-[var(--primary)]"
+                >
+                  Practicar escritura
+                </button>
+              }
+            >
+              {GROUP_LABEL[group]}
+            </SectionTitle>
             <div className="grid grid-cols-5 gap-2">
               {characters
                 .filter((character) => character.group === group)

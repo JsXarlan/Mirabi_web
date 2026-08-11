@@ -4,11 +4,12 @@ import { NavLink, useNavigate } from 'react-router-dom'
 import { SakuraFall } from './illustrations'
 import { Yuki } from './Yuki'
 
-/** Navegacion oficial: Inicio | Curso | Caracteres | Repaso | Perfil. */
+/** Navegacion oficial: Inicio | Curso | Caracteres | Palabras | Repaso | Perfil. */
 const NAV_ITEMS = [
   { to: '/', label: 'Inicio', icon: '🏠' },
   { to: '/curso', label: 'Curso', icon: '🗺️' },
   { to: '/caracteres', label: 'Caracteres', icon: 'あ' },
+  { to: '/palabras', label: 'Palabras', icon: '📚' },
   { to: '/repaso', label: 'Repaso', icon: '🔁' },
   { to: '/perfil', label: 'Perfil', icon: '🌸' },
 ]

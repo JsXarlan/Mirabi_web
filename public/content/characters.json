@@ -1,7 +1,7 @@
 {
     "schemaVersion": 1,
     "version": "1.0.0",
-    "checksum": "characters-1.0.0-n142",
+    "checksum": "characters-1.0.0-n151",
     "characters": [
         {
             "id": "kana-hiragana-a",
@@ -1140,11 +1140,75 @@
             ]
         },
         {
+            "id": "kana-hiragana-small-ya",
+            "symbol": "ゃ",
+            "romaji": "ya (chica)",
+            "script": "HIRAGANA",
+            "group": "COMBINATIONS",
+            "learningItemId": "kana-hiragana-small-ya",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "きゃく",
+                    "romaji": "kyaku",
+                    "meaning": "cliente"
+                }
+            ]
+        },
+        {
+            "id": "kana-hiragana-small-yu",
+            "symbol": "ゅ",
+            "romaji": "yu (chica)",
+            "script": "HIRAGANA",
+            "group": "COMBINATIONS",
+            "learningItemId": "kana-hiragana-small-yu",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "ぎゅうにゅう",
+                    "romaji": "gyuunyuu",
+                    "meaning": "leche"
+                }
+            ]
+        },
+        {
+            "id": "kana-hiragana-small-yo",
+            "symbol": "ょ",
+            "romaji": "yo (chica)",
+            "script": "HIRAGANA",
+            "group": "COMBINATIONS",
+            "learningItemId": "kana-hiragana-small-yo",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "とうきょう",
+                    "romaji": "toukyou",
+                    "meaning": "Tokio"
+                }
+            ]
+        },
+        {
+            "id": "kana-hiragana-small-tsu",
+            "symbol": "っ",
+            "romaji": "(sokuon)",
+            "script": "HIRAGANA",
+            "group": "SPECIAL_MARKS",
+            "learningItemId": "kana-hiragana-small-tsu",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "がっこう",
+                    "romaji": "gakkou",
+                    "meaning": "escuela"
+                }
+            ]
+        },
+        {
             "id": "kana-katakana-a",
             "symbol": "ア",
             "romaji": "a",
             "script": "KATAKANA",
-            "group": "BASIC_KATAKANA",
+            "group": "VOWELS",
             "learningItemId": "kana-katakana-a",
             "learningItemType": "KANA",
             "examples": [
@@ -1160,7 +1224,7 @@
             "symbol": "イ",
             "romaji": "i",
             "script": "KATAKANA",
-            "group": "BASIC_KATAKANA",
+            "group": "VOWELS",
             "learningItemId": "kana-katakana-i",
             "learningItemType": "KANA",
             "examples": [
@@ -1176,7 +1240,7 @@
             "symbol": "ウ",
             "romaji": "u",
             "script": "KATAKANA",
-            "group": "BASIC_KATAKANA",
+            "group": "VOWELS",
             "learningItemId": "kana-katakana-u",
             "learningItemType": "KANA",
             "examples": [
@@ -1192,7 +1256,7 @@
             "symbol": "エ",
             "romaji": "e",
             "script": "KATAKANA",
-            "group": "BASIC_KATAKANA",
+            "group": "VOWELS",
             "learningItemId": "kana-katakana-e",
             "learningItemType": "KANA",
             "examples": [
@@ -1208,7 +1272,7 @@
             "symbol": "オ",
             "romaji": "o",
             "script": "KATAKANA",
-            "group": "BASIC_KATAKANA",
+            "group": "VOWELS",
             "learningItemId": "kana-katakana-o",
             "learningItemType": "KANA",
             "examples": [
@@ -1224,7 +1288,7 @@
             "symbol": "カ",
             "romaji": "ka",
             "script": "KATAKANA",
-            "group": "BASIC_KATAKANA",
+            "group": "K",
             "learningItemId": "kana-katakana-ka",
             "learningItemType": "KANA",
             "examples": [
@@ -1240,7 +1304,7 @@
             "symbol": "キ",
             "romaji": "ki",
             "script": "KATAKANA",
-            "group": "BASIC_KATAKANA",
+            "group": "K",
             "learningItemId": "kana-katakana-ki",
             "learningItemType": "KANA",
             "examples": [
@@ -1256,7 +1320,7 @@
             "symbol": "ク",
             "romaji": "ku",
             "script": "KATAKANA",
-            "group": "BASIC_KATAKANA",
+            "group": "K",
             "learningItemId": "kana-katakana-ku",
             "learningItemType": "KANA",
             "examples": [
@@ -1272,7 +1336,7 @@
             "symbol": "ケ",
             "romaji": "ke",
             "script": "KATAKANA",
-            "group": "BASIC_KATAKANA",
+            "group": "K",
             "learningItemId": "kana-katakana-ke",
             "learningItemType": "KANA",
             "examples": [
@@ -1288,7 +1352,7 @@
             "symbol": "コ",
             "romaji": "ko",
             "script": "KATAKANA",
-            "group": "BASIC_KATAKANA",
+            "group": "K",
             "learningItemId": "kana-katakana-ko",
             "learningItemType": "KANA",
             "examples": [
@@ -1304,7 +1368,7 @@
             "symbol": "サ",
             "romaji": "sa",
             "script": "KATAKANA",
-            "group": "BASIC_KATAKANA",
+            "group": "S",
             "learningItemId": "kana-katakana-sa",
             "learningItemType": "KANA",
             "examples": [
@@ -1320,7 +1384,7 @@
             "symbol": "シ",
             "romaji": "shi",
             "script": "KATAKANA",
-            "group": "BASIC_KATAKANA",
+            "group": "S",
             "learningItemId": "kana-katakana-shi",
             "learningItemType": "KANA",
             "examples": [
@@ -1336,7 +1400,7 @@
             "symbol": "ス",
             "romaji": "su",
             "script": "KATAKANA",
-            "group": "BASIC_KATAKANA",
+            "group": "S",
             "learningItemId": "kana-katakana-su",
             "learningItemType": "KANA",
             "examples": [
@@ -1352,7 +1416,7 @@
             "symbol": "セ",
             "romaji": "se",
             "script": "KATAKANA",
-            "group": "BASIC_KATAKANA",
+            "group": "S",
             "learningItemId": "kana-katakana-se",
             "learningItemType": "KANA",
             "examples": [
@@ -1368,7 +1432,7 @@
             "symbol": "ソ",
             "romaji": "so",
             "script": "KATAKANA",
-            "group": "BASIC_KATAKANA",
+            "group": "S",
             "learningItemId": "kana-katakana-so",
             "learningItemType": "KANA",
             "examples": [
@@ -1384,7 +1448,7 @@
             "symbol": "タ",
             "romaji": "ta",
             "script": "KATAKANA",
-            "group": "BASIC_KATAKANA",
+            "group": "T",
             "learningItemId": "kana-katakana-ta",
             "learningItemType": "KANA",
             "examples": [
@@ -1400,7 +1464,7 @@
             "symbol": "チ",
             "romaji": "chi",
             "script": "KATAKANA",
-            "group": "BASIC_KATAKANA",
+            "group": "T",
             "learningItemId": "kana-katakana-chi",
             "learningItemType": "KANA",
             "examples": [
@@ -1416,7 +1480,7 @@
             "symbol": "ツ",
             "romaji": "tsu",
             "script": "KATAKANA",
-            "group": "BASIC_KATAKANA",
+            "group": "T",
             "learningItemId": "kana-katakana-tsu",
             "learningItemType": "KANA",
             "examples": [
@@ -1432,7 +1496,7 @@
             "symbol": "テ",
             "romaji": "te",
             "script": "KATAKANA",
-            "group": "BASIC_KATAKANA",
+            "group": "T",
             "learningItemId": "kana-katakana-te",
             "learningItemType": "KANA",
             "examples": [
@@ -1448,7 +1512,7 @@
             "symbol": "ト",
             "romaji": "to",
             "script": "KATAKANA",
-            "group": "BASIC_KATAKANA",
+            "group": "T",
             "learningItemId": "kana-katakana-to",
             "learningItemType": "KANA",
             "examples": [
@@ -1464,7 +1528,7 @@
             "symbol": "ナ",
             "romaji": "na",
             "script": "KATAKANA",
-            "group": "BASIC_KATAKANA",
+            "group": "N",
             "learningItemId": "kana-katakana-na",
             "learningItemType": "KANA",
             "examples": [
@@ -1480,7 +1544,7 @@
             "symbol": "ニ",
             "romaji": "ni",
             "script": "KATAKANA",
-            "group": "BASIC_KATAKANA",
+            "group": "N",
             "learningItemId": "kana-katakana-ni",
             "learningItemType": "KANA",
             "examples": [
@@ -1496,7 +1560,7 @@
             "symbol": "ヌ",
             "romaji": "nu",
             "script": "KATAKANA",
-            "group": "BASIC_KATAKANA",
+            "group": "N",
             "learningItemId": "kana-katakana-nu",
             "learningItemType": "KANA",
             "examples": [
@@ -1512,7 +1576,7 @@
             "symbol": "ネ",
             "romaji": "ne",
             "script": "KATAKANA",
-            "group": "BASIC_KATAKANA",
+            "group": "N",
             "learningItemId": "kana-katakana-ne",
             "learningItemType": "KANA",
             "examples": [
@@ -1528,7 +1592,7 @@
             "symbol": "ノ",
             "romaji": "no",
             "script": "KATAKANA",
-            "group": "BASIC_KATAKANA",
+            "group": "N",
             "learningItemId": "kana-katakana-no",
             "learningItemType": "KANA",
             "examples": [
@@ -1544,7 +1608,7 @@
             "symbol": "ハ",
             "romaji": "ha",
             "script": "KATAKANA",
-            "group": "BASIC_KATAKANA",
+            "group": "H",
             "learningItemId": "kana-katakana-ha",
             "learningItemType": "KANA",
             "examples": [
@@ -1560,7 +1624,7 @@
             "symbol": "ヒ",
             "romaji": "hi",
             "script": "KATAKANA",
-            "group": "BASIC_KATAKANA",
+            "group": "H",
             "learningItemId": "kana-katakana-hi",
             "learningItemType": "KANA",
             "examples": [
@@ -1576,7 +1640,7 @@
             "symbol": "フ",
             "romaji": "fu",
             "script": "KATAKANA",
-            "group": "BASIC_KATAKANA",
+            "group": "H",
             "learningItemId": "kana-katakana-fu",
             "learningItemType": "KANA",
             "examples": [
@@ -1592,7 +1656,7 @@
             "symbol": "ヘ",
             "romaji": "he",
             "script": "KATAKANA",
-            "group": "BASIC_KATAKANA",
+            "group": "H",
             "learningItemId": "kana-katakana-he",
             "learningItemType": "KANA",
             "examples": [
@@ -1608,7 +1672,7 @@
             "symbol": "ホ",
             "romaji": "ho",
             "script": "KATAKANA",
-            "group": "BASIC_KATAKANA",
+            "group": "H",
             "learningItemId": "kana-katakana-ho",
             "learningItemType": "KANA",
             "examples": [
@@ -1624,7 +1688,7 @@
             "symbol": "マ",
             "romaji": "ma",
             "script": "KATAKANA",
-            "group": "BASIC_KATAKANA",
+            "group": "M",
             "learningItemId": "kana-katakana-ma",
             "learningItemType": "KANA",
             "examples": [
@@ -1640,7 +1704,7 @@
             "symbol": "ミ",
             "romaji": "mi",
             "script": "KATAKANA",
-            "group": "BASIC_KATAKANA",
+            "group": "M",
             "learningItemId": "kana-katakana-mi",
             "learningItemType": "KANA",
             "examples": [
@@ -1656,7 +1720,7 @@
             "symbol": "ム",
             "romaji": "mu",
             "script": "KATAKANA",
-            "group": "BASIC_KATAKANA",
+            "group": "M",
             "learningItemId": "kana-katakana-mu",
             "learningItemType": "KANA",
             "examples": [
@@ -1672,7 +1736,7 @@
             "symbol": "メ",
             "romaji": "me",
             "script": "KATAKANA",
-            "group": "BASIC_KATAKANA",
+            "group": "M",
             "learningItemId": "kana-katakana-me",
             "learningItemType": "KANA",
             "examples": [
@@ -1688,7 +1752,7 @@
             "symbol": "モ",
             "romaji": "mo",
             "script": "KATAKANA",
-            "group": "BASIC_KATAKANA",
+            "group": "M",
             "learningItemId": "kana-katakana-mo",
             "learningItemType": "KANA",
             "examples": [
@@ -1704,7 +1768,7 @@
             "symbol": "ヤ",
             "romaji": "ya",
             "script": "KATAKANA",
-            "group": "BASIC_KATAKANA",
+            "group": "Y",
             "learningItemId": "kana-katakana-ya",
             "learningItemType": "KANA",
             "examples": [
@@ -1720,7 +1784,7 @@
             "symbol": "ユ",
             "romaji": "yu",
             "script": "KATAKANA",
-            "group": "BASIC_KATAKANA",
+            "group": "Y",
             "learningItemId": "kana-katakana-yu",
             "learningItemType": "KANA",
             "examples": [
@@ -1736,7 +1800,7 @@
             "symbol": "ヨ",
             "romaji": "yo",
             "script": "KATAKANA",
-            "group": "BASIC_KATAKANA",
+            "group": "Y",
             "learningItemId": "kana-katakana-yo",
             "learningItemType": "KANA",
             "examples": [
@@ -1752,7 +1816,7 @@
             "symbol": "ラ",
             "romaji": "ra",
             "script": "KATAKANA",
-            "group": "BASIC_KATAKANA",
+            "group": "R",
             "learningItemId": "kana-katakana-ra",
             "learningItemType": "KANA",
             "examples": [
@@ -1768,7 +1832,7 @@
             "symbol": "リ",
             "romaji": "ri",
             "script": "KATAKANA",
-            "group": "BASIC_KATAKANA",
+            "group": "R",
             "learningItemId": "kana-katakana-ri",
             "learningItemType": "KANA",
             "examples": [
@@ -1784,7 +1848,7 @@
             "symbol": "ル",
             "romaji": "ru",
             "script": "KATAKANA",
-            "group": "BASIC_KATAKANA",
+            "group": "R",
             "learningItemId": "kana-katakana-ru",
             "learningItemType": "KANA",
             "examples": [
@@ -1800,7 +1864,7 @@
             "symbol": "レ",
             "romaji": "re",
             "script": "KATAKANA",
-            "group": "BASIC_KATAKANA",
+            "group": "R",
             "learningItemId": "kana-katakana-re",
             "learningItemType": "KANA",
             "examples": [
@@ -1816,7 +1880,7 @@
             "symbol": "ロ",
             "romaji": "ro",
             "script": "KATAKANA",
-            "group": "BASIC_KATAKANA",
+            "group": "R",
             "learningItemId": "kana-katakana-ro",
             "learningItemType": "KANA",
             "examples": [
@@ -1832,7 +1896,7 @@
             "symbol": "ワ",
             "romaji": "wa",
             "script": "KATAKANA",
-            "group": "BASIC_KATAKANA",
+            "group": "W",
             "learningItemId": "kana-katakana-wa",
             "learningItemType": "KANA",
             "examples": [
@@ -1848,7 +1912,7 @@
             "symbol": "ヲ",
             "romaji": "wo",
             "script": "KATAKANA",
-            "group": "BASIC_KATAKANA",
+            "group": "W",
             "learningItemId": "kana-katakana-wo",
             "learningItemType": "KANA",
             "examples": [
@@ -1864,7 +1928,7 @@
             "symbol": "ン",
             "romaji": "n",
             "script": "KATAKANA",
-            "group": "BASIC_KATAKANA",
+            "group": "W",
             "learningItemId": "kana-katakana-n",
             "learningItemType": "KANA",
             "examples": [
@@ -2272,6 +2336,86 @@
                     "text": "ポスト",
                     "romaji": "posuto",
                     "meaning": "buzon"
+                }
+            ]
+        },
+        {
+            "id": "kana-katakana-small-ya",
+            "symbol": "ャ",
+            "romaji": "ya (chica)",
+            "script": "KATAKANA",
+            "group": "COMBINATIONS",
+            "learningItemId": "kana-katakana-small-ya",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "キャンプ",
+                    "romaji": "kyanpu",
+                    "meaning": "campamento"
+                }
+            ]
+        },
+        {
+            "id": "kana-katakana-small-yu",
+            "symbol": "ュ",
+            "romaji": "yu (chica)",
+            "script": "KATAKANA",
+            "group": "COMBINATIONS",
+            "learningItemId": "kana-katakana-small-yu",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "ニュース",
+                    "romaji": "nyuusu",
+                    "meaning": "noticias"
+                }
+            ]
+        },
+        {
+            "id": "kana-katakana-small-yo",
+            "symbol": "ョ",
+            "romaji": "yo (chica)",
+            "script": "KATAKANA",
+            "group": "COMBINATIONS",
+            "learningItemId": "kana-katakana-small-yo",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "ショップ",
+                    "romaji": "shoppu",
+                    "meaning": "tienda"
+                }
+            ]
+        },
+        {
+            "id": "kana-katakana-small-tsu",
+            "symbol": "ッ",
+            "romaji": "(sokuon)",
+            "script": "KATAKANA",
+            "group": "SPECIAL_MARKS",
+            "learningItemId": "kana-katakana-small-tsu",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "ベッド",
+                    "romaji": "beddo",
+                    "meaning": "cama"
+                }
+            ]
+        },
+        {
+            "id": "kana-katakana-chouonpu",
+            "symbol": "ー",
+            "romaji": "(chōonpu)",
+            "script": "KATAKANA",
+            "group": "SPECIAL_MARKS",
+            "learningItemId": "kana-katakana-chouonpu",
+            "learningItemType": "KANA",
+            "examples": [
+                {
+                    "text": "コーヒー",
+                    "romaji": "koohii",
+                    "meaning": "cafe"
                 }
             ]
         }
