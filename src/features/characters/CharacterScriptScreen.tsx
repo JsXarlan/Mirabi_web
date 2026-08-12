@@ -101,6 +101,7 @@ export function CharacterScriptScreen() {
 
       <MirabiTabs
         className="mb-5"
+        ariaLabel="Sección"
         value={tab}
         onChange={setTab}
         options={[

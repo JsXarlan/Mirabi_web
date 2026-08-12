@@ -336,6 +336,7 @@ export function SettingsScreen() {
             <button
               key={option.value}
               type="button"
+              aria-pressed={theme === option.value}
               onClick={() => setTheme(option.value)}
               className={[
                 'flex-1 rounded-[14px] py-2.5 text-sm font-semibold transition',
@@ -357,6 +358,7 @@ export function SettingsScreen() {
             <button
               key={option.value}
               type="button"
+              aria-pressed={writingFontStyle === option.value}
               onClick={() => setWritingFontStyle(option.value)}
               className={[
                 'flex-1 rounded-[14px] py-2.5 text-sm font-semibold transition',
@@ -400,6 +402,7 @@ export function SettingsScreen() {
             <button
               key={minutes}
               type="button"
+              aria-pressed={dailyGoalMinutes === minutes}
               onClick={() => setDailyGoalMinutes(minutes)}
               className={[
                 'flex-1 rounded-[14px] py-2.5 text-sm font-semibold transition',

@@ -180,6 +180,7 @@ export function KanjiScreen() {
         <>
           <MirabiTabs
             className="mb-3"
+            ariaLabel="Ordenar por"
             value={mode}
             onChange={setMode}
             options={[

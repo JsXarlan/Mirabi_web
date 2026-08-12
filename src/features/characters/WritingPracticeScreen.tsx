@@ -170,6 +170,7 @@ export function WritingPracticeScreen() {
   const fontStyleToggle = (
     <MirabiTabs
       className="mb-3"
+      ariaLabel="Estilo de trazo"
       value={writingFontStyle}
       onChange={setWritingFontStyle}
       options={[

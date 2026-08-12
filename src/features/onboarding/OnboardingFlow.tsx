@@ -99,6 +99,7 @@ export function OnboardingFlow() {
               <MirabiCard
                 key={option.value}
                 onClick={() => setMotivation(option.value)}
+                ariaPressed={motivation === option.value}
                 className={[
                   'p-4 text-center',
                   motivation === option.value ? 'ring-2 ring-[var(--primary)]' : '',
@@ -132,6 +133,7 @@ export function OnboardingFlow() {
               <MirabiCard
                 key={option.value}
                 onClick={() => setInitialLevel(option.value)}
+                ariaPressed={initialLevel === option.value}
                 className={[
                   'p-4',
                   initialLevel === option.value ? 'ring-2 ring-[var(--primary)]' : '',
@@ -158,6 +160,7 @@ export function OnboardingFlow() {
               <MirabiCard
                 key={option.minutes}
                 onClick={() => setGoalMinutes(option.minutes)}
+                ariaPressed={goalMinutes === option.minutes}
                 className={[
                   'flex items-center justify-between p-4',
                   goalMinutes === option.minutes ? 'ring-2 ring-[var(--primary)]' : '',

@@ -11,11 +11,14 @@ export function MirabiCard({
   className,
   onClick,
   disabled,
+  ariaPressed,
 }: {
   children: ReactNode
   className?: string
   onClick?: () => void
   disabled?: boolean
+  /** Solo para tarjetas que funcionan como opcion seleccionable (ver OnboardingFlow). */
+  ariaPressed?: boolean
 }) {
   const base =
     'rounded-[22px] bg-[var(--surface)] shadow-[var(--shadow-card)] border border-[color-mix(in_srgb,var(--outline)_35%,transparent)]'
@@ -25,6 +28,7 @@ export function MirabiCard({
       type="button"
       onClick={onClick}
       disabled={disabled}
+      aria-pressed={ariaPressed}
       className={cx(
         base,
         'w-full text-left transition active:scale-[0.99] disabled:opacity-55 disabled:active:scale-100',
@@ -261,8 +265,36 @@ export function MirabiSheet({
     const previous = document.activeElement as HTMLElement | null
     panelRef.current?.focus()
 
+    const focusableSelector =
+      'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])'
+
     const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') closeRef.current()
+      if (event.key === 'Escape') {
+        closeRef.current()
+        return
+      }
+      if (event.key !== 'Tab') return
+
+      const panel = panelRef.current
+      if (!panel) return
+      const focusable = Array.from(panel.querySelectorAll<HTMLElement>(focusableSelector))
+      if (focusable.length === 0) {
+        event.preventDefault()
+        panel.focus()
+        return
+      }
+
+      const first = focusable[0]
+      const last = focusable[focusable.length - 1]
+      const active = document.activeElement
+
+      if (event.shiftKey && (active === first || active === panel)) {
+        event.preventDefault()
+        last.focus()
+      } else if (!event.shiftKey && active === last) {
+        event.preventDefault()
+        first.focus()
+      }
     }
     document.addEventListener('keydown', onKeyDown)
     return () => {
@@ -391,11 +423,13 @@ export function MirabiTabs<T extends string>({
   onChange,
   options,
   className,
+  ariaLabel,
 }: {
   value: T
   onChange: (value: T) => void
   options: { value: T; label: string }[]
   className?: string
+  ariaLabel: string
 }) {
   // El aria-selected del boton destino no cambia hasta el siguiente render, asi
   // que apuntar por indice es lo unico fiable: buscar «el que ya esta activo»
@@ -410,7 +444,11 @@ export function MirabiTabs<T extends string>({
   }
 
   return (
-    <div role="tablist" className={cx('inline-flex rounded-[14px] bg-[var(--surface-variant)] p-1', className)}>
+    <div
+      role="tablist"
+      aria-label={ariaLabel}
+      className={cx('inline-flex rounded-[14px] bg-[var(--surface-variant)] p-1', className)}
+    >
       {options.map((option, index) => {
         const active = option.value === value
         return (
