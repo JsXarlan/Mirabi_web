@@ -1,6 +1,6 @@
 import { supabase } from '../supabase/client'
 import { useMirabiStore } from '../store/useMirabiStore'
-import { reconcileOnSignIn } from '../sync/syncEngine'
+import { reconcileOnManualSignIn, reconcileOnSignIn } from '../sync/syncEngine'
 
 /**
  * Orquesta la sesion de Supabase: anonima desde el arranque, sin bloquear la
@@ -88,24 +88,40 @@ export async function setAccountPassword(password: string): Promise<{ ok: boolea
   return { ok: true }
 }
 
+export type SignInResult =
+  | { ok: true; progressRestored: boolean }
+  | { ok: false; message?: string }
+
 /**
  * Para el caso "ese email ya tiene cuenta": inicia sesion en la cuenta
- * existente. El progreso de la sesion anonima actual NO se mezcla
- * automaticamente (evita pisar datos por error) -- queda disponible para
- * exportar a mano desde Ajustes si hace falta rescatarlo.
+ * existente. El progreso de la sesion anonima actual NO se pisa el remoto a
+ * ciegas: `reconcileOnManualSignIn` trae el snapshot de la cuenta real si
+ * existe (lo prefiere sobre el local); si el usuario queria rescatar el
+ * progreso local de todas formas, puede exportarlo a mano desde Ajustes
+ * antes de iniciar sesion.
  */
-export async function signInWithPassword(
-  email: string,
-  password: string,
-): Promise<{ ok: boolean; message?: string }> {
-  const { error } = await supabase.auth.signInWithPassword({ email, password })
+export async function signInWithPassword(email: string, password: string): Promise<SignInResult> {
+  const { data, error } = await supabase.auth.signInWithPassword({ email, password })
   if (error) return { ok: false, message: error.message }
-  return { ok: true }
+
+  const userId = data.user?.id
+  const outcome = userId ? await reconcileOnManualSignIn(userId) : 'kept-local'
+  return { ok: true, progressRestored: outcome === 'restored-remote' }
 }
 
 /** Requiere el provider Google configurado en el dashboard (Authentication → Providers). */
 export async function linkGoogleIdentity(): Promise<{ ok: boolean; message?: string }> {
-  const { error } = await supabase.auth.linkIdentity({ provider: 'google' })
+  const { error } = await supabase.auth.linkIdentity({
+    provider: 'google',
+    // Sin ruta de callback dedicada: vuelve al origen y la sesion se
+    // detecta sola (detectSessionInUrl), onAuthStateChange hace el resto.
+    options: { redirectTo: window.location.origin + window.location.pathname },
+  })
   if (error) return { ok: false, message: error.message }
   return { ok: true }
+}
+
+export async function signOut(): Promise<void> {
+  await supabase.auth.signOut()
+  useMirabiStore.getState().clearAuthSession()
 }

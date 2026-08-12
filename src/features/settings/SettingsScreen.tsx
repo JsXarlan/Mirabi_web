@@ -6,6 +6,7 @@ import {
   linkGoogleIdentity,
   setAccountPassword,
   signInWithPassword,
+  signOut,
 } from '../../core/auth/authManager'
 import {
   disableBackgroundReminder,
@@ -109,6 +110,9 @@ export function SettingsScreen() {
       return
     }
     setAccountView('idle')
+    setAccountMessage(
+      result.progressRestored ? 'Se restauró tu progreso guardado en esta cuenta.' : null,
+    )
   }
 
   const connectGoogle = async () => {
@@ -117,6 +121,13 @@ export function SettingsScreen() {
     const result = await linkGoogleIdentity()
     setAccountBusy(false)
     if (!result.ok) setAccountMessage(result.message ?? 'No se pudo conectar con Google.')
+  }
+
+  const submitSignOut = async () => {
+    setAccountBusy(true)
+    setAccountMessage(null)
+    await signOut()
+    setAccountBusy(false)
   }
 
   useEffect(() => {
@@ -198,12 +209,17 @@ export function SettingsScreen() {
           )}
 
           {authStatus !== 'error' && !isAnonymous && (
-            <p className="text-sm">
-              <span className="font-semibold">Cuenta conectada</span>
-              {accountEmail && (
-                <span className="text-[var(--on-surface-variant)]"> · {accountEmail}</span>
-              )}
-            </p>
+            <div className="flex flex-wrap items-center justify-between gap-2">
+              <p className="text-sm">
+                <span className="font-semibold">Cuenta conectada</span>
+                {accountEmail && (
+                  <span className="text-[var(--on-surface-variant)]"> · {accountEmail}</span>
+                )}
+              </p>
+              <MirabiButton variant="secondary" disabled={accountBusy} onClick={() => void submitSignOut()}>
+                Cerrar sesión
+              </MirabiButton>
+            </div>
           )}
 
           {authStatus !== 'error' && isAnonymous && pendingEmailConfirmation && (
