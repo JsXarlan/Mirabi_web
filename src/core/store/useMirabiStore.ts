@@ -8,6 +8,7 @@ import {
   type AchievementsSlice,
   type AchievementsState,
 } from './slices/achievementsSlice'
+import { createAuthSlice, type AuthSlice } from './slices/authSlice'
 import { createContentSlice, type ContentSlice } from './slices/contentSlice'
 import {
   createMissionsSlice,
@@ -85,6 +86,7 @@ export type MirabiStore = ContentSlice &
   MissionsSlice &
   AchievementsSlice &
   WordsProgressSlice &
+  AuthSlice &
   RootActions
 
 /** Lo que se guarda en localStorage: todo salvo el contenido, que se recarga del JSON. */
@@ -111,6 +113,7 @@ export const useMirabiStore = create<MirabiStore>()(
         ...createMissionsSlice(set, get, store),
         ...createAchievementsSlice(set, get, store),
         ...createWordsProgressSlice(set, get, store),
+        ...createAuthSlice(set, get, store),
 
         // Borra el aprendizaje, no la configuracion: el tema, el nombre y el
         // objetivo diario no son progreso y volver al onboarding sorprende.

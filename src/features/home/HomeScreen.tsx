@@ -3,7 +3,9 @@ import { Link, useNavigate } from 'react-router-dom'
 
 import { epochDayOf, levelFromXp, xpIntoLevel, XP_PER_LEVEL } from '../../core/domain/models'
 import { motivationCopy } from '../../core/domain/motivation'
+import { buildHomeRecommendation } from '../../core/domain/recommendations'
 import { streakStatus } from '../../core/domain/rewards'
+import { buildWeakPoints } from '../../core/domain/weakpoints'
 import { resolveHomeTrigger, yukiReaction } from '../../core/domain/yuki'
 import { useMirabiStore } from '../../core/store/useMirabiStore'
 import { isSpeechAvailable, speakJapanese } from '../../core/audio/speech'
@@ -44,6 +46,8 @@ export function HomeScreen() {
   const catalog = useMirabiStore((state) => state.catalog)
   const kanji = useMirabiStore((state) => state.kanji)
   const index = useMirabiStore((state) => state.index)
+  const errorTallies = useMirabiStore((state) => state.errorTallies)
+  const reviewItems = useMirabiStore((state) => state.reviewItems)
 
   const courseMap = useMirabiStore((state) => state.courseMap)()
   const pendingReviews = useMirabiStore((state) => state.dueReviewItems)()
@@ -70,6 +74,24 @@ export function HomeScreen() {
   const nextWorld = nextUnit ? (index?.worldById.get(nextUnit.worldId) ?? null) : null
 
   const activeMission = missions.find((mission) => !mission.progress.completed) ?? missions[0]
+
+  const recommendation = useMemo(
+    () =>
+      buildHomeRecommendation(
+        buildWeakPoints(errorTallies, reviewItems),
+        pendingReviews.length,
+        Boolean(nextLesson),
+      ),
+    [errorTallies, reviewItems, pendingReviews.length, nextLesson],
+  )
+  const recommendationAction =
+    recommendation?.type === 'REVIEW_ITEM'
+      ? { label: 'Ir a repaso', to: '/repaso' }
+      : recommendation?.type === 'PRACTICE_CATEGORY'
+        ? { label: 'Ver puntos débiles', to: '/analisis' }
+        : recommendation?.type === 'CONTINUE_COURSE'
+          ? { label: 'Ir al curso', to: '/curso' }
+          : null
 
   const dailyPhrase = useMemo(() => {
     if (!catalog || catalog.characters.length === 0) return null
@@ -188,6 +210,25 @@ export function HomeScreen() {
           </MirabiButton>
         </div>
       </MirabiCard>
+
+      {recommendation && (
+        <>
+          <SectionTitle>Recomendado para ti</SectionTitle>
+          <MirabiCard className="mb-5 p-5">
+            <p className="text-sm font-semibold">{recommendation.title}</p>
+            <p className="mt-1 text-xs text-[var(--on-surface-variant)]">{recommendation.reason}</p>
+            {recommendationAction && (
+              <MirabiButton
+                className="mt-3"
+                variant="secondary"
+                onClick={() => navigate(recommendationAction.to)}
+              >
+                {recommendationAction.label}
+              </MirabiButton>
+            )}
+          </MirabiCard>
+        </>
+      )}
 
       <SectionTitle>Objetivo diario</SectionTitle>
       <MirabiCard className="mb-5 p-5">

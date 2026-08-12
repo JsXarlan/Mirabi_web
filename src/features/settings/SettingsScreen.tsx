@@ -1,6 +1,12 @@
-import { useEffect, useRef, useState, type ChangeEvent } from 'react'
+import { useEffect, useRef, useState, type ChangeEvent, type FormEvent } from 'react'
 import { Link } from 'react-router-dom'
 
+import {
+  linkEmailToAnonymousUser,
+  linkGoogleIdentity,
+  setAccountPassword,
+  signInWithPassword,
+} from '../../core/auth/authManager'
 import {
   disableBackgroundReminder,
   enableBackgroundReminder,
@@ -41,6 +47,10 @@ export function SettingsScreen() {
   const dailyGoalMinutes = useMirabiStore((state) => state.dailyGoalMinutes)
   const setDailyGoalMinutes = useMirabiStore((state) => state.setDailyGoalMinutes)
   const subscriptionType = useMirabiStore((state) => state.subscriptionType)
+  const authStatus = useMirabiStore((state) => state.authStatus)
+  const isAnonymous = useMirabiStore((state) => state.isAnonymous)
+  const accountEmail = useMirabiStore((state) => state.email)
+  const pendingEmailConfirmation = useMirabiStore((state) => state.pendingEmailConfirmation)
   const resetProgress = useMirabiStore((state) => state.resetProgress)
   const exportProgress = useMirabiStore((state) => state.exportProgress)
   const importProgress = useMirabiStore((state) => state.importProgress)
@@ -56,6 +66,58 @@ export function SettingsScreen() {
   const [dataMessage, setDataMessage] = useState<string | null>(null)
   const [support, setSupport] = useState<ReminderSupport>('UNSUPPORTED')
   const fileInputRef = useRef<HTMLInputElement>(null)
+
+  const [accountView, setAccountView] = useState<'idle' | 'signup' | 'login'>('idle')
+  const [accountEmailInput, setAccountEmailInput] = useState('')
+  const [accountPasswordInput, setAccountPasswordInput] = useState('')
+  const [accountMessage, setAccountMessage] = useState<string | null>(null)
+  const [accountBusy, setAccountBusy] = useState(false)
+
+  const submitSignup = async (event: FormEvent) => {
+    event.preventDefault()
+    setAccountBusy(true)
+    setAccountMessage(null)
+    const result = await linkEmailToAnonymousUser(accountEmailInput.trim())
+    setAccountBusy(false)
+    if (!result.ok) {
+      setAccountMessage(result.message)
+      return
+    }
+    setAccountMessage('Te enviamos un correo para confirmar tu email. Cuando lo confirmes, volvé acá para elegir tu contraseña.')
+    setAccountView('idle')
+  }
+
+  const submitPassword = async (event: FormEvent) => {
+    event.preventDefault()
+    setAccountBusy(true)
+    setAccountMessage(null)
+    const result = await setAccountPassword(accountPasswordInput)
+    setAccountBusy(false)
+    setAccountPasswordInput('')
+    setAccountMessage(result.ok ? 'Contraseña guardada. Ya podés iniciar sesión con este email en otro dispositivo.' : (result.message ?? 'No se pudo guardar la contraseña.'))
+  }
+
+  const submitLogin = async (event: FormEvent) => {
+    event.preventDefault()
+    setAccountBusy(true)
+    setAccountMessage(null)
+    const result = await signInWithPassword(accountEmailInput.trim(), accountPasswordInput)
+    setAccountBusy(false)
+    setAccountPasswordInput('')
+    if (!result.ok) {
+      setAccountMessage(result.message ?? 'No se pudo iniciar sesión.')
+      return
+    }
+    setAccountView('idle')
+  }
+
+  const connectGoogle = async () => {
+    setAccountBusy(true)
+    setAccountMessage(null)
+    const result = await linkGoogleIdentity()
+    setAccountBusy(false)
+    if (!result.ok) setAccountMessage(result.message ?? 'No se pudo conectar con Google.')
+  }
 
   useEffect(() => {
     void reminderSupport().then(setSupport)
@@ -127,9 +189,128 @@ export function SettingsScreen() {
             className="mt-1 w-full rounded-[16px] border border-[var(--outline)] bg-[var(--surface)] px-4 py-3 outline-none focus:border-[var(--primary)]"
           />
         </label>
-        <p className="mt-3 text-xs text-[var(--on-surface-variant)]">
-          Mirabi funciona sin cuenta: tu progreso se guarda en este navegador.
-        </p>
+        <div className="mt-4 border-t border-[var(--outline)] pt-4">
+          {authStatus === 'error' && (
+            <p className="text-xs text-[var(--on-surface-variant)]">
+              Sin sincronización por ahora (sin conexión, o el servicio no está disponible). Tu
+              progreso sigue a salvo en este navegador.
+            </p>
+          )}
+
+          {authStatus !== 'error' && !isAnonymous && (
+            <p className="text-sm">
+              <span className="font-semibold">Cuenta conectada</span>
+              {accountEmail && (
+                <span className="text-[var(--on-surface-variant)]"> · {accountEmail}</span>
+              )}
+            </p>
+          )}
+
+          {authStatus !== 'error' && isAnonymous && pendingEmailConfirmation && (
+            <>
+              <p className="text-sm font-semibold">Confirmá tu correo</p>
+              <p className="mt-1 text-xs text-[var(--on-surface-variant)]">
+                Te enviamos un enlace a {pendingEmailConfirmation}. Una vez confirmado, elegí tu
+                contraseña acá:
+              </p>
+              <form className="mt-3 flex gap-2" onSubmit={(event) => void submitPassword(event)}>
+                <input
+                  type="password"
+                  required
+                  minLength={6}
+                  placeholder="Contraseña"
+                  value={accountPasswordInput}
+                  onChange={(event) => setAccountPasswordInput(event.target.value)}
+                  className="min-w-0 flex-1 rounded-[16px] border border-[var(--outline)] bg-[var(--surface)] px-4 py-2.5 text-sm outline-none focus:border-[var(--primary)]"
+                />
+                <MirabiButton disabled={accountBusy} type="submit">
+                  Guardar
+                </MirabiButton>
+              </form>
+            </>
+          )}
+
+          {authStatus !== 'error' && isAnonymous && !pendingEmailConfirmation && (
+            <>
+              <p className="text-sm">
+                Tu progreso ya se sincroniza en segundo plano. Creá una cuenta para no perderlo si
+                cambiás de dispositivo o navegador.
+              </p>
+
+              {accountView === 'idle' && (
+                <div className="mt-3 flex flex-wrap gap-2">
+                  <MirabiButton onClick={() => setAccountView('signup')}>Crear cuenta</MirabiButton>
+                  <MirabiButton variant="secondary" onClick={() => setAccountView('login')}>
+                    Ya tengo cuenta
+                  </MirabiButton>
+                  <MirabiButton
+                    variant="secondary"
+                    disabled={accountBusy}
+                    onClick={() => void connectGoogle()}
+                  >
+                    Continuar con Google
+                  </MirabiButton>
+                </div>
+              )}
+
+              {accountView === 'signup' && (
+                <form className="mt-3 flex flex-col gap-2" onSubmit={(event) => void submitSignup(event)}>
+                  <input
+                    type="email"
+                    required
+                    placeholder="tu@email.com"
+                    value={accountEmailInput}
+                    onChange={(event) => setAccountEmailInput(event.target.value)}
+                    className="w-full rounded-[16px] border border-[var(--outline)] bg-[var(--surface)] px-4 py-2.5 text-sm outline-none focus:border-[var(--primary)]"
+                  />
+                  <div className="flex gap-2">
+                    <MirabiButton disabled={accountBusy} type="submit">
+                      Enviar confirmación
+                    </MirabiButton>
+                    <MirabiButton variant="secondary" onClick={() => setAccountView('idle')}>
+                      Cancelar
+                    </MirabiButton>
+                  </div>
+                </form>
+              )}
+
+              {accountView === 'login' && (
+                <form className="mt-3 flex flex-col gap-2" onSubmit={(event) => void submitLogin(event)}>
+                  <input
+                    type="email"
+                    required
+                    placeholder="tu@email.com"
+                    value={accountEmailInput}
+                    onChange={(event) => setAccountEmailInput(event.target.value)}
+                    className="w-full rounded-[16px] border border-[var(--outline)] bg-[var(--surface)] px-4 py-2.5 text-sm outline-none focus:border-[var(--primary)]"
+                  />
+                  <input
+                    type="password"
+                    required
+                    placeholder="Contraseña"
+                    value={accountPasswordInput}
+                    onChange={(event) => setAccountPasswordInput(event.target.value)}
+                    className="w-full rounded-[16px] border border-[var(--outline)] bg-[var(--surface)] px-4 py-2.5 text-sm outline-none focus:border-[var(--primary)]"
+                  />
+                  <div className="flex gap-2">
+                    <MirabiButton disabled={accountBusy} type="submit">
+                      Iniciar sesión
+                    </MirabiButton>
+                    <MirabiButton variant="secondary" onClick={() => setAccountView('idle')}>
+                      Cancelar
+                    </MirabiButton>
+                  </div>
+                </form>
+              )}
+            </>
+          )}
+
+          {accountMessage && (
+            <p role="status" className="mt-3 text-xs font-semibold text-[var(--primary)]">
+              {accountMessage}
+            </p>
+          )}
+        </div>
       </MirabiCard>
 
       <SectionTitle>Tema</SectionTitle>
@@ -297,10 +478,13 @@ export function SettingsScreen() {
 
       <SectionTitle>Copia de seguridad</SectionTitle>
       <MirabiCard className="mb-5 p-5">
-        <p className="text-sm font-semibold">Tu progreso vive solo en este navegador</p>
+        <p className="text-sm font-semibold">
+          {isAnonymous ? 'Copia manual, además de la sincronización automática' : 'Copia manual'}
+        </p>
         <p className="mt-1 text-xs text-[var(--on-surface-variant)]">
-          Sin cuenta no hay sincronización: si limpias los datos del navegador o cambias de
-          dispositivo, se pierde. Guarda un fichero de vez en cuando.
+          {isAnonymous
+            ? 'Tu progreso ya se sincroniza solo, pero sin una cuenta esa sincronización se pierde si limpias los datos del navegador. Creá una cuenta arriba, o guarda un fichero de vez en cuando como respaldo extra.'
+            : 'Guarda un fichero de vez en cuando como respaldo extra, además de la sincronización automática de tu cuenta.'}
         </p>
         <div className="mt-3 flex gap-2">
           <MirabiButton variant="secondary" onClick={downloadBackup}>
