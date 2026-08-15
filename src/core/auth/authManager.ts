@@ -125,3 +125,18 @@ export async function signOut(): Promise<void> {
   await supabase.auth.signOut()
   useMirabiStore.getState().clearAuthSession()
 }
+
+export type DeleteAccountResult = { ok: true } | { ok: false; message: string }
+
+/**
+ * Borra la cuenta y su snapshot remoto (edge function `delete-account`:
+ * `auth.admin.deleteUser`, y `progress_snapshots` se cae por cascade). Tras el
+ * borrado se cierra la sesion local; el progreso local se resetea por
+ * separado desde la UI porque este modulo no decide politicas de datos.
+ */
+export async function deleteAccount(): Promise<DeleteAccountResult> {
+  const { error } = await supabase.functions.invoke('delete-account')
+  if (error) return { ok: false, message: error.message }
+  await signOut()
+  return { ok: true }
+}

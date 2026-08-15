@@ -2,6 +2,7 @@ import { useEffect, useRef, useState, type ChangeEvent, type FormEvent } from 'r
 import { Link } from 'react-router-dom'
 
 import {
+  deleteAccount,
   linkEmailToAnonymousUser,
   linkGoogleIdentity,
   setAccountPassword,
@@ -73,6 +74,8 @@ export function SettingsScreen() {
   const [accountPasswordInput, setAccountPasswordInput] = useState('')
   const [accountMessage, setAccountMessage] = useState<string | null>(null)
   const [accountBusy, setAccountBusy] = useState(false)
+  const [confirmingDelete, setConfirmingDelete] = useState(false)
+  const [deleteMessage, setDeleteMessage] = useState<string | null>(null)
 
   const submitSignup = async (event: FormEvent) => {
     event.preventDefault()
@@ -128,6 +131,21 @@ export function SettingsScreen() {
     setAccountMessage(null)
     await signOut()
     setAccountBusy(false)
+  }
+
+  const submitDeleteAccount = async () => {
+    setAccountBusy(true)
+    setDeleteMessage(null)
+    const result = await deleteAccount()
+    setAccountBusy(false)
+    if (!result.ok) {
+      setDeleteMessage(result.message ?? 'No se pudo borrar la cuenta.')
+      return
+    }
+    setConfirmingDelete(false)
+    // La cuenta y su snapshot remoto ya no existen; el progreso local no debe
+    // resucitar en una sesion anonima nueva. Preferencias de la app se quedan.
+    resetProgress()
   }
 
   useEffect(() => {
@@ -219,6 +237,43 @@ export function SettingsScreen() {
               <MirabiButton variant="secondary" disabled={accountBusy} onClick={() => void submitSignOut()}>
                 Cerrar sesión
               </MirabiButton>
+            </div>
+          )}
+
+          {authStatus !== 'error' && !isAnonymous && (
+            <div className="mt-4 rounded-[16px] border border-[var(--outline)] p-4">
+              <p className="text-sm font-semibold">Zona de peligro</p>
+              <p className="mt-1 text-xs text-[var(--on-surface-variant)]">
+                Borra tu cuenta y todo su progreso en el servidor, además del progreso de este
+                navegador. Es permanente y no se puede deshacer.
+              </p>
+              {confirmingDelete ? (
+                <div className="mt-3 flex flex-col gap-2">
+                  <MirabiButton
+                    variant="danger"
+                    disabled={accountBusy}
+                    onClick={() => void submitDeleteAccount()}
+                  >
+                    {accountBusy ? 'Borrando…' : 'Sí, borrar mi cuenta y mi progreso'}
+                  </MirabiButton>
+                  <MirabiButton variant="secondary" onClick={() => setConfirmingDelete(false)}>
+                    Cancelar
+                  </MirabiButton>
+                </div>
+              ) : (
+                <MirabiButton
+                  className="mt-3"
+                  variant="danger"
+                  onClick={() => setConfirmingDelete(true)}
+                >
+                  Borrar mi cuenta
+                </MirabiButton>
+              )}
+              {deleteMessage && (
+                <p role="alert" className="mt-3 text-xs font-semibold text-[var(--secondary)]">
+                  {deleteMessage}
+                </p>
+              )}
             </div>
           )}
 
