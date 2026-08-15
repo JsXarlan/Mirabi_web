@@ -29,7 +29,8 @@ Paridad funcional con el MVP de la app Android:
 | Prueba de mundo (checkpoint) | ✅ |
 | Colocación inicial (prueba de nivel) | ✅ |
 | Misiones semanales | ✅ |
-| Kanji, escritura, IA conversacional | Fuera del MVP |
+| Kanji | ✅ |
+| Escritura (canvas), IA conversacional | Fuera del MVP |
 
 Más allá del MVP de Android, la web añade:
 
@@ -62,8 +63,9 @@ Más allá del MVP de Android, la web añade:
 - Service worker propio, sin dependencias de build
 - Vitest para los tests
 
-Sin backend: **todo funciona offline** —incluida la primera recarga sin red— y el
-progreso vive en el navegador.
+Sin backend obligatorio: **todo funciona offline** —incluida la primera recarga sin red— y el
+progreso vive en el navegador. La cuenta (Supabase) y la sincronización a `progress_snapshots`
+son opcionales y solo se activan si el usuario inicia sesión.
 
 ## Desarrollo
 
@@ -128,12 +130,13 @@ de qué clase Kotlin es equivalente.
 
 - **Repaso**: Android guarda los fallos; aquí hay repetición espaciada con fechas.
   Si se porta de vuelta, `ReviewItem` necesita `box` y `nextReviewAt`.
-- **Conversaciones guiadas**: en Android llegan de una API remota. Aquí se construyen con los pasos
-  `CONVERSATION_RESPONSE` que ya viven dentro de las lecciones, para que la pantalla funcione sin
-  backend y offline.
+- **Conversaciones guiadas**: en ambas plataformas se construyen con los pasos
+  `CONVERSATION_RESPONSE` que ya viven dentro de las lecciones, para que la pantalla
+  funcione sin backend y offline (en Android, desde 2026-08-12).
 - **Audio**: no hay ficheros grabados. Se usa la síntesis del navegador; si no hay voz `ja-JP`
   instalada, los botones de audio no se muestran.
-- **Cuenta y sincronización**: no implementadas. El progreso es local a este navegador.
+- **Cuenta y sincronización**: implementadas con Supabase (PKCE). El progreso se guarda
+  localmente y se sincroniza con `progress_snapshots`; el estado de sesión no se persiste.
 - **Premium y tienda**: la compra está simulada; no hay pasarela de pago.
 - **Anuncios recompensados**: no implementados en web.
 
