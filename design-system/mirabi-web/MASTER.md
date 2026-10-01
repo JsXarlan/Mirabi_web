@@ -56,7 +56,9 @@ Compilación de producción con `npm run build`. Inspección visual en navegador
 1440 y 375 px, con temas claro y oscuro. Foco al cambiar de pantalla, etiquetas
 visibles en formularios, selección mediante botones y controles táctiles de 44 px.
 Las animaciones conservan el soporte existente de `prefers-reduced-motion`.
-Las suites automatizadas existentes no se ejecutaron en este rediseño.
+Las suites automatizadas no se ejecutaron localmente. GitHub Actions ejecuta
+las suites existentes al abrir el PR; la validación del rediseño terminó con éxito
+en el run #12 de CI.
 
 Fuentes autohospedadas para offline. Yuji Syuku se reserva para la práctica de
 escritura tradicional; las colecciones usan fuentes japonesas del sistema.
