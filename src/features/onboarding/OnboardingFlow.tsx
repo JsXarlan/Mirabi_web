@@ -14,7 +14,8 @@ import {
   MirabiProgressBar,
 } from '../../ui/components'
 import { Yuki } from '../../ui/Yuki'
-import { MirabiBrand, JourneyScene } from '../../ui/Brand'
+import { MirabiBrand } from '../../ui/Brand'
+import { Artwork } from '../../ui/Artwork'
 import { AppIcon } from '../../ui/Icons'
 
 /**
@@ -88,8 +89,8 @@ export function OnboardingFlow() {
           paso.
         </p>
         <div className="onboarding-art">
-          <JourneyScene />
-          <Yuki state="HAPPY" size={170} halo={false} />
+          <Artwork name="journey" className="onboarding-landscape" eager />
+          <Yuki state="HAPPY" size={200} halo={false} />
         </div>
         <span className="onboarding-pill">
           <AppIcon name="leaf" size={17} /> A tu ritmo. Un poquito cada día.

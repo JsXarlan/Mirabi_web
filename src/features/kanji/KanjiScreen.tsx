@@ -289,7 +289,7 @@ export function KanjiSheet({
     .filter((word): word is NonNullable<typeof word> => word !== undefined)
 
   return (
-    <MirabiSheet title={`Kanji ${item.symbol}, ${item.meanings[0]}`} onClose={onClose}>
+    <MirabiSheet artwork="brush" title={`Kanji ${item.symbol}, ${item.meanings[0]}`} onClose={onClose}>
       <div className="flex items-start justify-between">
         <div>
           <p className="font-jp text-6xl leading-none">{item.symbol}</p>

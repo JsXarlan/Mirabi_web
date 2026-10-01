@@ -12,6 +12,7 @@ import {
 } from '../../ui/components'
 import { Screen } from '../../ui/Layout'
 import { AppIcon } from '../../ui/Icons'
+import { ScriptArtwork } from '../../ui/Artwork'
 import { useKanjiMastery } from '../kanji/kanjiMastery'
 import { isPracticableGroup, slugOf, titleOf } from './scriptSlug'
 
@@ -155,9 +156,7 @@ function ScriptCard({
 }) {
   return (
     <MirabiCard className="collection-card" onClick={onOpen}>
-      <div className="collection-symbol" lang="ja" aria-hidden="true">
-        {sample}
-      </div>
+      <ScriptArtwork sample={sample} kanji={title === 'Kanji'} />
       <h2>{title}</h2>
       <p>{description}</p>
       <div className="collection-meta">

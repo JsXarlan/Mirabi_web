@@ -7,6 +7,7 @@ import {
 import { MirabiButton, MirabiCard, SectionTitle } from '../../ui/components'
 import { Screen } from '../../ui/Layout'
 import { AppIcon } from '../../ui/Icons'
+import { Artwork } from '../../ui/Artwork'
 
 /**
  * Tienda Sakura del MVP. La regla del producto es explicita: la Sakura compra
@@ -118,9 +119,7 @@ export function ShopScreen() {
             <li key={item.id}>
               <MirabiCard className="p-4">
                 <div className="item-content">
-                  <span className="icon-tile">
-                    <AppIcon name={item.icon} size={28} />
-                  </span>
+                  <Artwork name={item.id === 'yuki_gift' ? 'gift' : item.id === 'xp_boost' ? 'cards' : item.id === 'streak_shield' ? 'shield' : 'repair'} size={76} />
                   <div className="min-w-0 flex-1">
                     <h2>{item.title}</h2>
                     <p className="mt-0.5 text-xs text-[var(--on-surface-variant)]">

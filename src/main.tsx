@@ -9,6 +9,7 @@ import { ErrorBoundary } from './ui/ErrorBoundary'
 import '@fontsource-variable/dm-sans/wght.css'
 import '@fontsource-variable/nunito/wght.css'
 import './index.css'
+import './art.css'
 // Fuente "tradicional" de la practica de escritura: autohospedada para que
 // funcione offline (el service worker cachea .woff2 igual que cualquier
 // otro asset). Solo se descarga si el estilo tradicional llega a usarse.

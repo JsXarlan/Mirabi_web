@@ -6,6 +6,7 @@ import { epochDayOf } from '../core/domain/models'
 import { streakStatus } from '../core/domain/rewards'
 import { AppIcon } from './Icons'
 import { MirabiBrand } from './Brand'
+import { Artwork, artworkForRoute } from './Artwork'
 import { MirabiProgressBar } from './components'
 
 const NAV_ITEMS = [
@@ -241,6 +242,7 @@ export function Screen({
         >
           {title && (
             <header className="page-heading">
+              <Artwork name={artworkForRoute(pathname)} className="heading-art" size={144} eager />
               <div>
                 <p className="eyebrow">APRENDE · PRACTICA · CRECE</p>
                 <h1>{title}</h1>
@@ -279,6 +281,10 @@ export function SessionScreen({
   hint?: ReactNode
 }) {
   const navigate = useNavigate()
+  const { pathname } = useLocation()
+  const sessionArt = pathname.startsWith('/conversaciones') ? 'tea'
+    : pathname.startsWith('/palabras') || pathname.startsWith('/repaso') ? 'cards'
+      : pathname.includes('kanji') ? 'brush' : 'scroll'
   const clamped = Math.min(1, Math.max(0, progress))
   return (
     <main className="session-layout" id="main-content">
@@ -315,7 +321,7 @@ export function SessionScreen({
         )}
       </section>
       <p className="session-caption">
-        <AppIcon name="leaf" size={16} /> Aquí, cada intento cuenta.
+        <Artwork name={sessionArt} size={48} eager /> Aquí, cada intento cuenta.
       </p>
     </main>
   )

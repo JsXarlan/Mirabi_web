@@ -1,6 +1,7 @@
 import { useEffect, useId, useRef } from 'react'
 import { AppIcon } from './Icons'
 import { Yuki } from './Yuki'
+import { Artwork, type ArtworkName } from './Artwork'
 import type {
   ButtonHTMLAttributes,
   KeyboardEvent as ReactKeyboardEvent,
@@ -209,7 +210,8 @@ export function MirabiLoading({ message = 'Cargando…' }: { message?: string })
       role="status"
       className="flex flex-col items-center justify-center gap-3 py-16 text-[var(--on-surface-variant)]"
     >
-      <div className="h-8 w-8 animate-spin rounded-full border-3 border-[var(--surface-variant)] border-t-[var(--primary)]" />
+      <Yuki state="THINKING" size={100} />
+      <div className="h-1 w-16 animate-pulse rounded-full bg-[var(--primary-container)]" aria-hidden="true" />
       <p className="text-sm">{message}</p>
     </div>
   )
@@ -226,6 +228,7 @@ export function MirabiError({
 }) {
   return (
     <MirabiCard className="p-6 text-center">
+      <div className="mb-3 flex justify-center"><Yuki state="SAD" size={110} /></div>
       <p className="text-base font-semibold">{title}</p>
       <p className="mt-1 text-sm text-[var(--on-surface-variant)]">{message}</p>
       {onRetry && (
@@ -271,11 +274,13 @@ export function MirabiSheet({
   title,
   onClose,
   children,
+  artwork = 'cards',
 }: {
   /** Nombre accesible del dialogo; no se pinta. */
   title: string
   onClose: () => void
   children: ReactNode
+  artwork?: ArtworkName
 }) {
   const panelRef = useRef<HTMLDivElement>(null)
   const titleId = useId()
@@ -341,12 +346,13 @@ export function MirabiSheet({
       <div
         ref={panelRef}
         tabIndex={-1}
-        className="w-full max-w-md rounded-t-[28px] bg-[var(--surface)] p-6 outline-none sm:rounded-[28px] animate-pop"
+        className="mirabi-sheet-panel w-full max-w-md rounded-t-[28px] bg-[var(--surface)] p-6 outline-none sm:rounded-[28px] animate-pop"
         onClick={(event) => event.stopPropagation()}
       >
         <h2 id={titleId} className="sr-only">
           {title}
         </h2>
+        <div className="sheet-art-strip" aria-hidden="true"><Artwork name={artwork} size={56} eager /></div>
         {children}
       </div>
     </div>

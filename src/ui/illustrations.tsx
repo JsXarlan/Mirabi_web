@@ -1,14 +1,6 @@
-/**
- * Ilustraciones de Mirabi.
- *
- * La guia visual pide "ilustraciones japonesas suaves: sakura, torii, Monte Fuji,
- * nubes, caminos". Son SVG inline y no imagenes para que hereden el tema y no
- * pesen en la descarga: la app tiene que arrancar entera offline.
- *
- * Regla: decoran, nunca informan. Todo lo que un usuario necesita saber esta en
- * texto; si aqui se apagara todo, la app seguiria siendo usable.
- */
+import { Artwork } from './Artwork'
 
+/** Painted scenes share the brand; progress and learning information remain HTML. */
 /** Paletas por mundo. El color es la senal de "he cambiado de sitio". */
 const WORLD_SKIES: Record<string, [string, string]> = {
   world_m0_sounds: ['#6b5bbd', '#a88ade'], // atardecer: antes de leer
@@ -27,68 +19,11 @@ export function skyFor(worldId: string): [string, string] {
 
 /**
  * Cabecera de mundo: cielo, Fuji, torii y sakura.
- * Cada mundo cambia de color, asi que avanzar por el curso se ve, no solo se lee.
+ * Alterna el jardín y el viaje al pueblo según el contexto del mundo.
  */
-export function WorldBackdrop({
-  worldId,
-  className = '',
-}: {
-  worldId: string
-  className?: string
-}) {
-  const [from, to] = skyFor(worldId)
-  const gradientId = `sky-${worldId}`
-
-  return (
-    <svg
-      viewBox="0 0 400 150"
-      preserveAspectRatio="xMidYMax slice"
-      className={className}
-      aria-hidden
-    >
-      <defs>
-        <linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor={from} />
-          <stop offset="100%" stopColor={to} />
-        </linearGradient>
-      </defs>
-
-      <rect width="400" height="150" fill={`url(#${gradientId})`} />
-
-      {/* Sol / luna */}
-      <circle cx="320" cy="42" r="20" fill="#fff8e7" opacity={0.85} />
-
-      {/* Nubes */}
-      <g fill="#ffffff" opacity={0.35}>
-        <ellipse cx="70" cy="38" rx="34" ry="11" />
-        <ellipse cx="96" cy="32" rx="22" ry="9" />
-        <ellipse cx="250" cy="62" rx="28" ry="9" />
-      </g>
-
-      {/* Monte Fuji */}
-      <path d="M 120 150 L 205 58 L 290 150 Z" fill="#ffffff" opacity={0.22} />
-      <path d="M 176 90 L 205 58 L 234 90 q -15 8 -29 0 q -14 8 -29 0 Z" fill="#ffffff" opacity={0.6} />
-
-      {/* Colinas */}
-      <path d="M 0 150 q 70 -34 140 -6 q 70 28 140 -10 q 60 -30 120 4 L 400 150 Z" fill="#ffffff" opacity={0.16} />
-
-      {/* Torii */}
-      <g fill="#e8503f" opacity={0.9}>
-        <rect x="44" y="96" width="7" height="54" />
-        <rect x="93" y="96" width="7" height="54" />
-        <rect x="32" y="88" width="80" height="7" rx="3" />
-        <rect x="40" y="104" width="64" height="5" />
-      </g>
-
-      {/* Petalos */}
-      <g fill="#fbdce9" opacity={0.85}>
-        <ellipse cx="150" cy="30" rx="4" ry="2.6" transform="rotate(-25 150 30)" />
-        <ellipse cx="188" cy="52" rx="3.4" ry="2.2" transform="rotate(18 188 52)" />
-        <ellipse cx="342" cy="88" rx="4.4" ry="2.8" transform="rotate(-40 342 88)" />
-        <ellipse cx="272" cy="26" rx="3" ry="2" transform="rotate(35 272 26)" />
-      </g>
-    </svg>
-  )
+export function WorldBackdrop({ worldId, className = '' }: { worldId: string; className?: string }) {
+  const village = ['world_m2_first_japanese', 'world_m4_people', 'world_m5_food'].includes(worldId)
+  return <Artwork name={village ? 'journey' : 'garden'} className={className + ' world-landscape'} eager />
 }
 
 /** Un petalo de sakura: cinco lobulos con la muesca caracteristica. */

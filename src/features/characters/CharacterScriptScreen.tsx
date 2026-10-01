@@ -218,7 +218,7 @@ function CharacterSheet({
   onPractice: () => void
 }) {
   return (
-    <MirabiSheet
+    <MirabiSheet artwork={character.script === 'KATAKANA' ? 'katakana' : 'scroll'}
       title={`Carácter ${character.symbol}, ${character.romaji}`}
       onClose={onClose}
     >

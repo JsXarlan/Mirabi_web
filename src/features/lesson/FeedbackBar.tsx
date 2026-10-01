@@ -1,4 +1,4 @@
-import { AppIcon } from '../../ui/Icons'
+import { Yuki } from '../../ui/Yuki'
 import type { ContentExercise } from '../../core/content/types'
 import { hasKana, toRomaji } from '../../core/domain/romaji'
 import { errorTypeLabel } from '../../core/domain/weakpoints'
@@ -33,7 +33,7 @@ export function FeedbackBar({
       >
         <p className="text-sm font-bold text-[var(--on-surface)]">
           <span className="flex items-center gap-2">
-            <AppIcon name="complete" size={22} />
+            <Yuki state="PROUD" size={40} halo={false} />
             ¡Correcto!
           </span>
         </p>
@@ -59,6 +59,7 @@ export function FeedbackBar({
       className="mt-4 rounded-[16px] bg-[var(--secondary-container)] p-4 animate-pop"
     >
       <div className="flex items-start justify-between gap-3">
+        <Yuki state="SAD" size={40} halo={false} />
         <p className="text-sm font-bold text-[var(--on-secondary-container)]">
           La respuesta era{' '}
           <span

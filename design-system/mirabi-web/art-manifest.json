@@ -1,0 +1,161 @@
+[
+  {
+    "name": "reading",
+    "source": "exec-39d5158b-1fee-407f-9244-b9f1f69735be.png",
+    "widths": [
+      160,
+      320,
+      640
+    ],
+    "prompt": "Use case: illustration-story. Create ONE production website asset, not a webpage mockup. Input reference is the approved Mirabi art direction and Yuki character identity. Isolate the same original white fox Yuki sitting and reading a small open purple study book, full body including fluffy upright tail, purple scarf, tiny golden star charm, lavender diamond on forehead, purple inner ears, large dark purple expressive eyes, soft pink cheeks. Match her friendly hand-painted 2D game illustration exactly, softly shaded cream-white fur, delicate violet shadows, crisp premium silhouette. Three-quarter front view, charming adult-friendly learning companion. Plain book cover with one tiny gold leaf symbol, no written words or characters. Centered on a square canvas with about 8% clear margin, comfortably fills 80% of canvas. A tiny soft contact shadow only. Real transparent alpha background, no scene, ground platform, circle, interface, logo, text, floating petals, border or checkerboard artwork. Keep the entire tail and ear tips visible. This is the definitive reading pose to reuse across the site, faithful to the attached fox."
+  },
+  {
+    "name": "happy",
+    "source": "exec-d8d23a64-803b-4837-bb33-583fa4676aef.png",
+    "widths": [
+      160,
+      320,
+      640
+    ],
+    "prompt": "Use case: illustration-story. ONE production website mascot asset, not a mockup. The input is the definitive Yuki identity reference: same original cream-white fox, lavender diamond forehead mark, purple inner ears, fluffy white tail, pink cheeks, purple scarf with gold star charm, large violet eyes. Match the exact face, proportions, palette and polished hand-painted 2D game-art style. Full body centered on square canvas, entire ears and tail visible with 8% clear margin. Real transparent alpha, no scene, platform, circle, UI, text, logo or background. No book in these poses. Maintain clean anti-aliased edges, no white fringe or colored stray pixels, no confetti. Friendly welcome pose: sitting upright, gently waving one paw, open expressive smiling eyes and relaxed warm smile. This is the standard friendly Yuki for onboarding and messages."
+  },
+  {
+    "name": "proud",
+    "source": "exec-cd5c0e1c-d158-4fc6-85ad-e790793131dc.png",
+    "widths": [
+      160,
+      320,
+      640
+    ],
+    "prompt": "Use case: illustration-story. ONE production website mascot asset, not a mockup. The input is the definitive Yuki identity reference: same original cream-white fox, lavender diamond forehead mark, purple inner ears, fluffy white tail, pink cheeks, purple scarf with gold star charm, large violet eyes. Match the exact face, proportions, palette and polished hand-painted 2D game-art style. Full body centered on square canvas, entire ears and tail visible with 8% clear margin. Real transparent alpha, no scene, platform, circle, UI, text, logo or background. No book in these poses. Maintain clean anti-aliased edges, no white fringe or colored stray pixels, no confetti. Quiet proud celebration pose: sitting, both paws held together at chest, eyes smiling in gentle upward arches, warm satisfied smile. Two very small gold sparkles immediately near the star charm, no props."
+  },
+  {
+    "name": "thinking",
+    "source": "exec-17bc93ca-f95b-407b-a4cb-a819c63f2179.png",
+    "widths": [
+      160,
+      320,
+      640
+    ],
+    "prompt": "Use case: illustration-story. ONE production mascot asset. Reference image is the definitive Yuki; preserve the identical cream-white fox identity, soft violet shading, lavender diamond forehead, purple inner ears, fluffy tail, pink cheeks, purple scarf and small gold star pendant, premium hand-painted 2D style. Full body centered square, ears and tail uncropped with 8% clear margin. Real alpha transparency, no backdrop, platform, border, circle, interface, logos, letters, particles or white/colored fringe. No book or extra props. Keep face and body proportions consistent. Thoughtful gentle pose: sitting, one paw resting lightly against chin, head slightly tilted, eyes open looking softly upward, tiny thoughtful smile. Curious companion, never a strict teacher; no glasses or pointer."
+  },
+  {
+    "name": "sad",
+    "source": "exec-78fbc73e-9cfb-4f35-8180-fc5de65823e6.png",
+    "widths": [
+      160,
+      320,
+      640
+    ],
+    "prompt": "Use case: illustration-story. ONE production mascot asset. Reference image is the definitive Yuki; preserve the identical cream-white fox identity, soft violet shading, lavender diamond forehead, purple inner ears, fluffy tail, pink cheeks, purple scarf and small gold star pendant, premium hand-painted 2D style. Full body centered square, ears and tail uncropped with 8% clear margin. Real alpha transparency, no backdrop, platform, border, circle, interface, logos, letters, particles or white/colored fringe. No book or extra props. Keep face and body proportions consistent. Reassuring gentle pose for a difficult moment: sitting quietly, ears slightly softened, paws together, mildly concerned compassionate eyes, tiny understanding smile, NOT crying, NOT disappointed or judging, no tear. Invites trying again."
+  },
+  {
+    "name": "sleeping",
+    "source": "exec-b40d35c8-37e4-46b0-8f4c-5a463d13472c.png",
+    "widths": [
+      160,
+      320,
+      640
+    ],
+    "prompt": "Use case: illustration-story. ONE production mascot asset. Reference image is the definitive Yuki; preserve the identical cream-white fox identity, soft violet shading, lavender diamond forehead, purple inner ears, fluffy tail, pink cheeks, purple scarf and small gold star pendant, premium hand-painted 2D style. Full body centered square, ears and tail uncropped with 8% clear margin. Real alpha transparency, no backdrop, platform, border, circle, interface, logos, letters, particles or white/colored fringe. No book or extra props. Keep face and body proportions consistent. Peaceful resting pose: curled up asleep hugging her fluffy tail, eyes softly closed, scarf and gold star clearly recognizable. No zzz letters, no bed or scenery. Comfortable quiet expression."
+  },
+  {
+    "name": "garden",
+    "source": "exec-aebc028a-c692-434f-95f6-7aa7d35d0380.png",
+    "widths": [
+      768,
+      1280
+    ],
+    "prompt": "Wide landscape asset, 3:2 aspect ratio, NOT a website mockup. Tranquil Japanese garden at purple twilight, Mount Fuji distant, a small torii gate and one warmly glowing lantern on the RIGHT, sparse pink sakura branch upper right, layered lavender hills, quiet indigo negative space on the left two thirds. No text, no UI, no mascot, no moon. Beautiful softly painted 2D illustration matching the attached Mirabi concept, intermediate detail, soft edges, restrained highlights, purple and lavender primary, no busy foreground."
+  },
+  {
+    "name": "journey",
+    "source": "exec-07455e33-8fab-4a20-b2b2-fa2664f8b7c7.png",
+    "widths": [
+      768,
+      1280
+    ],
+    "prompt": "Wide landscape illustration asset, 3:2 aspect ratio, NOT a website mockup. Winding stone footpath crossing a small Japanese wooden bridge toward a peaceful hillside village and distant lavender mountains, sparse cherry blossoms on RIGHT edge, calm violet and muted lilac atmosphere, one little warm lantern. Spacious composition, clear silhouettes, dreamy premium 2D painted illustration matching attached Mirabi concept, medium detail, purple dominant, no people, no character, no text, no UI."
+  },
+  {
+    "name": "scroll",
+    "source": "exec-94d33e5b-a841-4f02-b7fc-c294b0ecb959.png",
+    "widths": [
+      256,
+      512
+    ],
+    "prompt": "Single transparent-background spot illustration asset: small Japanese cream paper scroll with curled warm wooden ends, angled slightly, completely BLANK center for adding accessible HTML Japanese glyph later; a few pink sakura flowers at its base. Painted 2D style consistent with attached Mirabi, restrained detail, lavender shadows, warm paper, centered square, ample transparent margins. No lettering, no symbols, no UI, no backdrop."
+  },
+  {
+    "name": "brush",
+    "source": "exec-d7168235-8579-4f24-8cfc-97b3827fd089.png",
+    "widths": [
+      256,
+      512
+    ],
+    "prompt": "Single transparent-background spot illustration: Japanese calligraphy brush resting beside a small dark violet ink stone and folded blank cream sheet, a single lavender leaf. Soft premium painted 2D style matching attached Mirabi illustration, readable at small size, restrained detail, purple dominant, centered square with ample transparent margins. No text, no glyphs, no UI, no backdrop."
+  },
+  {
+    "name": "cards",
+    "source": "exec-08793b72-2ccd-4b44-8e71-4fa7743546ed.png",
+    "widths": [
+      256,
+      512
+    ],
+    "prompt": "Single transparent-background spot illustration: three softly rounded learning flashcards fanned out, lavender and cream, front card with a small elegant pink sakura blossom illustration, second with simplified violet Mount Fuji, third solid purple. Premium softly painted 2D style matching attached Mirabi, simple clear silhouettes, small gold accent, centered square, generous transparent margins. No words, no glyphs, no UI, no backdrop."
+  },
+  {
+    "name": "tea",
+    "source": "exec-8b705dcf-1848-4122-abdc-b0938344062d.png",
+    "widths": [
+      256,
+      512
+    ],
+    "prompt": "Single transparent-background spot illustration: cozy little Japanese tea set, two ceramic lilac tea cups and a rounded purple teapot on a small warm wooden tray, one tiny sakura flower. Premium softly painted 2D style matching attached Mirabi, restrained detail, friendly clean silhouette, centered square with ample transparent margins. No text, no glyphs, no UI, no backdrop."
+  },
+  {
+    "name": "medal",
+    "source": "exec-15fd84b7-a37b-4ca8-8507-c1b1ba87f75d.png",
+    "widths": [
+      256,
+      512
+    ],
+    "prompt": "Single transparent-background spot illustration: original gold achievement badge shaped like a rounded six-point medallion with a sculpted five-petal sakura flower at center, softly beveled warm gold, tiny lavender ribbon tails and just two small glints. Premium softly painted 2D style matching Mirabi reference, restrained elegant detail, centered square, ample transparent margins. No text, no UI, no backdrop."
+  },
+  {
+    "name": "gift",
+    "source": "exec-3cecd652-4213-4752-b124-8c4caae42bbc.png",
+    "widths": [
+      256,
+      512
+    ],
+    "prompt": "Single transparent-background spot illustration: little lavender Japanese travel satchel with a cream fox-shaped charm and a tiny pink sakura gift envelope peeking out, gold fastener, friendly simple silhouette. Premium softly painted 2D style matching attached Mirabi reference, restrained detail, centered square with ample transparent margins. No lettering, no symbols, no UI, no backdrop."
+  },
+  {
+    "name": "katakana",
+    "source": "exec-3249185d-0597-4949-8f8f-10cd91c94f0b.png",
+    "widths": [
+      256,
+      512
+    ],
+    "prompt": "Single transparent-background spot illustration asset: small traditional Japanese wooden sign with dark warm brown frame and a rectangular cream paper face, a little peaked wooden roof, hanging from a simple wood crossbar, a few pink sakura flowers at its base. The entire paper face is BLANK for accessible HTML glyph placement later. Same softly painted premium 2D style, gentle purple/lavender shadows, restrained detail, centered square, generous transparent margin. No text, no symbols, no UI, no background."
+  },
+  {
+    "name": "shield",
+    "source": "exec-c79d8aee-cb17-4ffb-b8fe-a3e9cc1faf2b.png",
+    "widths": [
+      256,
+      512
+    ],
+    "prompt": "Single transparent-background spot illustration asset: a friendly protective shield, lavender and deep purple, rounded edges and softly beveled gold rim, a small pink sakura blossom emblem at its center, two tiny golden glints, no weapon. Same softly painted premium 2D Mirabi illustration style as reference, restrained detail and clean silhouette readable at small size, centered square with generous transparent margins. No text, no letters, no UI, no backdrop."
+  },
+  {
+    "name": "repair",
+    "source": "exec-2b6a662f-222a-48a5-b093-76e8eb556812.png",
+    "widths": [
+      256,
+      512
+    ],
+    "prompt": "Single transparent-background spot illustration asset: a small cozy Japanese purple fabric good-luck pouch with a softly rounded lavender adhesive bandage emblem, simple gold drawstring loop and one tiny sakura blossom charm. Visual metaphor for gently repairing a learning streak. Same softly painted premium 2D Mirabi style as reference, restrained detail, clear friendly silhouette, centered square with generous transparent margins. No text, no symbols or characters, no UI, no background."
+  }
+]
