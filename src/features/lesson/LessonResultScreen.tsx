@@ -47,7 +47,7 @@ export function LessonResultScreen() {
 
   return (
     <Screen title="">
-      <div className="flex flex-col items-center gap-3 text-center animate-pop">
+      <div className="celebration flex flex-col items-center gap-3 text-center animate-pop">
         <Yuki size={110} state={reaction.state} />
         <h1 className="text-2xl font-bold">
           {outcome.isPerfect ? '¡Lección perfecta!' : 'Lección completada'}
@@ -75,11 +75,11 @@ export function LessonResultScreen() {
         </div>
         <div className="mt-2 flex items-center justify-between">
           <span className="text-sm text-[var(--on-surface-variant)]">Sakura</span>
-          <span className="text-lg font-bold">+{totalSakura} 🌸</span>
+          <span className="text-lg font-bold">+{totalSakura} Sakura</span>
         </div>
         <div className="mt-2 flex items-center justify-between">
           <span className="text-sm text-[var(--on-surface-variant)]">Racha</span>
-          <span className="text-lg font-bold">{outcome.streakDays} 🔥</span>
+          <span className="text-lg font-bold">{outcome.streakDays} días</span>
         </div>
         {outcome.unitBonus && (
           <p className="mt-3 rounded-[12px] bg-[var(--tertiary-container)] px-3 py-2 text-xs font-semibold text-[var(--on-tertiary-container)]">
@@ -93,7 +93,7 @@ export function LessonResultScreen() {
         )}
         {outcome.levelUp && (
           <p className="mt-2 rounded-[12px] bg-[var(--primary-container)] px-3 py-2 text-xs font-semibold text-[var(--on-primary-container)]">
-            ¡Subiste de nivel! ⭐
+            ¡Subiste de nivel!
           </p>
         )}
       </MirabiCard>

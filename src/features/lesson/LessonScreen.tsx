@@ -89,7 +89,7 @@ export function LessonScreen() {
 
   return (
     <SessionScreen
-      title={isCheckpoint ? `🏁 Prueba · ${lesson.title}` : lesson.title}
+      title={isCheckpoint ? `Prueba · ${lesson.title}` : lesson.title}
       progress={currentIndex / steps.length}
       onExit={() => navigate(`/leccion/${lesson.id}`)}
       hint={

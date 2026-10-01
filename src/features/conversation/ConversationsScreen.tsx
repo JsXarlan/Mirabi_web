@@ -2,16 +2,24 @@ import { useNavigate } from 'react-router-dom'
 
 import { DEFAULT_REWARD_CONFIG } from '../../core/domain/rewards'
 import { useMirabiStore } from '../../core/store/useMirabiStore'
-import { MirabiButton, MirabiCard, MirabiEmpty, SectionTitle } from '../../ui/components'
+import {
+  MirabiButton,
+  MirabiCard,
+  MirabiEmpty,
+  SectionTitle,
+} from '../../ui/components'
 import { Screen } from '../../ui/Layout'
-import { YukiBubble } from '../../ui/Yuki'
+import { Yuki } from '../../ui/Yuki'
+import { AppIcon } from '../../ui/Icons'
 import { buildConversations } from './conversations'
 
 export function ConversationsScreen() {
   const navigate = useNavigate()
   const pack = useMirabiStore((state) => state.pack)
   const courseMap = useMirabiStore((state) => state.courseMap)()
-  const completed = useMirabiStore((state) => state.completedConversationLessonIds)
+  const completed = useMirabiStore(
+    (state) => state.completedConversationLessonIds,
+  )
 
   if (!pack || !courseMap) return <Screen title="Conversaciones">{null}</Screen>
 
@@ -41,30 +49,38 @@ export function ConversationsScreen() {
   )
 
   return (
-    <Screen title="Conversaciones">
-      <YukiBubble message="Aquí usas el japonés que ya aprendiste. No hay respuestas nuevas: solo las tuyas." />
-
+    <Screen title="Conversaciones" wide>
       {recommended && (
-        <MirabiCard className="mt-5 p-5">
-          <p className="text-xs font-semibold text-[var(--on-surface-variant)]">Recomendada</p>
-          <p className="mt-0.5 font-jp text-lg font-bold">{recommended.title}</p>
-          <p className="mt-1 text-xs text-[var(--on-surface-variant)]">
-            {recommended.steps.length} intercambios · +
-            {DEFAULT_REWARD_CONFIG.conversationCompletedSakura} 🌸
-          </p>
-          <MirabiButton
-            className="mt-4"
-            onClick={() => navigate(`/conversaciones/${recommended.lessonId}`)}
-          >
-            Iniciar conversación
-          </MirabiButton>
+        <MirabiCard className="feature-banner">
+          <Yuki size={96} state="HAPPY" halo={false} />
+          <div>
+            <p className="text-xs font-semibold text-[var(--on-surface-variant)]">
+              Recomendada
+            </p>
+            <p className="mt-0.5 font-jp text-lg font-bold">
+              {recommended.title}
+            </p>
+            <p className="mt-1 text-xs text-[var(--on-surface-variant)]">
+              {recommended.steps.length} intercambios · +
+              {DEFAULT_REWARD_CONFIG.conversationCompletedSakura} Sakura
+            </p>
+            <MirabiButton
+              className="mt-4"
+              onClick={() =>
+                navigate(`/conversaciones/${recommended.lessonId}`)
+              }
+            >
+              <AppIcon name="conversation" size={21} />
+              Iniciar conversación
+            </MirabiButton>
+          </div>
         </MirabiCard>
       )}
 
       {Object.entries(grouped).map(([worldTitle, items]) => (
         <section key={worldTitle} className="mt-6">
           <SectionTitle>{worldTitle}</SectionTitle>
-          <ul className="flex flex-col gap-2">
+          <ul className="conversation-grid">
             {items.map((conversation) => (
               <li key={conversation.lessonId}>
                 <MirabiCard
@@ -76,10 +92,19 @@ export function ConversationsScreen() {
                   }
                 >
                   <span aria-hidden className="text-lg">
-                    {conversation.isCompleted ? '✅' : conversation.isUnlocked ? '💬' : '🔒'}
+                    <AppIcon
+                      name={
+                        conversation.isCompleted
+                          ? 'complete'
+                          : conversation.isUnlocked
+                            ? 'conversation'
+                            : 'lock'
+                      }
+                      size={26}
+                    />
                   </span>
                   <span className="min-w-0 flex-1">
-                    <span className="block truncate font-jp text-sm font-semibold">
+                    <span className="block font-jp text-sm font-semibold">
                       {conversation.title}
                     </span>
                     <span className="block text-xs text-[var(--on-surface-variant)]">

@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
-import { epochDayOf, levelFromXp, xpIntoLevel, XP_PER_LEVEL } from '../../core/domain/models'
+import { epochDayOf, levelFromXp } from '../../core/domain/models'
 import { motivationCopy } from '../../core/domain/motivation'
 import { buildHomeRecommendation } from '../../core/domain/recommendations'
 import { streakStatus } from '../../core/domain/rewards'
@@ -10,14 +10,14 @@ import { resolveHomeTrigger, yukiReaction } from '../../core/domain/yuki'
 import { useMirabiStore } from '../../core/store/useMirabiStore'
 import { isSpeechAvailable, speakJapanese } from '../../core/audio/speech'
 import {
-  MirabiButton,
   MirabiCard,
   MirabiProgressBar,
-  MirabiStatChip,
   SectionTitle,
 } from '../../ui/components'
 import { Screen } from '../../ui/Layout'
 import { Yuki } from '../../ui/Yuki'
+import { AppIcon } from '../../ui/Icons'
+import { JourneyScene } from '../../ui/Brand'
 
 function greeting(): string {
   const hour = new Date().getHours()
@@ -33,15 +33,22 @@ export function HomeScreen() {
   const displayName = useMirabiStore((state) => state.displayName)
   const motivationValue = useMirabiStore((state) => state.motivation)
   const streakDays = useMirabiStore((state) => state.streakDays)
-  const lastActivityEpochDay = useMirabiStore((state) => state.lastActivityEpochDay)
-  const sakura = useMirabiStore((state) => state.sakura)
+  const lastActivityEpochDay = useMirabiStore(
+    (state) => state.lastActivityEpochDay,
+  )
   const totalXp = useMirabiStore((state) => state.totalXp)
   const dailyGoalXp = useMirabiStore((state) => state.dailyGoalXp)
   const dailyActivity = useMirabiStore((state) => state.dailyActivity)
   const activityEpochDay = useMirabiStore((state) => state.activityEpochDay)
-  const totalLessonsCompleted = useMirabiStore((state) => state.totalLessonsCompleted)
-  const totalReviewsCompleted = useMirabiStore((state) => state.totalReviewsCompleted)
-  const totalConversationsCompleted = useMirabiStore((state) => state.totalConversationsCompleted)
+  const totalLessonsCompleted = useMirabiStore(
+    (state) => state.totalLessonsCompleted,
+  )
+  const totalReviewsCompleted = useMirabiStore(
+    (state) => state.totalReviewsCompleted,
+  )
+  const totalConversationsCompleted = useMirabiStore(
+    (state) => state.totalConversationsCompleted,
+  )
   const activeDays = useMirabiStore((state) => state.activeDays)
   const catalog = useMirabiStore((state) => state.catalog)
   const kanji = useMirabiStore((state) => state.kanji)
@@ -70,10 +77,15 @@ export function HomeScreen() {
   const nextLesson = courseMap?.currentLessonId
     ? (index?.lessonById.get(courseMap.currentLessonId) ?? null)
     : null
-  const nextUnit = nextLesson ? (index?.unitById.get(nextLesson.unitId) ?? null) : null
-  const nextWorld = nextUnit ? (index?.worldById.get(nextUnit.worldId) ?? null) : null
+  const nextUnit = nextLesson
+    ? (index?.unitById.get(nextLesson.unitId) ?? null)
+    : null
+  const nextWorld = nextUnit
+    ? (index?.worldById.get(nextUnit.worldId) ?? null)
+    : null
 
-  const activeMission = missions.find((mission) => !mission.progress.completed) ?? missions[0]
+  const activeMission =
+    missions.find((mission) => !mission.progress.completed) ?? missions[0]
 
   const recommendation = useMemo(
     () =>
@@ -96,7 +108,9 @@ export function HomeScreen() {
   const dailyPhrase = useMemo(() => {
     if (!catalog || catalog.characters.length === 0) return null
     // Frase del dia estable dentro del mismo dia y distinta cada dia.
-    const withExample = catalog.characters.filter((character) => character.examples.length > 0)
+    const withExample = catalog.characters.filter(
+      (character) => character.examples.length > 0,
+    )
     if (withExample.length === 0) return null
     const character = withExample[today % withExample.length]
     return character.examples[0]
@@ -143,225 +157,347 @@ export function HomeScreen() {
 
   const motivation = motivationCopy(motivationValue)
   const level = levelFromXp(totalXp)
-  const goalProgress = dailyGoalXp > 0 ? todayActivity.xpEarnedToday / dailyGoalXp : 0
+  const goalProgress =
+    dailyGoalXp > 0 ? todayActivity.xpEarnedToday / dailyGoalXp : 0
+
+  const week = Array.from({ length: 7 }, (_, i) => today - 6 + i)
+  const date = new Date().toLocaleDateString('es-PE', {
+    weekday: 'long',
+    day: 'numeric',
+    month: 'long',
+  })
 
   return (
-    <Screen>
-      <header className="mb-5 flex items-center gap-3">
-        <Yuki state={yuki.state} size={56} />
-        <div className="min-w-0 flex-1">
-          <p className="text-sm text-[var(--on-surface-variant)]">{greeting()}</p>
-          <h1 className="truncate text-xl font-bold">{displayName ?? 'Bienvenido a Mirabi'}</h1>
-        </div>
-        <Link
-          to="/ajustes"
-          aria-label="Ajustes"
-          className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--surface-variant)] text-lg"
-        >
-          ⚙️
-        </Link>
-      </header>
-
-      {/* Yuki dice algo, no solo pone cara: es su unico momento fuera de los
-          resultados, y el que recoge volver tras unos dias. */}
-      <MirabiCard className="mb-5 p-4">
-        <p className="text-sm">{yuki.text}</p>
-        <p className="mt-1 text-xs text-[var(--on-surface-variant)]">
-          {motivation.icon} {motivation.encouragement}
-        </p>
-      </MirabiCard>
-
-      <div className="mb-5 flex gap-2">
-        <MirabiStatChip
-          icon={streak.atRisk ? '⏳' : '🔥'}
-          value={streak.days}
-          label={streak.atRisk ? 'Racha (hoy no)' : 'Racha'}
-        />
-        <MirabiStatChip icon="🌸" value={sakura} label="Sakura" />
-        <MirabiStatChip icon="⭐" value={`Nv ${level}`} label={`${xpIntoLevel(totalXp)}/${XP_PER_LEVEL} XP`} />
-      </div>
-
-      {/* Accion principal: la tarjeta visualmente dominante de la pantalla. */}
-      <MirabiCard className="mb-5 overflow-hidden p-0">
-        <div className="bg-[var(--primary)] px-5 py-4 text-[var(--on-primary)]">
-          <p className="text-xs font-semibold opacity-90">
-            {nextWorld ? nextWorld.title : 'Tu camino'}
-            {nextUnit ? ` · ${nextUnit.title}` : ''}
+    <Screen wide>
+      <header className="home-welcome">
+        <div>
+          <p className="eyebrow">
+            {greeting()}
+            {displayName ? ', ' + displayName : ''}
           </p>
-          <h2 className="mt-0.5 text-xl font-bold">
-            {nextLesson ? nextLesson.title : '¡Curso completado!'}
-          </h2>
+          <h1>
+            Un poquito más cerca
+            <br className="hidden sm:block" /> de tu japonés.
+          </h1>
+          <p className="page-subtitle">Tu próximo paso te está esperando.</p>
         </div>
-        <div className="p-5">
-          <div className="mb-3 flex items-center justify-between text-sm">
-            <span className="text-[var(--on-surface-variant)]">Progreso del curso</span>
-            <span className="font-semibold">
-              {courseMap?.courseProgress.completedLessons ?? 0}/
-              {courseMap?.courseProgress.totalLessons ?? 0} lecciones
-            </span>
-          </div>
-          <MirabiProgressBar progress={(courseMap?.overallProgressPercentage ?? 0) / 100} />
-          <MirabiButton
-            className="mt-4"
-            disabled={!nextLesson}
-            onClick={() => nextLesson && navigate(`/leccion/${nextLesson.id}`)}
-          >
-            {totalLessonsCompleted === 0 ? 'Empezar mi primera lección' : 'Continuar lección'}
-          </MirabiButton>
-        </div>
-      </MirabiCard>
-
-      {recommendation && (
-        <>
-          <SectionTitle>Recomendado para ti</SectionTitle>
-          <MirabiCard className="mb-5 p-5">
-            <p className="text-sm font-semibold">{recommendation.title}</p>
-            <p className="mt-1 text-xs text-[var(--on-surface-variant)]">{recommendation.reason}</p>
-            {recommendationAction && (
-              <MirabiButton
-                className="mt-3"
-                variant="secondary"
-                onClick={() => navigate(recommendationAction.to)}
+        <span className="home-date">
+          <AppIcon name="calendar" size={18} />
+          {date}
+        </span>
+      </header>
+      <div className="home-grid">
+        <div className="home-main">
+          <section className="lesson-hero" aria-labelledby="next-lesson-title">
+            <JourneyScene className="hero-scene" />
+            <div className="hero-yuki">
+              <Yuki state={yuki.state} size={112} halo={false} />
+            </div>
+            <div className="hero-content">
+              <span className="hero-label">
+                <AppIcon name="sparkle" size={16} /> TU SIGUIENTE PASO
+              </span>
+              <p className="hero-unit">
+                {nextWorld?.title ?? 'Tu camino'}
+                {nextUnit ? ' · ' + nextUnit.title : ''}
+              </p>
+              <h2 id="next-lesson-title">
+                {nextLesson?.title ?? '¡Curso completado!'}
+              </h2>
+              <p>
+                {nextLesson
+                  ? 'Una pequeña lección. Una nueva forma de entender.'
+                  : 'Sigue explorando y refuerza lo que has aprendido.'}
+              </p>
+              <button
+                type="button"
+                className="mirabi-button hero-action"
+                onClick={() =>
+                  navigate(nextLesson ? '/leccion/' + nextLesson.id : '/repaso')
+                }
               >
-                {recommendationAction.label}
-              </MirabiButton>
-            )}
-          </MirabiCard>
-        </>
-      )}
+                {nextLesson
+                  ? totalLessonsCompleted === 0
+                    ? 'Empezar mi primera lección'
+                    : 'Continuar lección'
+                  : 'Ir a repaso'}
+                <AppIcon name="next" size={20} />
+              </button>
+            </div>
+            <div className="hero-footer">
+              <div className="hero-footer-label">
+                <span>Tu camino recorrido</span>
+                <strong>
+                  {courseMap?.courseProgress.completedLessons ?? 0} /{' '}
+                  {courseMap?.courseProgress.totalLessons ?? 0} lecciones
+                </strong>
+              </div>
+              <MirabiProgressBar
+                progress={(courseMap?.overallProgressPercentage ?? 0) / 100}
+                label="Progreso del curso"
+              />
+            </div>
+          </section>
 
-      <SectionTitle>Objetivo diario</SectionTitle>
-      <MirabiCard className="mb-5 p-5">
-        <div className="mb-2 flex items-baseline justify-between">
-          <span className="text-sm font-semibold">
-            {todayActivity.xpEarnedToday} / {dailyGoalXp} XP
-          </span>
-          {todayActivity.dailyGoalCompleted && (
-            <span className="text-sm font-semibold text-[var(--success)]">Completado ✓</span>
-          )}
-        </div>
-        <MirabiProgressBar
-          progress={goalProgress}
-          tone={todayActivity.dailyGoalCompleted ? 'success' : 'primary'}
-        />
-      </MirabiCard>
-
-      {activeMission && (
-        <>
-          <SectionTitle
-            action={
-              <Link to="/misiones" className="text-xs font-semibold text-[var(--primary)]">
-                Ver todas
+          <div>
+            <SectionTitle
+              action={
+                <Link to="/caracteres" className="text-link">
+                  Explorar <AppIcon name="next" size={16} />
+                </Link>
+              }
+            >
+              Un momento para practicar
+            </SectionTitle>
+            <div className="practice-grid">
+              <Link to="/repaso" className="mirabi-card practice-card">
+                <span className="icon-tile">
+                  <AppIcon name="review" size={25} />
+                </span>
+                <h3>Refuerza lo aprendido</h3>
+                <p>
+                  {pendingReviews.length > 0
+                    ? pendingReviews.length + ' elementos listos para repasar'
+                    : 'Todo al día. Puedes practicar a tu ritmo.'}
+                </p>
+                <span className="practice-action">
+                  {pendingReviews.length > 0
+                    ? 'Ir a repaso'
+                    : 'Ver mis repasos'}
+                  <AppIcon name="next" size={18} />
+                </span>
               </Link>
-            }
-          >
-            Misión diaria
-          </SectionTitle>
-          <MirabiCard className="mb-5 p-5" onClick={() => navigate('/misiones')}>
-            <div className="flex items-center justify-between gap-3">
-              <div className="min-w-0">
-                <p className="truncate text-sm font-semibold">{activeMission.definition.title}</p>
-                <p className="mt-0.5 text-xs text-[var(--on-surface-variant)]">
-                  {activeMission.progress.currentProgress}/{activeMission.definition.targetValue}
+              <Link to="/caracteres" className="mirabi-card practice-card">
+                <span className="icon-tile sakura">
+                  <AppIcon name="characters" size={25} />
+                </span>
+                <h3>Dale forma al japonés</h3>
+                <p>Hiragana, katakana y kanji. Descubre cada trazo.</p>
+                <span className="practice-action">
+                  Explorar caracteres
+                  <AppIcon name="next" size={18} />
+                </span>
+              </Link>
+            </div>
+          </div>
+          {recommendation && recommendation.type !== 'CONTINUE_COURSE' && (
+            <MirabiCard className="home-recommendation">
+              <span className="icon-tile">
+                <AppIcon name="target" />
+              </span>
+              <div>
+                <h3>{recommendation.title}</h3>
+                <p>{recommendation.reason}</p>
+                {recommendationAction && (
+                  <Link to={recommendationAction.to} className="text-link">
+                    {recommendationAction.label}
+                    <AppIcon name="next" size={16} />
+                  </Link>
+                )}
+              </div>
+            </MirabiCard>
+          )}
+          <div className="practice-grid">
+            <Link
+              to="/palabras"
+              className="mirabi-card library-link home-library-link"
+            >
+              <AppIcon name="words" size={24} />
+              <div>
+                <h3>Tu vocabulario</h3>
+                <p>Palabras para cada día</p>
+              </div>
+              <AppIcon name="next" size={18} />
+            </Link>
+            <Link
+              to="/conversaciones"
+              className="mirabi-card library-link home-library-link"
+            >
+              <AppIcon name="conversation" size={24} />
+              <div>
+                <h3>Conversaciones</h3>
+                <p>Usa lo que ya sabes</p>
+              </div>
+              <AppIcon name="next" size={18} />
+            </Link>
+          </div>
+          <div>
+            <SectionTitle>Cada paso cuenta</SectionTitle>
+            <div className="activity-strip">
+              <div>
+                <AppIcon name="course" size={20} />
+                <strong>{totalLessonsCompleted}</strong>
+                <span>Lecciones</span>
+              </div>
+              <div>
+                <AppIcon name="review" size={20} />
+                <strong>{totalReviewsCompleted}</strong>
+                <span>Repasos</span>
+              </div>
+              <div>
+                <AppIcon name="conversation" size={20} />
+                <strong>{totalConversationsCompleted}</strong>
+                <span>Conversaciones</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <aside className="home-aside" aria-label="Tu hábito y descubrimientos">
+          <MirabiCard className="goal-card">
+            <div className="goal-top">
+              <span className="icon-tile">
+                <AppIcon name="target" />
+              </span>
+              <div>
+                <h2>Tu objetivo de hoy</h2>
+                <p>
+                  {todayActivity.dailyGoalCompleted
+                    ? '¡Objetivo completado!'
+                    : 'Haz espacio para un pequeño paso.'}
                 </p>
               </div>
-              <span className="shrink-0 rounded-full bg-[var(--tertiary-container)] px-3 py-1 text-xs font-bold text-[var(--on-tertiary-container)]">
-                +{activeMission.definition.rewardSakura} 🌸
+            </div>
+            <div className="mt-5 mb-2 flex items-baseline justify-between">
+              <strong>
+                {todayActivity.xpEarnedToday}
+                <span className="text-sm font-normal text-[var(--on-surface-variant)]">
+                  {' '}
+                  / {dailyGoalXp} XP
+                </span>
+              </strong>
+              <span className="text-sm font-semibold text-[var(--primary)]">
+                {Math.min(100, Math.round(goalProgress * 100))}%
               </span>
             </div>
             <MirabiProgressBar
-              className="mt-3"
-              tone="sakura"
-              progress={
-                activeMission.progress.currentProgress / activeMission.definition.targetValue
-              }
+              progress={goalProgress}
+              tone={todayActivity.dailyGoalCompleted ? 'success' : 'primary'}
+              label="Objetivo diario"
             />
-          </MirabiCard>
-        </>
-      )}
-
-      <SectionTitle>Repaso</SectionTitle>
-      <MirabiCard className="mb-5 p-5" onClick={() => navigate('/repaso')}>
-        {pendingReviews.length > 0 ? (
-          <>
-            <p className="text-sm font-semibold">
-              {pendingReviews.length}{' '}
-              {pendingReviews.length === 1 ? 'elemento listo' : 'elementos listos'} para reforzar
-            </p>
-            <p className="mt-1 text-xs text-[var(--on-surface-variant)]">
-              Tus errores se convierten en aprendizaje.
-            </p>
-          </>
-        ) : (
-          <>
-            <p className="text-sm font-semibold">Todo al día</p>
-            <p className="mt-1 text-xs text-[var(--on-surface-variant)]">
-              No hay nada pendiente de repaso ahora mismo.
-            </p>
-          </>
-        )}
-      </MirabiCard>
-
-      {dailyPhrase && (
-        <>
-          <SectionTitle>Frase del día</SectionTitle>
-          <MirabiCard className="mb-5 p-5">
-            <div className="flex items-center justify-between gap-3">
-              <div className="min-w-0">
-                <p className="font-jp text-2xl font-semibold">{dailyPhrase.text}</p>
-                <p className="text-sm text-[var(--on-surface-variant)]">{dailyPhrase.romaji}</p>
-                <p className="mt-1 text-sm">{dailyPhrase.meaning}</p>
-              </div>
-              {isSpeechAvailable() && (
-                <button
-                  type="button"
-                  aria-label="Escuchar frase del día"
-                  onClick={() => speakJapanese(dailyPhrase.text)}
-                  className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[var(--primary-container)] text-lg"
-                >
-                  🔊
-                </button>
-              )}
+            <div className="week-days">
+              {week.map((day) => {
+                const dayDate = new Date(day * 86400000)
+                const active = activeDays.includes(day)
+                return (
+                  <div key={day} className="week-day">
+                    <span>
+                      {dayDate.toLocaleDateString('es-PE', {
+                        weekday: 'narrow',
+                        timeZone: 'UTC',
+                      })}
+                    </span>
+                    <span
+                      className={
+                        'week-day-dot' +
+                        (active ? ' active' : '') +
+                        (day === today ? ' today' : '')
+                      }
+                      aria-label={
+                        dayDate.toLocaleDateString('es-PE', {
+                          day: 'numeric',
+                          month: 'long',
+                          timeZone: 'UTC',
+                        }) + (active ? ': estudiaste' : ': sin actividad')
+                      }
+                    >
+                      {active ? (
+                        <AppIcon name="check" size={15} />
+                      ) : (
+                        <span aria-hidden>·</span>
+                      )}
+                    </span>
+                  </div>
+                )
+              })}
             </div>
+            <p className="goal-streak">
+              <AppIcon name={streak.atRisk ? 'time' : 'fire'} size={18} />
+              <strong>{streak.days} días de racha</strong>
+              <span>· Nivel {level}</span>
+            </p>
           </MirabiCard>
-        </>
-      )}
-
-      {dailyKanji && (
-        <>
-          <SectionTitle>Kanji del día</SectionTitle>
-          {/* Tarjeta clicable entera: MirabiCard con onClick renderiza un
-              <button>, asi que aca no puede ir el AudioButton anidado como en
-              la Frase del dia -boton dentro de boton no es HTML valido-. El
-              audio ya esta a un toque, dentro de la ficha que abre. */}
-          <MirabiCard
-            className="mb-5 p-5"
-            onClick={() => navigate(`/caracteres/kanji?kanji=${dailyKanji.id}`)}
-          >
-            <p className="font-jp text-4xl font-semibold">{dailyKanji.symbol}</p>
-            <p className="mt-1 text-sm">{dailyKanji.meanings[0]}</p>
-          </MirabiCard>
-        </>
-      )}
-
-      <SectionTitle>Tu actividad</SectionTitle>
-      <div className="mb-5 flex gap-2">
-        <MirabiStatChip icon="📘" value={totalLessonsCompleted} label="Lecciones" />
-        <MirabiStatChip icon="🔁" value={totalReviewsCompleted} label="Repasos" />
-        <MirabiStatChip icon="💬" value={totalConversationsCompleted} label="Conversaciones" />
-        <MirabiStatChip
-          icon="📅"
-          value={activeDays.filter((day) => day > today - 7).length}
-          label="Días (7)"
-        />
+          <div className="yuki-note">
+            <Yuki state={yuki.state} size={58} halo={false} />
+            <div>
+              <p>{yuki.text}</p>
+              <small>{motivation.encouragement}</small>
+            </div>
+          </div>
+          {activeMission && (
+            <div>
+              <SectionTitle
+                action={
+                  <Link to="/misiones" className="text-link">
+                    Ver todas
+                  </Link>
+                }
+              >
+                Una misión para hoy
+              </SectionTitle>
+              <MirabiCard
+                className="mission-card"
+                onClick={() => navigate('/misiones')}
+              >
+                <div className="flex items-start justify-between gap-3">
+                  <AppIcon name="flag" size={24} />
+                  <span className="reward-label">
+                    +{activeMission.definition.rewardSakura} Sakura
+                  </span>
+                </div>
+                <h3>{activeMission.definition.title}</h3>
+                <p>
+                  {activeMission.progress.currentProgress} /{' '}
+                  {activeMission.definition.targetValue}
+                </p>
+                <MirabiProgressBar
+                  progress={
+                    activeMission.progress.currentProgress /
+                    activeMission.definition.targetValue
+                  }
+                  tone="sakura"
+                  label="Misión diaria"
+                />
+              </MirabiCard>
+            </div>
+          )}
+          {dailyPhrase && (
+            <MirabiCard className="daily-phrase">
+              <div className="flex items-center justify-between">
+                <span className="eyebrow">UN DESCUBRIMIENTO AL DÍA</span>
+                {isSpeechAvailable() && (
+                  <button
+                    type="button"
+                    className="icon-button"
+                    aria-label="Escuchar frase del día"
+                    onClick={() => speakJapanese(dailyPhrase.text)}
+                  >
+                    <AppIcon name="audio" size={20} />
+                  </button>
+                )}
+              </div>
+              <p className="font-jp phrase" lang="ja">
+                {dailyPhrase.text}
+              </p>
+              <span>{dailyPhrase.romaji}</span>
+              <p className="meaning">{dailyPhrase.meaning}</p>
+              {dailyKanji && (
+                <Link
+                  to={'/caracteres/kanji?kanji=' + dailyKanji.id}
+                  className="daily-kanji"
+                >
+                  <span lang="ja" className="font-jp">
+                    {dailyKanji.symbol}
+                  </span>
+                  <span>
+                    Kanji del día<strong>{dailyKanji.meanings[0]}</strong>
+                  </span>
+                  <AppIcon name="next" size={18} />
+                </Link>
+              )}
+            </MirabiCard>
+          )}
+        </aside>
       </div>
-
-      <MirabiCard className="p-4" onClick={() => navigate('/conversaciones')}>
-        <p className="text-sm font-semibold">Conversaciones guiadas</p>
-        <p className="mt-0.5 text-xs text-[var(--on-surface-variant)]">
-          Usa lo aprendido en un diálogo real.
-        </p>
-      </MirabiCard>
     </Screen>
   )
 }

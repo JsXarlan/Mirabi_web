@@ -113,7 +113,7 @@ export function WorldExamScreen() {
 
   return (
     <SessionScreen
-      title={`🏁 Prueba · ${world.title}`}
+      title={`Prueba · ${world.title}`}
       progress={currentIndex / steps.length}
       onExit={() => navigate('/curso')}
       hint={`Pregunta ${currentIndex + 1} de ${steps.length} · sin correcciones hasta el final`}

@@ -1,3 +1,4 @@
+import { AppIcon } from '../../ui/Icons'
 import { useNavigate } from 'react-router-dom'
 
 import type { KanaCharacter, VocabularyWord } from '../../core/content/types'
@@ -57,7 +58,7 @@ export function WordDetailSheet({
             onClick={onClose}
             className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--surface-variant)]"
           >
-            ✕
+            <AppIcon name="close" size={21} />
           </button>
         </div>
       </div>

@@ -19,6 +19,7 @@ import {
   SectionTitle,
 } from '../../ui/components'
 import { Screen } from '../../ui/Layout'
+import { AppIcon } from '../../ui/Icons'
 import { AudioButton } from '../lesson/ExerciseView'
 import { MASTERY_LABEL, MASTERY_STYLE } from '../characters/masteryStyle'
 import { useKanjiMastery, useKanjiMasteryByGrade } from './kanjiMastery'
@@ -309,7 +310,7 @@ export function KanjiSheet({
             onClick={onClose}
             className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--surface-variant)]"
           >
-            ✕
+            <AppIcon name="close" size={21} />
           </button>
         </div>
       </div>

@@ -14,6 +14,7 @@ import {
   SectionTitle,
 } from '../../ui/components'
 import { Screen } from '../../ui/Layout'
+import { AppIcon } from '../../ui/Icons'
 import { AudioButton } from '../lesson/ExerciseView'
 import { useScriptMastery } from './CharactersScreen'
 import { MASTERY_LABEL, MASTERY_STYLE } from './masteryStyle'
@@ -45,7 +46,9 @@ export function CharacterScriptScreen() {
   const [selected, setSelected] = useState<KanaCharacter | null>(null)
 
   const characters =
-    scriptKey === null ? [] : (catalog?.characters.filter((item) => item.script === scriptKey) ?? [])
+    scriptKey === null
+      ? []
+      : (catalog?.characters.filter((item) => item.script === scriptKey) ?? [])
   const groups = [...new Set(characters.map((item) => item.group))]
 
   // Un slug desconocido corta siempre; la falta de caracteres solo cuando el
@@ -61,7 +64,10 @@ export function CharacterScriptScreen() {
               : `Todavía no hay caracteres de ${title} en el catálogo.`
           }
           action={
-            <MirabiButton className="mt-4" onClick={() => navigate('/caracteres')}>
+            <MirabiButton
+              className="mt-4"
+              onClick={() => navigate('/caracteres')}
+            >
               Volver a Caracteres
             </MirabiButton>
           }
@@ -75,7 +81,9 @@ export function CharacterScriptScreen() {
       <MirabiCard className="mb-5 p-5">
         <div className="mb-2 flex items-baseline justify-between">
           <span className="text-sm font-semibold">Dominio</span>
-          <span className="text-sm font-bold">{Math.round(stats.percentage)}%</span>
+          <span className="text-sm font-bold">
+            {Math.round(stats.percentage)}%
+          </span>
         </div>
         <MirabiProgressBar progress={stats.percentage / 100} />
         <MirabiButton
@@ -92,7 +100,9 @@ export function CharacterScriptScreen() {
           <MirabiButton
             className="mt-2"
             variant="secondary"
-            onClick={() => navigate(`/caracteres/${slugOf(scriptKey)}/escritura`)}
+            onClick={() =>
+              navigate(`/caracteres/${slugOf(scriptKey)}/escritura`)
+            }
           >
             Practicar escritura
           </MirabiButton>
@@ -117,7 +127,11 @@ export function CharacterScriptScreen() {
               action={
                 <button
                   type="button"
-                  onClick={() => navigate(`/caracteres/${slugOf(scriptKey)}/escritura?grupo=${group}`)}
+                  onClick={() =>
+                    navigate(
+                      `/caracteres/${slugOf(scriptKey)}/escritura?grupo=${group}`,
+                    )
+                  }
                   className="text-xs font-semibold text-[var(--primary)]"
                 >
                   Practicar escritura
@@ -126,20 +140,33 @@ export function CharacterScriptScreen() {
             >
               {GROUP_LABEL[group]}
             </SectionTitle>
-            <div className="grid grid-cols-5 gap-2">
+            <div className="kana-grid grid grid-cols-5 gap-2">
               {characters
                 .filter((character) => character.group === group)
                 .map((character) => {
-                  const mastery = learningProgress[character.learningItemId]?.mastery ?? 'UNKNOWN'
+                  const mastery =
+                    learningProgress[character.learningItemId]?.mastery ??
+                    'UNKNOWN'
                   return (
                     <button
                       key={character.id}
                       type="button"
                       onClick={() => setSelected(character)}
+                      aria-label={
+                        character.symbol +
+                        ', ' +
+                        character.romaji +
+                        '. ' +
+                        MASTERY_LABEL[mastery]
+                      }
                       className={`flex aspect-square flex-col items-center justify-center rounded-[16px] transition active:scale-95 ${MASTERY_STYLE[mastery]}`}
                     >
-                      <span className="font-jp text-2xl leading-none">{character.symbol}</span>
-                      <span className="mt-1 text-[10px] opacity-80">{character.romaji}</span>
+                      <span className="font-jp text-2xl leading-none">
+                        {character.symbol}
+                      </span>
+                      <span className="mt-1 text-[10px] opacity-80">
+                        {character.romaji}
+                      </span>
                     </button>
                   )
                 })}
@@ -150,7 +177,9 @@ export function CharacterScriptScreen() {
         <WordsTab
           script={scriptKey}
           onOpenCharacter={(characterId) => {
-            const character = catalog?.characters.find((item) => item.id === characterId)
+            const character = catalog?.characters.find(
+              (item) => item.id === characterId,
+            )
             if (character) setSelected(character)
           }}
         />
@@ -164,9 +193,13 @@ export function CharacterScriptScreen() {
       {selected && (
         <CharacterSheet
           character={selected}
-          mastery={learningProgress[selected.learningItemId]?.mastery ?? 'UNKNOWN'}
+          mastery={
+            learningProgress[selected.learningItemId]?.mastery ?? 'UNKNOWN'
+          }
           onClose={() => setSelected(null)}
-          onPractice={() => navigate(`/caracteres/${slugOf(scriptKey)}/practica`)}
+          onPractice={() =>
+            navigate(`/caracteres/${slugOf(scriptKey)}/practica`)
+          }
         />
       )}
     </Screen>
@@ -185,12 +218,17 @@ function CharacterSheet({
   onPractice: () => void
 }) {
   return (
-    <MirabiSheet title={`Carácter ${character.symbol}, ${character.romaji}`} onClose={onClose}>
+    <MirabiSheet
+      title={`Carácter ${character.symbol}, ${character.romaji}`}
+      onClose={onClose}
+    >
       <div className="flex items-start justify-between">
         <div>
           <p className="font-jp text-6xl leading-none">{character.symbol}</p>
           <p className="mt-2 text-lg font-bold">{character.romaji}</p>
-          <p className="text-xs text-[var(--on-surface-variant)]">{MASTERY_LABEL[mastery]}</p>
+          <p className="text-xs text-[var(--on-surface-variant)]">
+            {MASTERY_LABEL[mastery]}
+          </p>
         </div>
         <div className="flex items-center gap-2">
           {/* AudioButton y no un boton propio: respeta el ajuste de audio y la
@@ -202,7 +240,7 @@ function CharacterSheet({
             onClick={onClose}
             className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--surface-variant)]"
           >
-            ✕
+            <AppIcon name="close" size={21} />
           </button>
         </div>
       </div>
@@ -216,7 +254,9 @@ function CharacterSheet({
           >
             <div>
               <p className="font-jp text-lg">{example.text}</p>
-              <p className="text-xs text-[var(--on-surface-variant)]">{example.romaji}</p>
+              <p className="text-xs text-[var(--on-surface-variant)]">
+                {example.romaji}
+              </p>
             </div>
             <span className="text-sm">{example.meaning}</span>
           </li>

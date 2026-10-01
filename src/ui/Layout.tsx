@@ -1,228 +1,322 @@
+import { useEffect, useRef } from 'react'
 import type { ReactNode } from 'react'
-import { NavLink, useNavigate } from 'react-router-dom'
+import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'
+import { useMirabiStore } from '../core/store/useMirabiStore'
+import { epochDayOf } from '../core/domain/models'
+import { streakStatus } from '../core/domain/rewards'
+import { AppIcon } from './Icons'
+import { MirabiBrand } from './Brand'
+import { MirabiProgressBar } from './components'
 
-import { SakuraFall } from './illustrations'
-import { Yuki } from './Yuki'
-
-/** Navegacion oficial: Inicio | Curso | Caracteres | Palabras | Repaso | Perfil. */
 const NAV_ITEMS = [
-  { to: '/', label: 'Inicio', icon: '🏠' },
-  { to: '/curso', label: 'Curso', icon: '🗺️' },
-  { to: '/caracteres', label: 'Caracteres', icon: 'あ' },
-  { to: '/palabras', label: 'Palabras', icon: '📚' },
-  { to: '/repaso', label: 'Repaso', icon: '🔁' },
-  { to: '/perfil', label: 'Perfil', icon: '🌸' },
+  { to: '/', label: 'Inicio', icon: 'home' },
+  { to: '/curso', label: 'Curso', icon: 'course' },
+  { to: '/caracteres', label: 'Caracteres', icon: 'characters' },
+  { to: '/repaso', label: 'Repaso', icon: 'review' },
+  { to: '/perfil', label: 'Perfil', icon: 'profile' },
 ]
+const PRACTICE_ITEMS = [
+  { to: '/palabras', label: 'Vocabulario', icon: 'words' },
+  { to: '/conversaciones', label: 'Conversaciones', icon: 'conversation' },
+  { to: '/misiones', label: 'Misiones', icon: 'target' },
+  { to: '/analisis', label: 'Puntos débiles', icon: 'chart' },
+]
+const PAGE_DESCRIPTIONS: Record<string, string> = {
+  '/curso': 'Un pequeño paso hoy. Un nuevo mundo mañana.',
+  '/caracteres': 'Descubre los trazos que dan forma a un idioma.',
+  '/palabras': 'Cada palabra abre una nueva conversación.',
+  '/repaso': 'Lo que practicas hoy, se queda contigo.',
+  '/perfil': 'Tu historia de aprendizaje, paso a paso.',
+  '/conversaciones': 'Lleva lo aprendido a situaciones de todos los días.',
+  '/misiones': 'Pequeños objetivos para construir tu hábito.',
+  '/ajustes': 'Haz que Mirabi se adapte a ti.',
+  '/analisis': 'Descubre qué puedes reforzar en tu próxima práctica.',
+  '/tienda': 'Cuida tu hábito con las Sakura que has ganado.',
+  '/premium': 'Un poco más de comodidad en tu camino.',
+}
 
-/** Barra inferior: la navegacion de movil. */
-function MirabiBottomBar() {
+function NavigationLink({
+  item,
+  mobile = false,
+}: {
+  item: (typeof NAV_ITEMS)[number]
+  mobile?: boolean
+}) {
   return (
-    <nav
-      aria-label="Navegación principal"
-      className="fixed inset-x-0 bottom-0 z-20 border-t border-[color-mix(in_srgb,var(--outline)_45%,transparent)] bg-[var(--surface)]/95 backdrop-blur lg:hidden"
+    <NavLink
+      to={item.to}
+      end={item.to === '/'}
+      className={({ isActive }) =>
+        (mobile ? 'bottom-nav-link' : 'rail-link') +
+        (isActive ? ' is-active' : '')
+      }
     >
-      <ul className="mx-auto flex max-w-xl items-stretch pb-[env(safe-area-inset-bottom)]">
-        {NAV_ITEMS.map((item) => (
-          <li key={item.to} className="flex-1">
-            <NavLink
-              to={item.to}
-              end={item.to === '/'}
-              className={({ isActive }) =>
-                [
-                  'flex flex-col items-center gap-0.5 py-2.5 text-[11px] font-medium transition',
-                  isActive
-                    ? 'text-[var(--primary)]'
-                    : 'text-[var(--on-surface-variant)] hover:text-[var(--on-surface)]',
-                ].join(' ')
-              }
-            >
-              {({ isActive }) => (
-                <>
-                  <span
-                    aria-hidden
-                    className={[
-                      'flex h-7 w-12 items-center justify-center rounded-full text-base transition',
-                      isActive ? 'bg-[var(--primary-container)]' : '',
-                    ].join(' ')}
-                  >
-                    {item.icon}
-                  </span>
-                  {item.label}
-                </>
-              )}
-            </NavLink>
-          </li>
-        ))}
-      </ul>
-    </nav>
+      {({ isActive }) => (
+        <>
+          <span className="nav-icon">
+            <AppIcon name={item.icon} weight={isActive ? 'fill' : 'regular'} />
+          </span>
+          <span>{item.label}</span>
+          {!mobile && isActive && <span className="rail-active-dot" />}
+        </>
+      )}
+    </NavLink>
   )
 }
 
-/**
- * Carril lateral: la navegacion de escritorio.
- *
- * En un monitor ancho, una barra inferior obliga a bajar la vista al borde de la
- * pantalla y deja 700 px muertos a los lados. El carril aprovecha ese espacio y
- * da a la web una forma propia sin cambiar la informacion ni el orden.
- */
 function MirabiSideRail() {
   return (
-    <nav
-      aria-label="Navegación principal"
-      className="fixed top-0 bottom-0 left-0 z-20 hidden w-60 flex-col border-r border-[color-mix(in_srgb,var(--outline)_45%,transparent)] bg-[var(--surface)] px-4 py-6 lg:flex xl:w-64"
-    >
-      <div className="mb-8 flex items-center gap-3 px-2">
-        <Yuki size={44} halo={false} />
-        <div>
-          <p className="text-lg leading-none font-bold">Mirabi</p>
-          <p className="mt-1 text-[11px] text-[var(--on-surface-variant)]">未来 + 学び</p>
-        </div>
-      </div>
-
-      <ul className="flex flex-col gap-1">
-        {NAV_ITEMS.map((item) => (
-          <li key={item.to}>
-            <NavLink
-              to={item.to}
-              end={item.to === '/'}
-              className={({ isActive }) =>
-                [
-                  'flex items-center gap-3 rounded-[14px] px-3 py-2.5 text-sm font-semibold transition',
-                  isActive
-                    ? 'bg-[var(--primary)] text-[var(--on-primary)]'
-                    : 'text-[var(--on-surface-variant)] hover:bg-[var(--surface-variant)] hover:text-[var(--on-surface)]',
-                ].join(' ')
-              }
-            >
-              <span aria-hidden className="w-5 text-center text-base">
-                {item.icon}
-              </span>
-              {item.label}
-            </NavLink>
-          </li>
-        ))}
-      </ul>
-
-      <div className="mt-6 border-t border-[var(--surface-variant)] pt-4">
-        <ul className="flex flex-col gap-1">
-          {[
-            { to: '/conversaciones', label: 'Conversaciones', icon: '💬' },
-            { to: '/analisis', label: 'Puntos débiles', icon: '📊' },
-            { to: '/misiones', label: 'Misiones', icon: '🎯' },
-            { to: '/tienda', label: 'Tienda', icon: '🛍️' },
-            { to: '/ajustes', label: 'Ajustes', icon: '⚙️' },
-          ].map((item) => (
+    <aside className="side-rail">
+      <Link to="/" aria-label="Mirabi, ir al inicio" className="rail-brand">
+        <MirabiBrand />
+      </Link>
+      <p className="rail-caption">TU CAMINO</p>
+      <nav aria-label="Navegación principal">
+        <ul>
+          {NAV_ITEMS.map((item) => (
             <li key={item.to}>
-              <NavLink
-                to={item.to}
-                className={({ isActive }) =>
-                  [
-                    'flex items-center gap-3 rounded-[14px] px-3 py-2 text-sm transition',
-                    isActive
-                      ? 'bg-[var(--surface-variant)] font-semibold text-[var(--on-surface)]'
-                      : 'text-[var(--on-surface-variant)] hover:bg-[var(--surface-variant)]',
-                  ].join(' ')
-                }
-              >
-                <span aria-hidden className="w-5 text-center">
-                  {item.icon}
-                </span>
-                {item.label}
-              </NavLink>
+              <NavigationLink item={item} />
             </li>
           ))}
         </ul>
+      </nav>
+      <p className="rail-caption rail-caption-practice">EXPLORA Y PRACTICA</p>
+      <nav aria-label="Práctica y aprendizaje">
+        <ul>
+          {PRACTICE_ITEMS.map((item) => (
+            <li key={item.to}>
+              <NavigationLink item={item} />
+            </li>
+          ))}
+        </ul>
+      </nav>
+      <div className="rail-bottom">
+        <div className="rail-note">
+          <AppIcon name="leaf" size={24} />
+          <p>
+            A tu ritmo.
+            <br />
+            <strong>Un poquito cada día.</strong>
+          </p>
+        </div>
+        <nav aria-label="Preferencias">
+          <Link to="/tienda" className="rail-link">
+            <AppIcon name="shop" />
+            <span>Tienda Sakura</span>
+          </Link>
+          <Link to="/ajustes" className="rail-link">
+            <AppIcon name="settings" />
+            <span>Ajustes</span>
+          </Link>
+        </nav>
+        <span className="rail-footer">Hecho para tu japonés del mañana.</span>
       </div>
+    </aside>
+  )
+}
+
+function MirabiBottomBar() {
+  return (
+    <nav aria-label="Navegación principal móvil" className="bottom-nav">
+      <ul>
+        {NAV_ITEMS.map((item) => (
+          <li key={item.to}>
+            <NavigationLink item={item} mobile />
+          </li>
+        ))}
+      </ul>
     </nav>
   )
 }
 
-/** Pantalla principal: con navegacion y ancho de lectura. */
+export function ThemeToggle() {
+  const theme = useMirabiStore((state) => state.theme)
+  const setTheme = useMirabiStore((state) => state.setTheme)
+  const dark =
+    theme === 'dark' ||
+    (theme === 'system' &&
+      window.matchMedia('(prefers-color-scheme: dark)').matches)
+  return (
+    <button
+      type="button"
+      className="icon-button"
+      aria-label={dark ? 'Usar tema claro' : 'Usar tema oscuro'}
+      onClick={() => setTheme(dark ? 'light' : 'dark')}
+    >
+      <AppIcon name={dark ? 'sun' : 'moon'} size={21} />
+    </button>
+  )
+}
+
+function AppHeader() {
+  const { pathname } = useLocation()
+  const name = useMirabiStore((state) => state.displayName)
+  const sakura = useMirabiStore((state) => state.sakura)
+  const streakDays = useMirabiStore((state) => state.streakDays)
+  const lastActive = useMirabiStore((state) => state.lastActivityEpochDay)
+  const streak = streakStatus(streakDays, lastActive, epochDayOf(Date.now()))
+  const pageLabel =
+    [...NAV_ITEMS, ...PRACTICE_ITEMS].find((item) => item.to === pathname)
+      ?.label ?? 'Mi aprendizaje'
+  return (
+    <header className="app-header">
+      <Link to="/" className="mobile-brand" aria-label="Mirabi, inicio">
+        <MirabiBrand />
+      </Link>
+      <div className="header-context">
+        <span>Tu espacio de aprendizaje</span>
+        <strong>{pageLabel}</strong>
+      </div>
+      <div className="header-actions">
+        <Link
+          to="/perfil"
+          className="header-stat"
+          aria-label={streak.days + ' días de racha'}
+        >
+          <AppIcon name="fire" size={20} />
+          <span>
+            {streak.days}
+            <span className="header-stat-label"> días</span>
+          </span>
+        </Link>
+        <Link
+          to="/tienda"
+          className="header-stat sakura-stat"
+          aria-label={sakura + ' Sakura'}
+        >
+          <AppIcon name="flower" size={20} />
+          <span>{sakura}</span>
+        </Link>
+        <ThemeToggle />
+        <Link
+          to="/perfil"
+          className="header-avatar"
+          aria-label="Abrir mi perfil"
+        >
+          {(name ?? 'M').slice(0, 1).toUpperCase()}
+        </Link>
+      </div>
+    </header>
+  )
+}
+
 export function Screen({
   children,
   title,
+  subtitle,
   action,
+  wide = false,
 }: {
   children: ReactNode
   title?: string
+  subtitle?: string
   action?: ReactNode
+  wide?: boolean
 }) {
+  const mainRef = useRef<HTMLElement>(null)
+  const { pathname } = useLocation()
+  useEffect(() => {
+    mainRef.current?.focus({ preventScroll: true })
+  }, [pathname])
   return (
-    <>
-      <SakuraFall />
+    <div className="app-shell">
+      <a
+        className="skip-link"
+        href="#main-content"
+        onClick={(event) => {
+          event.preventDefault()
+          mainRef.current?.focus()
+        }}
+      >
+        Saltar al contenido
+      </a>
       <MirabiSideRail />
-      <div className="lg:pl-60 xl:pl-64">
-        <div className="mx-auto min-h-full max-w-xl px-4 pt-5 pb-nav lg:pb-10">
+      <div className="app-body">
+        <AppHeader />
+        <main
+          ref={mainRef}
+          id="main-content"
+          tabIndex={-1}
+          className={'page-content' + (wide ? ' page-wide' : '')}
+        >
           {title && (
-            <header className="mb-4 flex items-center justify-between gap-3">
-              <h1 className="text-2xl font-bold">{title}</h1>
+            <header className="page-heading">
+              <div>
+                <p className="eyebrow">APRENDE · PRACTICA · CRECE</p>
+                <h1>{title}</h1>
+                {(subtitle ?? PAGE_DESCRIPTIONS[pathname]) && (
+                  <p className="page-subtitle">
+                    {subtitle ?? PAGE_DESCRIPTIONS[pathname]}
+                  </p>
+                )}
+              </div>
               {action}
             </header>
           )}
           {children}
-        </div>
+        </main>
+        <footer className="page-footer">
+          <span lang="ja">未来 + 学び</span>
+          <span>Tu japonés empieza con un pequeño paso.</span>
+        </footer>
       </div>
       <MirabiBottomBar />
-    </>
+    </div>
   )
 }
 
-/**
- * Pantalla de sesion (leccion, repaso, practica, conversacion).
- * Sin navegacion: la spec prohibe salir por accidente durante ejercicios.
- */
 export function SessionScreen({
   children,
   title,
   progress,
   onExit,
-  /** Pista de teclado bajo la barra. Solo aparece si el paso acepta atajos. */
   hint,
 }: {
   children: ReactNode
   title: string
-  /** 0..1 */
   progress: number
   onExit?: () => void
   hint?: ReactNode
 }) {
   const navigate = useNavigate()
   const clamped = Math.min(1, Math.max(0, progress))
-
   return (
-    <div className="mx-auto flex min-h-full max-w-xl flex-col px-4 pt-5 pb-8">
-      <header className="mb-4 flex items-center gap-3">
-        <button
-          type="button"
-          onClick={() => (onExit ? onExit() : navigate(-1))}
-          aria-label="Salir de la sesión"
-          className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[var(--surface-variant)] text-lg"
-        >
-          ✕
-        </button>
-        <div className="min-w-0 flex-1">
-          <p className="truncate text-xs font-semibold text-[var(--on-surface-variant)]">{title}</p>
-          <div
-            className="mt-1 h-2 w-full overflow-hidden rounded-full bg-[var(--surface-variant)]"
-            role="progressbar"
-            aria-label="Progreso de la sesión"
-            aria-valuemin={0}
-            aria-valuemax={100}
-            aria-valuenow={Math.round(clamped * 100)}
+    <main className="session-layout" id="main-content">
+      <div className="session-brand">
+        <MirabiBrand />
+        <ThemeToggle />
+      </div>
+      <section className="session-panel">
+        <header className="session-header">
+          <button
+            type="button"
+            className="icon-button"
+            onClick={() => (onExit ? onExit() : navigate(-1))}
+            aria-label="Salir de la sesión"
           >
-            <div
-              className="h-full rounded-full bg-[var(--primary)] transition-[width] duration-300"
-              style={{ width: `${clamped * 100}%` }}
+            <AppIcon name="close" />
+          </button>
+          <div className="session-progress">
+            <div className="session-progress-label">
+              <h1 className="text-sm font-semibold">{title}</h1>
+              <strong>{Math.round(clamped * 100)}%</strong>
+            </div>
+            <MirabiProgressBar
+              progress={clamped}
+              label="Progreso de la sesión"
             />
           </div>
-        </div>
-      </header>
-      <div className="flex flex-1 flex-col">{children}</div>
-      {hint && (
-        <p className="mt-3 hidden text-center text-[11px] text-[var(--on-surface-variant)] sm:block">
-          {hint}
-        </p>
-      )}
-    </div>
+        </header>
+        <div className="session-content">{children}</div>
+        {hint && (
+          <p className="session-hint">
+            <kbd>↵</kbd> {hint}
+          </p>
+        )}
+      </section>
+      <p className="session-caption">
+        <AppIcon name="leaf" size={16} /> Aquí, cada intento cuenta.
+      </p>
+    </main>
   )
 }
