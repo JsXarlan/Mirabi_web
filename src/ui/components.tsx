@@ -1,5 +1,11 @@
 import { useEffect, useId, useRef } from 'react'
-import type { ButtonHTMLAttributes, KeyboardEvent as ReactKeyboardEvent, ReactNode } from 'react'
+import { AppIcon } from './Icons'
+import { Yuki } from './Yuki'
+import type {
+  ButtonHTMLAttributes,
+  KeyboardEvent as ReactKeyboardEvent,
+  ReactNode,
+} from 'react'
 
 /** Puerto de core/designsystem/component: mismos componentes, mismos nombres. */
 
@@ -20,8 +26,7 @@ export function MirabiCard({
   /** Solo para tarjetas que funcionan como opcion seleccionable (ver OnboardingFlow). */
   ariaPressed?: boolean
 }) {
-  const base =
-    'rounded-[22px] bg-[var(--surface)] shadow-[var(--shadow-card)] border border-[color-mix(in_srgb,var(--outline)_35%,transparent)]'
+  const base = 'mirabi-card'
   if (!onClick) return <div className={cx(base, className)}>{children}</div>
   return (
     <button
@@ -47,21 +52,25 @@ const VARIANTS: Record<ButtonVariant, string> = {
   primary: 'bg-[var(--primary)] text-[var(--on-primary)] hover:brightness-110',
   secondary:
     'bg-[var(--surface-variant)] text-[var(--on-surface)] hover:brightness-105 border border-[var(--outline)]',
-  ghost: 'bg-transparent text-[var(--primary)] hover:bg-[var(--surface-variant)]',
-  danger: 'bg-[var(--secondary)] text-[var(--on-secondary)] hover:brightness-110',
+  ghost:
+    'bg-transparent text-[var(--primary)] hover:bg-[var(--surface-variant)]',
+  danger:
+    'bg-[var(--secondary)] text-[var(--on-secondary)] hover:brightness-110',
 }
 
 export function MirabiButton({
   children,
   variant = 'primary',
   className,
+  type = 'button',
   ...rest
 }: ButtonHTMLAttributes<HTMLButtonElement> & { variant?: ButtonVariant }) {
   return (
     <button
       {...rest}
+      type={type}
       className={cx(
-        'w-full rounded-[16px] px-5 py-3.5 text-base font-semibold transition active:scale-[0.98]',
+        'mirabi-button w-full transition active:scale-[0.98]',
         'disabled:cursor-not-allowed disabled:opacity-45 disabled:active:scale-100',
         VARIANTS[variant],
         className,
@@ -94,7 +103,10 @@ export function MirabiProgressBar({
         : 'var(--primary)'
   return (
     <div
-      className={cx('h-2.5 w-full overflow-hidden rounded-full bg-[var(--surface-variant)]', className)}
+      className={cx(
+        'h-2.5 w-full overflow-hidden rounded-full bg-[var(--surface-variant)]',
+        className,
+      )}
       role="progressbar"
       aria-label={label}
       aria-valuemin={0}
@@ -127,12 +139,12 @@ export function MirabiStatChip({
   label: string
 }) {
   return (
-    <div className="flex flex-1 flex-col items-center gap-0.5 rounded-[16px] bg-[var(--surface-variant)] px-2 py-3">
-      <span aria-hidden className="text-lg">
-        {icon}
+    <div className="stat-chip">
+      <span className="stat-chip-icon">
+        <AppIcon name={icon} />
       </span>
-      <span className="text-lg font-bold leading-none">{value}</span>
-      <span className="text-center text-[11px] text-[var(--on-surface-variant)]">{label}</span>
+      <span className="stat-chip-value">{value}</span>
+      <span className="stat-chip-label">{label}</span>
     </div>
   )
 }
@@ -151,8 +163,16 @@ export function MirabiDonutProgress({
   const radius = (size - stroke) / 2
   const circumference = 2 * Math.PI * radius
   return (
-    <div className="relative inline-flex items-center justify-center" style={{ width: size, height: size }}>
-      <svg width={size} height={size} className="-rotate-90">
+    <div
+      role="progressbar"
+      aria-label="Dominio"
+      aria-valuemin={0}
+      aria-valuemax={100}
+      aria-valuenow={Math.round(clamped)}
+      className="relative inline-flex shrink-0 items-center justify-center"
+      style={{ width: size, height: size }}
+    >
+      <svg aria-hidden="true" width={size} height={size} className="-rotate-90">
         <circle
           cx={size / 2}
           cy={size / 2}
@@ -175,7 +195,9 @@ export function MirabiDonutProgress({
         />
       </svg>
       <div className="absolute inset-0 flex flex-col items-center justify-center">
-        {label ?? <span className="text-xl font-bold">{Math.round(clamped)}%</span>}
+        {label ?? (
+          <span className="text-xl font-bold">{Math.round(clamped)}%</span>
+        )}
       </div>
     </div>
   )
@@ -183,7 +205,10 @@ export function MirabiDonutProgress({
 
 export function MirabiLoading({ message = 'Cargando…' }: { message?: string }) {
   return (
-    <div className="flex flex-col items-center justify-center gap-3 py-16 text-[var(--on-surface-variant)]">
+    <div
+      role="status"
+      className="flex flex-col items-center justify-center gap-3 py-16 text-[var(--on-surface-variant)]"
+    >
       <div className="h-8 w-8 animate-spin rounded-full border-3 border-[var(--surface-variant)] border-t-[var(--primary)]" />
       <p className="text-sm">{message}</p>
     </div>
@@ -222,11 +247,11 @@ export function MirabiEmpty({
   action?: ReactNode
 }) {
   return (
-    <MirabiCard className="flex flex-col items-center gap-2 p-8 text-center">
-      <span aria-hidden className="text-4xl">
-        💤
-      </span>
-      <p className="text-base font-semibold">{title}</p>
+    <MirabiCard className="empty-state">
+      <div className="empty-state-illustration">
+        <Yuki state="SLEEPING" size={124} />
+      </div>
+      <h2>{title}</h2>
       <p className="text-sm text-[var(--on-surface-variant)]">{message}</p>
       {action}
     </MirabiCard>
@@ -277,7 +302,9 @@ export function MirabiSheet({
 
       const panel = panelRef.current
       if (!panel) return
-      const focusable = Array.from(panel.querySelectorAll<HTMLElement>(focusableSelector))
+      const focusable = Array.from(
+        panel.querySelectorAll<HTMLElement>(focusableSelector),
+      )
       if (focusable.length === 0) {
         event.preventDefault()
         panel.focus()
@@ -342,14 +369,17 @@ export function MirabiSearchField({
 }) {
   return (
     <label className={cx('block', className)}>
-      <span className="sr-only">{label}</span>
-      <input
-        type="search"
-        value={value}
-        onChange={(event) => onChange(event.target.value)}
-        placeholder={placeholder}
-        className="w-full rounded-[14px] border border-[var(--outline)] bg-[var(--surface)] px-4 py-2.5 text-sm text-[var(--on-surface)] outline-none placeholder:text-[var(--on-surface-variant)] focus-visible:border-[var(--primary)]"
-      />
+      <span className="mb-2 block text-sm font-semibold">{label}</span>
+      <span className="search-field">
+        <AppIcon name="search" size={21} />
+        <input
+          type="search"
+          value={value}
+          onChange={(event) => onChange(event.target.value)}
+          placeholder={placeholder}
+          className="w-full rounded-[14px] border border-[var(--outline)] bg-[var(--surface)] px-4 py-2.5 text-sm text-[var(--on-surface)] outline-none placeholder:text-[var(--on-surface-variant)] focus-visible:border-[var(--primary)]"
+        />
+      </span>
     </label>
   )
 }
@@ -376,8 +406,18 @@ export function MirabiFilterChips<T extends string>({
   className?: string
 }) {
   return (
-    <div role="radiogroup" aria-label={ariaLabel} className={cx('flex flex-wrap gap-2', className)}>
-      {allLabel && <FilterChip active={value === null} label={allLabel} onClick={() => onChange(null)} />}
+    <div
+      role="group"
+      aria-label={ariaLabel}
+      className={cx('flex flex-wrap gap-2', className)}
+    >
+      {allLabel && (
+        <FilterChip
+          active={value === null}
+          label={allLabel}
+          onClick={() => onChange(null)}
+        />
+      )}
       {options.map((option) => (
         <FilterChip
           key={option.value}
@@ -402,11 +442,10 @@ function FilterChip({
   return (
     <button
       type="button"
-      role="radio"
-      aria-checked={active}
+      aria-pressed={active}
       onClick={onClick}
       className={cx(
-        'rounded-full px-3 py-1.5 text-xs font-semibold transition',
+        'min-h-11 rounded-full px-4 py-2 text-sm font-semibold transition',
         active
           ? 'bg-[var(--primary)] text-[var(--on-primary)]'
           : 'bg-[var(--surface-variant)] text-[var(--on-surface-variant)] hover:brightness-95',
@@ -434,12 +473,17 @@ export function MirabiTabs<T extends string>({
   // El aria-selected del boton destino no cambia hasta el siguiente render, asi
   // que apuntar por indice es lo unico fiable: buscar «el que ya esta activo»
   // en el mismo tick encontraria el anterior.
-  const move = (event: ReactKeyboardEvent<HTMLButtonElement>, from: number, delta: number) => {
+  const move = (
+    event: ReactKeyboardEvent<HTMLButtonElement>,
+    from: number,
+    delta: number,
+  ) => {
     const next = options[(from + delta + options.length) % options.length]
     onChange(next.value)
-    const buttons = event.currentTarget.parentElement?.querySelectorAll<HTMLButtonElement>(
-      '[role="tab"]',
-    )
+    const buttons =
+      event.currentTarget.parentElement?.querySelectorAll<HTMLButtonElement>(
+        '[role="tab"]',
+      )
     buttons?.[(from + delta + options.length) % options.length]?.focus()
   }
 
@@ -447,7 +491,10 @@ export function MirabiTabs<T extends string>({
     <div
       role="tablist"
       aria-label={ariaLabel}
-      className={cx('inline-flex rounded-[14px] bg-[var(--surface-variant)] p-1', className)}
+      className={cx(
+        'inline-flex rounded-[14px] bg-[var(--surface-variant)] p-1',
+        className,
+      )}
     >
       {options.map((option, index) => {
         const active = option.value === value
@@ -478,12 +525,18 @@ export function MirabiTabs<T extends string>({
   )
 }
 
-export function SectionTitle({ children, action }: { children: ReactNode; action?: ReactNode }) {
+export function SectionTitle({
+  children,
+  action,
+  id,
+}: {
+  children: ReactNode
+  action?: ReactNode
+  id?: string
+}) {
   return (
-    <div className="mb-2 flex items-baseline justify-between">
-      <h2 className="text-sm font-bold tracking-wide text-[var(--on-surface-variant)] uppercase">
-        {children}
-      </h2>
+    <div className="section-title" id={id}>
+      <h2>{children}</h2>
       {action}
     </div>
   )

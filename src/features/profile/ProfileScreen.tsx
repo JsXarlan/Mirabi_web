@@ -7,7 +7,10 @@ import {
   levelFromXp,
   xpIntoLevel,
 } from '../../core/domain/models'
-import { calculateLearningStats, resolveProfileSignals } from '../../core/domain/profile'
+import {
+  calculateLearningStats,
+  resolveProfileSignals,
+} from '../../core/domain/profile'
 import { streakStatus } from '../../core/domain/rewards'
 import { useMirabiStore } from '../../core/store/useMirabiStore'
 import {
@@ -20,22 +23,31 @@ import {
 } from '../../ui/components'
 import { Screen } from '../../ui/Layout'
 import { Yuki } from '../../ui/Yuki'
+import { AppIcon } from '../../ui/Icons'
 
 export function ProfileScreen() {
   const displayName = useMirabiStore((state) => state.displayName)
   const totalXp = useMirabiStore((state) => state.totalXp)
   const sakura = useMirabiStore((state) => state.sakura)
   const persistedStreakDays = useMirabiStore((state) => state.streakDays)
-  const lastActivityEpochDay = useMirabiStore((state) => state.lastActivityEpochDay)
+  const lastActivityEpochDay = useMirabiStore(
+    (state) => state.lastActivityEpochDay,
+  )
   const subscriptionType = useMirabiStore((state) => state.subscriptionType)
   const learningProgress = useMirabiStore((state) => state.learningProgress)
   const totalAnswers = useMirabiStore((state) => state.totalAnswers)
   const correctAnswers = useMirabiStore((state) => state.correctAnswers)
   const activeDays = useMirabiStore((state) => state.activeDays)
   const dailyActivity = useMirabiStore((state) => state.dailyActivity)
-  const totalLessonsCompleted = useMirabiStore((state) => state.totalLessonsCompleted)
-  const totalReviewsCompleted = useMirabiStore((state) => state.totalReviewsCompleted)
-  const totalConversationsCompleted = useMirabiStore((state) => state.totalConversationsCompleted)
+  const totalLessonsCompleted = useMirabiStore(
+    (state) => state.totalLessonsCompleted,
+  )
+  const totalReviewsCompleted = useMirabiStore(
+    (state) => state.totalReviewsCompleted,
+  )
+  const totalConversationsCompleted = useMirabiStore(
+    (state) => state.totalConversationsCompleted,
+  )
 
   const courseMap = useMirabiStore((state) => state.courseMap)()
   const pending = useMirabiStore((state) => state.dueReviewItems)()
@@ -43,19 +55,29 @@ export function ProfileScreen() {
 
   const today = epochDayOf(Date.now())
   // Misma verdad que en Inicio: la racha vale lo que vale hoy.
-  const streakDays = streakStatus(persistedStreakDays, lastActivityEpochDay, today).days
+  const streakDays = streakStatus(
+    persistedStreakDays,
+    lastActivityEpochDay,
+    today,
+  ).days
 
   const level = levelFromXp(totalXp)
   const tracked = Object.values(learningProgress)
   const globalMastery =
     tracked.length === 0
       ? 0
-      : tracked.reduce((sum, item) => sum + MASTERY_VALUE[item.mastery], 0) / tracked.length
+      : tracked.reduce((sum, item) => sum + MASTERY_VALUE[item.mastery], 0) /
+        tracked.length
 
-  const stats = calculateLearningStats(totalAnswers, correctAnswers, activeDays.length)
+  const stats = calculateLearningStats(
+    totalAnswers,
+    correctAnswers,
+    activeDays.length,
+  )
   const signals = resolveProfileSignals({
     pendingReviewItems: pending.length,
-    criticalWeaknesses: pending.filter((item) => item.priority === 'CRITICAL').length,
+    criticalWeaknesses: pending.filter((item) => item.priority === 'CRITICAL')
+      .length,
     dailyActivity,
     learningStats: stats,
     streakActive: streakDays > 0,
@@ -65,141 +87,188 @@ export function ProfileScreen() {
 
   return (
     <Screen
-      title="Perfil"
+      title="Tu historia"
+      subtitle="Cada pequeño paso también es progreso."
+      wide
       action={
-        <Link
-          to="/ajustes"
-          aria-label="Ajustes"
-          className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--surface-variant)] text-lg"
-        >
-          ⚙️
+        <Link to="/ajustes" className="icon-button" aria-label="Abrir ajustes">
+          <AppIcon name="settings" />
         </Link>
       }
     >
-      <MirabiCard className="mb-5 p-5">
-        <div className="flex items-center gap-4">
-          <Yuki size={72} state={streakDays > 0 ? 'PROUD' : 'HAPPY'} />
-          <div className="min-w-0 flex-1">
-            <p className="truncate text-lg font-bold">{displayName ?? 'Estudiante'}</p>
-            <div className="mt-1 flex flex-wrap items-center gap-2">
-              <MirabiProgressPill>Nivel {level}</MirabiProgressPill>
-              {subscriptionType === 'PLUS' && (
-                <span className="rounded-full bg-[var(--tertiary-container)] px-3 py-1 text-xs font-bold text-[var(--on-tertiary-container)]">
-                  Plus
-                </span>
-              )}
+      <section className="profile-identity">
+        <Yuki
+          size={84}
+          state={streakDays > 0 ? 'PROUD' : 'HAPPY'}
+          halo={false}
+        />
+        <div>
+          <h2>{displayName ?? 'Estudiante'}</h2>
+          <div className="mt-2 flex gap-2">
+            <MirabiProgressPill>Nivel {level}</MirabiProgressPill>
+            {subscriptionType === 'PLUS' && (
+              <MirabiProgressPill>Mirabi Plus</MirabiProgressPill>
+            )}
+          </div>
+          <p>
+            {xpIntoLevel(totalXp)} / {XP_PER_LEVEL} XP para el nivel {level + 1}
+          </p>
+          <MirabiProgressBar
+            className="mt-2"
+            progress={xpIntoLevel(totalXp) / XP_PER_LEVEL}
+            label="Progreso al siguiente nivel"
+          />
+        </div>
+      </section>
+      <div className="mb-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
+        <MirabiStatChip icon="fire" value={streakDays} label="Días de racha" />
+        <MirabiStatChip icon="flower" value={sakura} label="Sakura" />
+        <MirabiStatChip icon="sparkle" value={totalXp} label="XP total" />
+        <MirabiStatChip
+          icon="calendar"
+          value={activeDays.length}
+          label="Días activos"
+        />
+      </div>
+      <div className="profile-grid">
+        <div className="profile-column">
+          <div>
+            <SectionTitle>Tu camino de aprendizaje</SectionTitle>
+            <MirabiCard className="flex items-center gap-5 p-6">
+              <MirabiDonutProgress percentage={globalMastery} size={96} />
+              <div>
+                <h3 className="font-bold">Dominio global</h3>
+                <p className="mt-2 text-sm text-[var(--on-surface-variant)]">
+                  {courseMap?.courseProgress.completedLessons ?? 0} /{' '}
+                  {courseMap?.courseProgress.totalLessons ?? 0} lecciones ·{' '}
+                  {courseMap?.courseProgress.completedWorlds ?? 0} /{' '}
+                  {courseMap?.courseProgress.totalWorlds ?? 0} mundos
+                </p>
+                <p className="mt-1 text-xs text-[var(--on-surface-variant)]">
+                  {tracked.length} elementos en seguimiento
+                </p>
+              </div>
+            </MirabiCard>
+          </div>
+          <div>
+            <SectionTitle>Lo que has construido</SectionTitle>
+            <MirabiCard className="p-6">
+              <dl className="profile-stats">
+                <div>
+                  <dt>Respuestas</dt>
+                  <dd>{stats.totalAnswers}</dd>
+                </div>
+                <div>
+                  <dt>Precisión</dt>
+                  <dd>{Math.round(stats.accuracyPercentage)}%</dd>
+                </div>
+                <div>
+                  <dt>Lecciones</dt>
+                  <dd>{totalLessonsCompleted}</dd>
+                </div>
+                <div>
+                  <dt>Repasos</dt>
+                  <dd>{totalReviewsCompleted}</dd>
+                </div>
+                <div>
+                  <dt>Conversaciones</dt>
+                  <dd>{totalConversationsCompleted}</dd>
+                </div>
+              </dl>
+              <Link to="/analisis" className="text-link mt-3">
+                Descubrir qué puedes reforzar
+                <AppIcon name="next" size={17} />
+              </Link>
+            </MirabiCard>
+          </div>
+          <div>
+            <SectionTitle>Tus pequeños grandes logros</SectionTitle>
+            <div className="achievement-grid">
+              {achievementsList.map(({ definition, unlock }) => (
+                <div
+                  key={definition.id}
+                  className={'achievement-card' + (unlock ? ' unlocked' : '')}
+                >
+                  <AppIcon name={unlock ? 'trophy' : 'lock'} size={27} />
+                  <strong className="text-xs">{definition.title}</strong>
+                  <span>
+                    {unlock
+                      ? 'Conseguido · ' +
+                        new Date(
+                          unlock.unlockedAtEpochMillis,
+                        ).toLocaleDateString('es-PE')
+                      : 'Por descubrir'}
+                  </span>
+                </div>
+              ))}
             </div>
           </div>
         </div>
-        <p className="mt-4 text-xs text-[var(--on-surface-variant)]">
-          {xpIntoLevel(totalXp)} / {XP_PER_LEVEL} XP para el nivel {level + 1}
-        </p>
-        <MirabiProgressBar className="mt-1.5" progress={xpIntoLevel(totalXp) / XP_PER_LEVEL} />
-      </MirabiCard>
-
-      <div className="mb-5 flex gap-2">
-        <MirabiStatChip icon="🔥" value={streakDays} label="Racha" />
-        <MirabiStatChip icon="🌸" value={sakura} label="Sakura" />
-        <MirabiStatChip icon="⭐" value={totalXp} label="XP total" />
-        <MirabiStatChip icon="📅" value={activeDays.length} label="Días activos" />
-      </div>
-
-      <SectionTitle>Camino de aprendizaje</SectionTitle>
-      <MirabiCard className="mb-5 flex items-center gap-5 p-5">
-        <MirabiDonutProgress percentage={globalMastery} size={88} />
-        <div className="min-w-0 text-sm">
-          <p className="font-bold">Dominio global</p>
-          <p className="mt-1 text-xs text-[var(--on-surface-variant)]">
-            {courseMap?.courseProgress.completedLessons ?? 0}/
-            {courseMap?.courseProgress.totalLessons ?? 0} lecciones ·{' '}
-            {courseMap?.courseProgress.completedWorlds ?? 0}/
-            {courseMap?.courseProgress.totalWorlds ?? 0} mundos
-          </p>
-          <p className="mt-1 text-xs text-[var(--on-surface-variant)]">
-            {tracked.length} {tracked.length === 1 ? 'elemento' : 'elementos'} en seguimiento
-          </p>
-        </div>
-      </MirabiCard>
-
-      <SectionTitle>Estadísticas</SectionTitle>
-      <MirabiCard className="mb-5 p-5">
-        <dl className="grid grid-cols-2 gap-y-3 text-sm">
-          <dt className="text-[var(--on-surface-variant)]">Respuestas</dt>
-          <dd className="text-right font-semibold">{stats.totalAnswers}</dd>
-          <dt className="text-[var(--on-surface-variant)]">Precisión</dt>
-          <dd className="text-right font-semibold">
-            {Math.round(stats.accuracyPercentage)}%
-          </dd>
-          <dt className="text-[var(--on-surface-variant)]">Lecciones</dt>
-          <dd className="text-right font-semibold">{totalLessonsCompleted}</dd>
-          <dt className="text-[var(--on-surface-variant)]">Repasos</dt>
-          <dd className="text-right font-semibold">{totalReviewsCompleted}</dd>
-          <dt className="text-[var(--on-surface-variant)]">Conversaciones</dt>
-          <dd className="text-right font-semibold">{totalConversationsCompleted}</dd>
-        </dl>
-        {/*
-          El analisis de fallos es gratis: el producto promete que Plus da
-          comodidad, no aprendizaje, y saber que se te resiste es aprendizaje.
-        */}
-        <Link
-          to="/analisis"
-          className="mt-4 block text-center text-xs font-semibold text-[var(--primary)]"
-        >
-          Ver qué se te resiste y por qué →
-        </Link>
-      </MirabiCard>
-
-      <SectionTitle>Calendario</SectionTitle>
-      <MirabiCard className="mb-5 p-5">
-        <div className="grid grid-cols-7 gap-1.5">
-          {last28.map((day) => (
-            <div
-              key={day}
-              title={new Date(day * 86_400_000).toLocaleDateString()}
-              className={`aspect-square rounded-[6px] ${
-                activeDays.includes(day) ? 'bg-[var(--primary)]' : 'bg-[var(--surface-variant)]'
-              }`}
-            />
-          ))}
-        </div>
-        <p className="mt-3 text-xs text-[var(--on-surface-variant)]">Últimas 4 semanas</p>
-      </MirabiCard>
-
-      <SectionTitle>Logros</SectionTitle>
-      <div className="mb-5 grid grid-cols-4 gap-2">
-        {achievementsList.map(({ definition, unlock }) => (
-          <div
-            key={definition.id}
-            title={unlock ? `Desbloqueado el ${new Date(unlock.unlockedAtEpochMillis).toLocaleDateString()}` : undefined}
-            className={`flex flex-col items-center gap-1 rounded-[16px] p-3 text-center ${
-              unlock
-                ? 'bg-[var(--primary-container)] text-[var(--on-primary-container)]'
-                : 'bg-[var(--surface-variant)] text-[var(--on-surface-variant)] opacity-55'
-            }`}
-          >
-            <span aria-hidden className="font-jp text-xl">
-              {definition.icon}
-            </span>
-            <span className="text-[10px] leading-tight font-semibold">{definition.title}</span>
+        <aside className="profile-column" aria-label="Tu hábito">
+          <div>
+            <SectionTitle>Un hábito que florece</SectionTitle>
+            <MirabiCard className="p-6">
+              <p className="text-sm text-[var(--on-surface-variant)]">
+                Tu actividad en los últimos 28 días.
+              </p>
+              <ol
+                className="activity-calendar"
+                aria-label="Calendario de actividad"
+              >
+                {last28.map((day) => {
+                  const date = new Date(day * 86400000)
+                  const active = activeDays.includes(day)
+                  return (
+                    <li
+                      key={day}
+                      className={active ? 'is-active' : ''}
+                      aria-label={
+                        date.toLocaleDateString('es-PE', {
+                          day: 'numeric',
+                          month: 'long',
+                          timeZone: 'UTC',
+                        }) + (active ? ': estudiaste' : ': sin actividad')
+                      }
+                    >
+                      <span aria-hidden="true">{date.getUTCDate()}</span>
+                      {active && <AppIcon name="check" size={12} />}
+                    </li>
+                  )
+                })}
+              </ol>
+              <div className="mt-4 flex items-center gap-2 text-xs text-[var(--on-surface-variant)]">
+                <span className="h-2 w-2 rounded-full bg-[var(--primary)]" />
+                Día con actividad
+              </div>
+            </MirabiCard>
           </div>
-        ))}
+          {signals.length > 0 && (
+            <div className="yuki-note items-start">
+              <Yuki size={56} state="THINKING" halo={false} />
+              <div>
+                <strong>Yuki te acompaña</strong>
+                <ul className="flex flex-col gap-3">
+                  {signals.map((signal) => (
+                    <li key={signal.type}>
+                      <p>{signal.message}</p>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          )}
+          <Link to="/misiones" className="mirabi-card library-link mt-0">
+            <span className="icon-tile">
+              <AppIcon name="target" />
+            </span>
+            <div>
+              <h2>Tu próxima misión</h2>
+              <p>Un objetivo pequeño para seguir creciendo.</p>
+            </div>
+            <AppIcon name="next" />
+          </Link>
+        </aside>
       </div>
-
-      {signals.length > 0 && (
-        <>
-          <SectionTitle>Yuki dice</SectionTitle>
-          <MirabiCard className="p-5">
-            <ul className="flex flex-col gap-1.5 text-sm">
-              {signals.map((signal) => (
-                <li key={signal.type} className="flex items-start gap-2">
-                  <span aria-hidden>•</span>
-                  <span>{signal.message}</span>
-                </li>
-              ))}
-            </ul>
-          </MirabiCard>
-        </>
-      )}
     </Screen>
   )
 }

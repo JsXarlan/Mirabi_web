@@ -5,7 +5,7 @@ import type { WordState } from '../../core/domain/wordProgress'
 export const WORD_STATE_STYLE: Record<WordState, string> = {
   NEW: 'bg-[var(--surface-variant)] text-[var(--on-surface-variant)]',
   LEARNING: 'bg-[color-mix(in_srgb,var(--tertiary)_28%,transparent)]',
-  MASTERED: 'bg-[var(--success)] text-white',
+  MASTERED: 'bg-[var(--success)] text-[var(--on-success)]',
 }
 
 export const WORD_STATE_LABEL: Record<WordState, string> = {

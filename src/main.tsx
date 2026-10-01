@@ -6,6 +6,8 @@ import App from './App'
 import { initAuth } from './core/auth/authManager'
 import { initSync } from './core/sync/syncEngine'
 import { ErrorBoundary } from './ui/ErrorBoundary'
+import '@fontsource-variable/dm-sans/wght.css'
+import '@fontsource-variable/nunito/wght.css'
 import './index.css'
 // Fuente "tradicional" de la practica de escritura: autohospedada para que
 // funcione offline (el service worker cachea .woff2 igual que cualquier
@@ -34,7 +36,9 @@ createRoot(document.getElementById('root')!).render(
 if (import.meta.env.PROD && 'serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker
-      .register(`${import.meta.env.BASE_URL}sw.js`, { scope: import.meta.env.BASE_URL })
+      .register(`${import.meta.env.BASE_URL}sw.js`, {
+        scope: import.meta.env.BASE_URL,
+      })
       .catch(() => {
         // Sin service worker la app sigue funcionando: solo pierde el modo offline.
       })

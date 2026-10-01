@@ -4,6 +4,7 @@ import { useMirabiStore } from '../../core/store/useMirabiStore'
 import { MirabiButton, MirabiCard, SectionTitle } from '../../ui/components'
 import { Screen } from '../../ui/Layout'
 import { YukiBubble } from '../../ui/Yuki'
+import { AppIcon } from '../../ui/Icons'
 
 const BENEFITS = [
   { icon: '🚫', title: 'Sin anuncios', description: 'Ningún anuncio, en ningún momento.' },
@@ -33,7 +34,7 @@ export function PremiumScreen() {
           <li key={benefit.title}>
             <MirabiCard className="flex items-start gap-3 p-4">
               <span aria-hidden className="text-xl">
-                {benefit.icon}
+                <AppIcon name={benefit.icon === '🚫' ? 'shield' : benefit.icon} size={25} />
               </span>
               <div>
                 <p className="text-sm font-bold">{benefit.title}</p>
@@ -51,8 +52,8 @@ export function PremiumScreen() {
         <table className="w-full text-sm">
           <thead>
             <tr className="bg-[var(--surface-variant)] text-xs">
-              <th className="p-3 text-left font-semibold">&nbsp;</th>
-              <th className="p-3 font-semibold">Free</th>
+              <th scope="col" className="p-3 text-left font-semibold">Incluye</th>
+              <th scope="col" className="p-3 font-semibold">Free</th>
               <th className="p-3 font-semibold">Plus</th>
             </tr>
           </thead>
@@ -67,9 +68,9 @@ export function PremiumScreen() {
               ['Estadísticas avanzadas', '—', '✓'],
             ].map(([feature, free, plus]) => (
               <tr key={feature} className="border-t border-[var(--surface-variant)]">
-                <td className="p-3 text-left">{feature}</td>
-                <td className="p-3 text-center text-[var(--on-surface-variant)]">{free}</td>
-                <td className="p-3 text-center font-semibold text-[var(--primary)]">{plus}</td>
+                <th scope="row" className="p-3 text-left font-normal">{feature}</th>
+                <td className="p-3 text-center text-[var(--on-surface-variant)]">{free === '✓' ? 'Sí' : 'No'}</td>
+                <td className="p-3 text-center font-semibold text-[var(--primary)]">{plus === '✓' ? 'Sí' : 'No'}</td>
               </tr>
             ))}
           </tbody>

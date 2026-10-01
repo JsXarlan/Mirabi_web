@@ -11,7 +11,7 @@ export const MASTERY_STYLE: Record<MasteryScore, string> = {
   FAMILIAR: 'bg-[color-mix(in_srgb,var(--secondary)_20%,transparent)]',
   LEARNING: 'bg-[color-mix(in_srgb,var(--tertiary)_28%,transparent)]',
   MASTERED: 'bg-[color-mix(in_srgb,var(--success)_28%,transparent)]',
-  EXPERT: 'bg-[var(--success)] text-white',
+  EXPERT: 'bg-[var(--success)] text-[var(--on-success)]',
 }
 
 export const MASTERY_LABEL: Record<MasteryScore, string> = {

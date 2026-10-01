@@ -1,3 +1,4 @@
+import { AppIcon } from '../../ui/Icons'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import { DEFAULT_REWARD_CONFIG } from '../../core/domain/rewards'
@@ -42,7 +43,7 @@ export function UnitDetailScreen() {
             {progress?.completedLessons ?? 0}/{progress?.totalLessons ?? 0} lecciones
           </span>
           <span className="rounded-full bg-[var(--tertiary-container)] px-3 py-1 text-xs font-bold text-[var(--on-tertiary-container)]">
-            +{DEFAULT_REWARD_CONFIG.unitCompletedSakura} 🌸 al completar
+            +{DEFAULT_REWARD_CONFIG.unitCompletedSakura} Sakura al completar
           </span>
         </div>
         <MirabiProgressBar
@@ -82,10 +83,10 @@ export function UnitDetailScreen() {
                 onClick={() => !locked && navigate(`/leccion/${node.lessonId}`)}
               >
                 <span aria-hidden className="text-lg">
-                  {node.state === 'COMPLETED' ? '✅' : locked ? '🔒' : '▶️'}
+                  <AppIcon name={node.state === 'COMPLETED' ? 'complete' : locked ? 'lock' : 'play'} size={22} />
                 </span>
                 <span className="min-w-0 flex-1">
-                  <span className="block truncate font-jp text-sm font-semibold">{node.title}</span>
+                  <span className="block font-jp text-sm font-semibold">{node.title}</span>
                   <span className="block text-xs text-[var(--on-surface-variant)]">
                     {lesson ? `${lesson.exercises.length} pasos` : ''}
                   </span>

@@ -1,8 +1,16 @@
-import type { MissionDefinition, MissionProgress } from '../../core/domain/models'
+import type {
+  MissionDefinition,
+  MissionProgress,
+} from '../../core/domain/models'
 import { useMirabiStore } from '../../core/store/useMirabiStore'
-import { MirabiCard, MirabiProgressBar, SectionTitle } from '../../ui/components'
+import {
+  MirabiCard,
+  MirabiProgressBar,
+  SectionTitle,
+} from '../../ui/components'
 import { Screen } from '../../ui/Layout'
 import { YukiBubble } from '../../ui/Yuki'
+import { AppIcon } from '../../ui/Icons'
 
 const TARGET_ICON: Record<string, string> = {
   COMPLETE_LESSON: '📘',
@@ -22,10 +30,15 @@ function MissionList({ missions }: { missions: MissionRow[] }) {
     <ul className="flex flex-col gap-2.5">
       {missions.map(({ definition, progress }) => (
         <li key={definition.id}>
-          <MirabiCard className={`p-5 ${progress.completed ? 'ring-2 ring-[var(--success)]' : ''}`}>
+          <MirabiCard
+            className={`p-5 ${progress.completed ? 'ring-2 ring-[var(--success)]' : ''}`}
+          >
             <div className="flex items-start gap-3">
               <span aria-hidden className="font-jp text-xl">
-                {TARGET_ICON[definition.targetType] ?? '🎯'}
+                <AppIcon
+                  name={TARGET_ICON[definition.targetType] ?? 'target'}
+                  size={26}
+                />
               </span>
               <div className="min-w-0 flex-1">
                 <p className="text-sm font-bold">{definition.title}</p>
@@ -36,11 +49,13 @@ function MissionList({ missions }: { missions: MissionRow[] }) {
               <span
                 className={`shrink-0 rounded-full px-3 py-1 text-xs font-bold ${
                   progress.completed
-                    ? 'bg-[var(--success)] text-white'
+                    ? 'bg-[var(--success)] text-[var(--on-success)]'
                     : 'bg-[var(--tertiary-container)] text-[var(--on-tertiary-container)]'
                 }`}
               >
-                {progress.completed ? '✓ Cobrada' : `+${definition.rewardSakura} 🌸`}
+                {progress.completed
+                  ? 'Completada'
+                  : `+${definition.rewardSakura} Sakura`}
               </span>
             </div>
 
@@ -64,11 +79,15 @@ export function MissionsScreen() {
   const missions = useMirabiStore((state) => state.todayMissions)()
   const weekly = useMirabiStore((state) => state.weekMissions)()
 
-  const completed = missions.filter((mission) => mission.progress.completed).length
-  const weeklyCompleted = weekly.filter((mission) => mission.progress.completed).length
+  const completed = missions.filter(
+    (mission) => mission.progress.completed,
+  ).length
+  const weeklyCompleted = weekly.filter(
+    (mission) => mission.progress.completed,
+  ).length
 
   return (
-    <Screen title="Misiones">
+    <Screen title="Misiones" wide>
       <YukiBubble
         state={completed === missions.length ? 'PROUD' : 'HAPPY'}
         message={
@@ -78,24 +97,29 @@ export function MissionsScreen() {
         }
       />
 
-      <p className="mt-5 mb-3 text-sm text-[var(--on-surface-variant)]">
-        {completed} de {missions.length} completadas hoy
-      </p>
-      <MissionList missions={missions} />
+      <div className="missions-layout">
+        <section>
+          <SectionTitle>Hoy</SectionTitle>
+          <p className="mt-5 mb-3 text-sm text-[var(--on-surface-variant)]">
+            {completed} de {missions.length} completadas hoy
+          </p>
+          <MissionList missions={missions} />
+        </section>
 
-      {/* Las semanales piden mas de lo que cabe en un dia: son el motivo para
+        {/* Las semanales piden mas de lo que cabe en un dia: son el motivo para
           volver el jueves, no para hacer mas hoy. */}
-      <div className="mt-8">
-        <SectionTitle
-          action={
-            <span className="text-xs text-[var(--on-surface-variant)]">
-              {weeklyCompleted}/{weekly.length}
-            </span>
-          }
-        >
-          Esta semana
-        </SectionTitle>
-        <MissionList missions={weekly} />
+        <section>
+          <SectionTitle
+            action={
+              <span className="text-xs text-[var(--on-surface-variant)]">
+                {weeklyCompleted}/{weekly.length}
+              </span>
+            }
+          >
+            Esta semana
+          </SectionTitle>
+          <MissionList missions={weekly} />
+        </section>
       </div>
 
       <p className="mt-5 text-center text-xs text-[var(--on-surface-variant)]">

@@ -1,3 +1,4 @@
+import { AppIcon } from '../../ui/Icons'
 import type { ContentExercise } from '../../core/content/types'
 import { hasKana, toRomaji } from '../../core/domain/romaji'
 import { errorTypeLabel } from '../../core/domain/weakpoints'
@@ -26,29 +27,49 @@ export function FeedbackBar({
 
   if (isCorrect) {
     return (
-      <div className="mt-4 flex items-center justify-between gap-3 rounded-[16px] bg-[color-mix(in_srgb,var(--success)_20%,transparent)] p-4 animate-pop">
-        <p className="text-sm font-bold text-[var(--on-surface)]">¡Correcto! 🌸</p>
+      <div
+        role="status"
+        className="mt-4 flex items-center justify-between gap-3 rounded-[16px] bg-[color-mix(in_srgb,var(--success)_20%,transparent)] p-4 animate-pop"
+      >
+        <p className="text-sm font-bold text-[var(--on-surface)]">
+          <span className="flex items-center gap-2">
+            <AppIcon name="complete" size={22} />
+            ¡Correcto!
+          </span>
+        </p>
         {audioText && <AudioButton compact text={audioText} />}
       </div>
     )
   }
 
   const distractorReason =
-    exercise.options.find((option) => option.text === answer)?.distractorReason ?? null
+    exercise.options.find((option) => option.text === answer)
+      ?.distractorReason ?? null
   const explanation =
-    exercise.errorType && exercise.errorType !== 'NONE' ? errorTypeLabel(exercise.errorType) : null
+    exercise.errorType && exercise.errorType !== 'NONE'
+      ? errorTypeLabel(exercise.errorType)
+      : null
   const correct = exercise.correctAnswer
-  const reading = correct && hasKana(correct) ? toRomaji(correct, catalog) : null
+  const reading =
+    correct && hasKana(correct) ? toRomaji(correct, catalog) : null
 
   return (
-    <div className="mt-4 rounded-[16px] bg-[var(--secondary-container)] p-4 animate-pop">
+    <div
+      role="status"
+      className="mt-4 rounded-[16px] bg-[var(--secondary-container)] p-4 animate-pop"
+    >
       <div className="flex items-start justify-between gap-3">
         <p className="text-sm font-bold text-[var(--on-secondary-container)]">
           La respuesta era{' '}
-          <span className="font-jp" lang={correct && hasKana(correct) ? 'ja' : undefined}>
+          <span
+            className="font-jp"
+            lang={correct && hasKana(correct) ? 'ja' : undefined}
+          >
             {correct}
           </span>
-          {reading && <span className="ml-1.5 font-normal opacity-80">({reading})</span>}
+          {reading && (
+            <span className="ml-1.5 font-normal opacity-80">({reading})</span>
+          )}
         </p>
         {audioText && <AudioButton compact text={audioText} />}
       </div>
@@ -61,7 +82,8 @@ export function FeedbackBar({
 
       {explanation && (
         <p className="mt-2 border-t border-[color-mix(in_srgb,var(--on-secondary-container)_20%,transparent)] pt-2 text-xs text-[var(--on-secondary-container)]">
-          <span className="font-semibold">{explanation.title}.</span> {explanation.advice}
+          <span className="font-semibold">{explanation.title}.</span>{' '}
+          {explanation.advice}
         </p>
       )}
 

@@ -5,6 +5,8 @@ import { useMirabiStore } from '../../core/store/useMirabiStore'
 import { MirabiButton, MirabiCard } from '../../ui/components'
 import { Screen } from '../../ui/Layout'
 import { Yuki } from '../../ui/Yuki'
+import { AppIcon } from '../../ui/Icons'
+import { labelFor } from '../../core/domain/labels'
 
 const LESSON_TYPE_LABEL: Record<string, string> = {
   CONCEPT_INTRO: 'Concepto nuevo',
@@ -22,6 +24,7 @@ export function LessonIntroScreen() {
   const { lessonId } = useParams<{ lessonId: string }>()
   const navigate = useNavigate()
   const index = useMirabiStore((state) => state.index)
+  const labels = useMirabiStore((state) => state.labels)
   const lessonProgress = useMirabiStore((state) => state.lessonProgress)
 
   const lesson = lessonId ? index?.lessonById.get(lessonId) : undefined
@@ -45,13 +48,26 @@ export function LessonIntroScreen() {
   const estimatedMinutes = Math.max(1, Math.round((steps.length * 15) / 60))
 
   return (
-    <Screen title={LESSON_TYPE_LABEL[lesson.lessonType] ?? 'Lección'}>
-      <div className="flex flex-col items-center gap-4 text-center">
-        <Yuki size={96} state={progress?.status === 'COMPLETED' ? 'PROUD' : 'HAPPY'} />
-        <h1 className="font-jp text-2xl font-bold">{lesson.title}</h1>
-        <p className="text-sm text-[var(--on-surface-variant)]">
-          {steps.length} pasos · unos {estimatedMinutes} min
+    <Screen>
+      <div className="lesson-intro">
+        <p className="eyebrow">
+          {LESSON_TYPE_LABEL[lesson.lessonType] ?? 'Lección'}
         </p>
+        <Yuki
+          size={96}
+          state={progress?.status === 'COMPLETED' ? 'PROUD' : 'HAPPY'}
+        />
+        <h1 className="font-jp text-2xl font-bold">{lesson.title}</h1>
+        <div className="lesson-meta">
+          <span>
+            <AppIcon name="characters" size={17} />
+            {steps.length} pasos
+          </span>
+          <span>
+            <AppIcon name="time" size={17} />
+            Unos {estimatedMinutes} min
+          </span>
+        </div>
       </div>
 
       {lesson.objectives.length > 0 && (
@@ -74,7 +90,7 @@ export function LessonIntroScreen() {
                 key={item.id}
                 className="rounded-full bg-[var(--surface-variant)] px-2.5 py-1 text-xs text-[var(--on-surface-variant)]"
               >
-                {item.id}
+                {labelFor(labels, item.id).primary}
               </span>
             ))}
           </div>
@@ -83,8 +99,8 @@ export function LessonIntroScreen() {
 
       {progress?.status === 'COMPLETED' && (
         <p className="mt-4 text-center text-xs text-[var(--on-surface-variant)]">
-          Ya la completaste con {Math.round(progress.bestAccuracyPercentage)}% de acierto.
-          Repetirla no resta progreso.
+          Ya la completaste con {Math.round(progress.bestAccuracyPercentage)}%
+          de acierto. Repetirla no resta progreso.
         </p>
       )}
 
@@ -93,7 +109,10 @@ export function LessonIntroScreen() {
         disabled={steps.length === 0}
         onClick={() => navigate(`/leccion/${lesson.id}/sesion`)}
       >
-        {progress?.status === 'COMPLETED' ? 'Repetir lección' : 'Comenzar'}
+        <AppIcon name="play" size={20} weight="fill" />
+        {progress?.status === 'COMPLETED'
+          ? 'Repetir lección'
+          : 'Comenzar lección'}
       </MirabiButton>
     </Screen>
   )

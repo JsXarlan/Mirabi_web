@@ -1,8 +1,12 @@
 import { useState } from 'react'
 
-import { useMirabiStore, type ShopItemId } from '../../core/store/useMirabiStore'
+import {
+  useMirabiStore,
+  type ShopItemId,
+} from '../../core/store/useMirabiStore'
 import { MirabiButton, MirabiCard, SectionTitle } from '../../ui/components'
 import { Screen } from '../../ui/Layout'
+import { AppIcon } from '../../ui/Icons'
 
 /**
  * Tienda Sakura del MVP. La regla del producto es explicita: la Sakura compra
@@ -27,7 +31,8 @@ const ITEMS: ShopItem[] = [
     id: 'streak_shield',
     icon: '🛡️',
     title: 'Protector de racha',
-    description: 'Guarda tu racha un día que no puedas estudiar. Se gasta solo cuando hace falta.',
+    description:
+      'Guarda tu racha un día que no puedas estudiar. Se gasta solo cuando hace falta.',
     cost: 20,
     owned: (state) => state.streakShields,
     ownedLabel: (count) => `${count} en reserva`,
@@ -48,7 +53,8 @@ const ITEMS: ShopItem[] = [
     description: 'XP x2 durante tu próxima sesión completada.',
     cost: 25,
     owned: (state) => state.xpBoostSessions,
-    ownedLabel: (count) => `${count} ${count === 1 ? 'sesión' : 'sesiones'} pendientes`,
+    ownedLabel: (count) =>
+      `${count} ${count === 1 ? 'sesión' : 'sesiones'} pendientes`,
   },
   {
     id: 'yuki_gift',
@@ -77,15 +83,22 @@ export function ShopScreen() {
   }
 
   const buy = (item: ShopItem) => {
-    if (buyShopItem(item.id, item.cost)) setMessage(`Compraste «${item.title}».`)
+    if (buyShopItem(item.id, item.cost))
+      setMessage(`Compraste «${item.title}».`)
     else setMessage('No tienes suficiente Sakura todavía.')
   }
 
   return (
-    <Screen title="Tienda Sakura">
+    <Screen title="Tienda Sakura" wide>
       <MirabiCard className="mb-5 flex items-center justify-between p-5">
-        <span className="text-sm text-[var(--on-surface-variant)]">Tu saldo</span>
-        <span className="text-2xl font-bold">{sakura} 🌸</span>
+        <span className="text-sm text-[var(--on-surface-variant)]">
+          Tu saldo
+        </span>
+        <span className="flex items-center gap-3 text-2xl font-bold">
+          <AppIcon name="flower" size={28} />
+          {sakura}
+          <span className="text-sm font-medium">Sakura</span>
+        </span>
       </MirabiCard>
 
       {message && (
@@ -98,18 +111,18 @@ export function ShopScreen() {
       )}
 
       <SectionTitle>Artículos</SectionTitle>
-      <ul className="flex flex-col gap-2.5">
+      <ul className="shop-grid">
         {ITEMS.map((item) => {
           const owned = counts[item.id]
           return (
             <li key={item.id}>
               <MirabiCard className="p-4">
-                <div className="flex items-start gap-3">
-                  <span aria-hidden className="text-xl">
-                    {item.icon}
+                <div className="item-content">
+                  <span className="icon-tile">
+                    <AppIcon name={item.icon} size={28} />
                   </span>
                   <div className="min-w-0 flex-1">
-                    <p className="text-sm font-bold">{item.title}</p>
+                    <h2>{item.title}</h2>
                     <p className="mt-0.5 text-xs text-[var(--on-surface-variant)]">
                       {item.description}
                     </p>
@@ -123,9 +136,13 @@ export function ShopScreen() {
                     type="button"
                     onClick={() => buy(item)}
                     disabled={sakura < item.cost}
-                    className="shrink-0 rounded-full bg-[var(--primary)] px-4 py-2 text-xs font-bold text-[var(--on-primary)] disabled:opacity-45"
+                    aria-label={
+                      'Comprar ' + item.title + ' por ' + item.cost + ' Sakura'
+                    }
+                    className="buy-action bg-[var(--primary)] px-4 py-2 text-xs font-bold text-[var(--on-primary)] disabled:opacity-45"
                   >
-                    {item.cost} 🌸
+                    {item.cost} Sakura
+                    <AppIcon name="flower" size={18} />
                   </button>
                 </div>
               </MirabiCard>
@@ -137,7 +154,11 @@ export function ShopScreen() {
       <p className="mt-5 text-center text-xs text-[var(--on-surface-variant)]">
         La Sakura nunca compra respuestas, progreso ni desbloqueo de unidades.
       </p>
-      <MirabiButton className="mt-4" variant="ghost" onClick={() => window.history.back()}>
+      <MirabiButton
+        className="mt-4"
+        variant="ghost"
+        onClick={() => window.history.back()}
+      >
         Volver
       </MirabiButton>
     </Screen>
