@@ -10,12 +10,16 @@
  * pidiendo y se precachea solo el esqueleto.
  */
 
-const VERSION = 'mirabi-v1'
+const VERSION = 'mirabi-v2-brand'
 const SHELL_CACHE = `${VERSION}-shell`
 const CONTENT_CACHE = `${VERSION}-content`
 const ASSET_CACHE = `${VERSION}-assets`
 
-const SHELL = ['./', './index.html', './manifest.webmanifest', './icon.svg']
+const SHELL = [
+  './', './index.html', './manifest.webmanifest', './icon.svg',
+  './icon-maskable.svg', './apple-touch-icon.png',
+  './icon-192.png', './icon-512.png', './icon-maskable-512.png',
+]
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
@@ -123,7 +127,7 @@ self.addEventListener('fetch', (event) => {
   }
 
   // Los assets llevan hash en el nombre: si el nombre coincide, el contenido tambien.
-  if (url.pathname.includes('/assets/') || /\.(js|css|svg|woff2?)$/.test(url.pathname)) {
+  if (url.pathname.includes('/assets/') || /\.(js|css|svg|png|woff2?)$/.test(url.pathname)) {
     event.respondWith(cacheFirst(request, ASSET_CACHE))
   }
 })

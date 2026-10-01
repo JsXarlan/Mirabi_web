@@ -45,12 +45,21 @@ async function minifyContent() {
  * fichero se añade ahi hay que añadirlo aqui tambien, o un cambio en el no
  * subiria el hash de VERSION.
  */
-const SHELL_FILES = ['index.html', 'manifest.webmanifest', 'icon.svg']
+const SHELL_FILES = [
+  'index.html',
+  'manifest.webmanifest',
+  'icon.svg',
+  'icon-maskable.svg',
+  'apple-touch-icon.png',
+  'icon-192.png',
+  'icon-512.png',
+  'icon-maskable-512.png',
+]
 
 /*
  * VERSION del service worker.
  *
- * public/sw.js trae 'mirabi-v1' a mano: si un despliegue cambia la logica de
+ * public/sw.js trae una version a mano: si un despliegue cambia la logica de
  * cache y nadie se acuerda de subir ese numero, el `activate` no purga nada y
  * quien esta offline se queda atascado en la version vieja. Aqui se calcula
  * un hash corto a partir de lo que de verdad cambia -el esqueleto, los assets
