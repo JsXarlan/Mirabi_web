@@ -1,4 +1,5 @@
 import { Component, type ErrorInfo, type ReactNode } from 'react'
+import { Yuki } from './Yuki'
 
 /**
  * Ultima red antes de la pantalla en blanco.
@@ -52,6 +53,7 @@ export class ErrorBoundary extends Component<Props, State> {
     return (
       <div className="mx-auto flex min-h-full max-w-xl flex-col justify-center px-5 py-16">
         <div className="rounded-[22px] border border-[var(--outline)] bg-[var(--surface)] p-6">
+          <div className="mb-4 flex justify-center"><Yuki state="SAD" size={120} /></div>
           <p className="text-lg font-bold">Algo se rompió por aquí</p>
           <p className="mt-2 text-sm text-[var(--on-surface-variant)]">
             Tu progreso está a salvo: vive en este navegador y no se ha tocado.

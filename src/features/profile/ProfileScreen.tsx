@@ -23,6 +23,7 @@ import {
 } from '../../ui/components'
 import { Screen } from '../../ui/Layout'
 import { Yuki } from '../../ui/Yuki'
+import { Artwork } from '../../ui/Artwork'
 import { AppIcon } from '../../ui/Icons'
 
 export function ProfileScreen() {
@@ -189,7 +190,8 @@ export function ProfileScreen() {
                   key={definition.id}
                   className={'achievement-card' + (unlock ? ' unlocked' : '')}
                 >
-                  <AppIcon name={unlock ? 'trophy' : 'lock'} size={27} />
+                  <Artwork name="medal" size={64} className={unlock ? '' : 'locked-art'} />
+                  {!unlock && <AppIcon name="lock" size={14} />}
                   <strong className="text-xs">{definition.title}</strong>
                   <span>
                     {unlock

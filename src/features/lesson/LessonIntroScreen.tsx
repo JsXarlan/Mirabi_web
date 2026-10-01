@@ -5,6 +5,7 @@ import { useMirabiStore } from '../../core/store/useMirabiStore'
 import { MirabiButton, MirabiCard } from '../../ui/components'
 import { Screen } from '../../ui/Layout'
 import { Yuki } from '../../ui/Yuki'
+import { Artwork } from '../../ui/Artwork'
 import { AppIcon } from '../../ui/Icons'
 import { labelFor } from '../../core/domain/labels'
 
@@ -50,11 +51,13 @@ export function LessonIntroScreen() {
   return (
     <Screen>
       <div className="lesson-intro">
+        <Artwork name="garden" className="intro-landscape" eager />
         <p className="eyebrow">
           {LESSON_TYPE_LABEL[lesson.lessonType] ?? 'Lección'}
         </p>
         <Yuki
-          size={96}
+          size={164}
+          pose={progress?.status === 'COMPLETED' ? 'proud' : 'reading'}
           state={progress?.status === 'COMPLETED' ? 'PROUD' : 'HAPPY'}
         />
         <h1 className="font-jp text-2xl font-bold">{lesson.title}</h1>

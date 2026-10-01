@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import { Artwork } from '../../ui/Artwork'
 
 import { ACHIEVEMENTS } from '../../core/domain/achievements'
 import { DEFAULT_REWARD_CONFIG } from '../../core/domain/rewards'
@@ -33,9 +34,7 @@ export function AchievementToast() {
       aria-live="polite"
       className="fixed top-4 left-1/2 z-30 flex w-max max-w-[92vw] -translate-x-1/2 items-center gap-3 rounded-[22px] border border-[color-mix(in_srgb,var(--outline)_35%,transparent)] bg-[var(--primary-container)] px-4 py-3 text-left text-[var(--on-primary-container)] shadow-[var(--shadow-card)]"
     >
-      <span aria-hidden className="font-jp text-2xl">
-        {definition.icon}
-      </span>
+      <Artwork name="medal" size={48} eager />
       <span className="min-w-0 flex-1">
         <span className="block text-xs font-semibold opacity-80">Logro desbloqueado</span>
         <span className="block truncate text-sm font-bold">{definition.title}</span>

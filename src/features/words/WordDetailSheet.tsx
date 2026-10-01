@@ -38,7 +38,7 @@ export function WordDetailSheet({
     .filter((item): item is NonNullable<typeof item> => item !== undefined)
 
   return (
-    <MirabiSheet title={`Palabra ${word.lemma}, ${word.romaji}`} onClose={onClose}>
+    <MirabiSheet artwork="cards" title={`Palabra ${word.lemma}, ${word.romaji}`} onClose={onClose}>
       <div className="flex items-start justify-between">
         <div>
           <p className="font-jp text-4xl leading-none">{word.lemma}</p>

@@ -1,0 +1,99 @@
+
+/* Mirabi's painted illustration system. Artwork never intercepts controls. */
+.mirabi-art { display: block; pointer-events: none; flex-shrink: 0; user-select: none; }
+.spot-art { object-fit: contain; }
+.scene-art { object-fit: cover; }
+.illustrated-yuki { position: relative; display: inline-block; flex-shrink: 0; isolation: isolate; vertical-align: middle; }
+.illustrated-yuki img { display: block; width: 100%; height: 100%; object-fit: contain; }
+.illustrated-yuki.has-halo::before { content: ''; position: absolute; inset: 12%; z-index: -1; border-radius: 50%; background: var(--primary-container); }
+.yuki-portrait { overflow: hidden; border-radius: 50%; background: var(--primary-container); }
+.yuki-portrait img { max-width: none; width: 160%; height: 160%; position: absolute; left: -30%; top: -7%; }
+.page-heading { position: relative; min-height: 144px; padding: 20px 168px 20px 0; isolation: isolate; }
+.page-heading > div { position: relative; z-index: 1; }
+.page-heading > .heading-art { position: absolute; right: 4px; top: 50%; transform: translateY(-50%); }
+.page-heading > .scene-art { width: 60%; height: 100%; right: -24px; border-radius: 24px; opacity: .52; mask-image: linear-gradient(to right, transparent 0%, #000 75%); z-index: -1; }
+.page-heading > a, .page-heading > button { position: absolute; right: 0; bottom: -8px; z-index: 2; }
+.home-welcome { position: relative; min-height: 192px; isolation: isolate; padding: 16px 0 22px; overflow: hidden; }
+.home-welcome > div { position: relative; z-index: 1; }
+.welcome-landscape { position: absolute; inset: 0 0 0 auto; width: 72%; height: 100%; object-position: right 42%; opacity: .75; mask-image: linear-gradient(to right, transparent, #000 78%); z-index: -1; border-radius: 24px; }
+.home-date { position: absolute; right: 16px; bottom: 14px; z-index: 1; background: var(--surface); border-radius: 100px; padding: 5px 10px; font-size: 10px; }
+.lesson-hero { min-height: 405px; display: flex; flex-direction: column; }
+.lesson-hero .hero-scene { width: 70%; height: 100%; right: 0; bottom: 0; opacity: .55; object-position: right bottom; mask-image: linear-gradient(to right, transparent 0%, #000 85%); z-index: -2; }
+.lesson-hero .hero-yuki { right: 6px; bottom: 65px; opacity: 1; z-index: -1; }
+.lesson-hero .hero-content { padding-right: 165px; }
+.lesson-hero .hero-content h2 { max-width: 360px; font-size: clamp(25px, 2.4vw, 34px); }
+.lesson-hero .hero-content > p { max-width: 320px; }
+.lesson-hero .hero-action { max-width: 100%; }
+.hero-footer { margin-top: auto; z-index: 1; }
+.home-practice-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.home-practice-grid .practice-card { position: relative; padding: 20px 16px; overflow: hidden; gap: 8px; }
+.home-practice-grid .practice-card > .practice-art,
+.home-practice-grid .practice-card > .script-artwork { width: 104px; height: 104px; align-self: flex-end; }
+.home-practice-grid .practice-card h3 { font-size: 16px; }
+.home-practice-grid .practice-card p { flex: 1; }
+.home-practice-grid .practice-action { font-size: 11px; margin-top: auto; }
+.script-artwork { position: relative; display: inline-flex; width: 142px; height: 142px; flex-shrink: 0; }
+.script-artwork > .spot-art { width: 100% !important; height: 100% !important; }
+.script-artwork-glyph { position: absolute; top: 29%; left: 31%; width: 42%; text-align: center; font-size: 54px; line-height: 1; color: #44235e; transform: rotate(8deg); }
+.script-artwork.is-kanji .script-artwork-glyph { font-size: 32px; top: 72%; left: 44%; transform: rotate(-18deg); }
+.script-artwork.is-katakana .script-artwork-glyph { top: 33%; left: 26%; width: 40%; transform: rotate(3deg); }
+.home-practice-grid .script-artwork-glyph { font-size: 40px; }
+.collection-card > .script-artwork { margin-bottom: 12px; }
+.yuki-note { overflow: hidden; }
+.yuki-note .illustrated-yuki { align-self: flex-end; }
+.yuki-note strong { display: block; margin-bottom: 6px; }
+.yuki-note small { display: block; margin-top: 6px; }
+.world-landscape { width: 100%; height: 100%; object-position: 75% 65%; }
+.world-summary-art { overflow: hidden; border-radius: 18px; }
+.world-tab { position: relative; }
+.locked-art { filter: grayscale(1); opacity: .36; }
+.achievement-card { gap: 6px; }
+.mirabi-sheet-panel { max-height: 88dvh; overflow-y: auto; }
+.sheet-art-strip { height: 36px; margin: -8px 0 12px; display: flex; align-items: center; justify-content: center; background: linear-gradient(to right, transparent, var(--primary-container), transparent); border-radius: 12px; }
+.sheet-art-strip .spot-art { opacity: .85; }
+.session-caption { gap: 8px; }
+.lesson-intro { position: relative; isolation: isolate; overflow: hidden; border-radius: 24px; padding: 28px 24px; }
+.intro-landscape { position: absolute; inset: 0; width: 100%; height: 100%; opacity: .18; mask-image: linear-gradient(to bottom, #000, transparent); z-index: -1; }
+.onboarding-art { isolation: isolate; border-radius: 24px; overflow: hidden; margin: 22px -12px; height: 240px; }
+.onboarding-art .onboarding-landscape { position: absolute; inset: 0; width: 100%; height: 100%; opacity: .68; mask-image: linear-gradient(to top, #000, transparent); z-index: -1; }
+.onboarding-art .illustrated-yuki { position: relative; z-index: 1; }
+.onboarding-progress > p { flex-shrink: 0; white-space: nowrap; }
+@media (min-width: 1440px) {
+  .page-wide { max-width: 1320px; }
+  .home-grid { grid-template-columns: minmax(0, 1.95fr) minmax(280px, 1fr); }
+  .lesson-hero .hero-content { padding-right: 205px; }
+  .lesson-hero .hero-yuki { right: 12px; }
+}
+@media (max-width: 1199px) and (min-width: 680px) {
+  .lesson-hero .hero-content { padding-right: 260px; }
+  .lesson-hero .hero-yuki { right: 24px; }
+}
+@media (max-width: 679px) {
+  .page-heading { min-height: 116px; padding: 8px 92px 8px 0; gap: 10px; }
+  .page-heading > .spot-art { width: 88px !important; height: 88px !important; right: -6px; }
+  .page-heading > .scene-art { width: 55%; opacity: .35; right: -10px; }
+  .page-heading h1 { font-size: 28px; }
+  .home-welcome { min-height: 204px; margin-bottom: 20px; }
+  .welcome-landscape { width: 95%; opacity: .4; mask-image: linear-gradient(to right, transparent 20%, #000); }
+  .home-date { display: none; }
+  .lesson-hero { min-height: 540px; padding: 26px 24px; }
+  .lesson-hero .hero-content { padding-right: 0; }
+  .lesson-hero .hero-content h2 { max-width: 100%; font-size: 30px; }
+  .lesson-hero .hero-content > p { max-width: 100%; }
+  .lesson-hero .hero-action { width: 100%; margin-bottom: 180px; }
+  .lesson-hero .hero-yuki { bottom: 64px; right: 10px; opacity: 1; }
+  .lesson-hero .hero-yuki .illustrated-yuki { width: 190px !important; height: 190px !important; }
+  .lesson-hero .hero-scene { width: 100%; height: 60%; opacity: .58; mask-image: linear-gradient(to bottom, transparent, #000); }
+  .home-practice-grid { grid-template-columns: 1fr; }
+  .home-practice-grid .practice-card { padding: 20px 112px 20px 20px; min-height: 148px; }
+  .home-practice-grid .practice-card > .practice-art,
+  .home-practice-grid .practice-card > .script-artwork { position: absolute; right: 6px; bottom: 12px; width: 98px; height: 98px; }
+  .home-practice-grid .practice-card h3 { font-size: 18px; }
+  .yuki-note { padding: 16px; gap: 10px; }
+  .yuki-note .illustrated-yuki { width: 90px !important; height: 90px !important; }
+  .shop-grid .item-content { flex-wrap: wrap; }
+  .shop-grid .buy-action { margin-left: auto; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .illustrated-yuki, .mirabi-art { animation: none !important; transition: none !important; }
+}

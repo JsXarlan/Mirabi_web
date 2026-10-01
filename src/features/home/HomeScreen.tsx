@@ -17,7 +17,7 @@ import {
 import { Screen } from '../../ui/Layout'
 import { Yuki } from '../../ui/Yuki'
 import { AppIcon } from '../../ui/Icons'
-import { JourneyScene } from '../../ui/Brand'
+import { Artwork, ScriptArtwork } from '../../ui/Artwork'
 
 function greeting(): string {
   const hour = new Date().getHours()
@@ -170,6 +170,7 @@ export function HomeScreen() {
   return (
     <Screen wide>
       <header className="home-welcome">
+        <Artwork name="garden" className="welcome-landscape" eager />
         <div>
           <p className="eyebrow">
             {greeting()}
@@ -189,9 +190,9 @@ export function HomeScreen() {
       <div className="home-grid">
         <div className="home-main">
           <section className="lesson-hero" aria-labelledby="next-lesson-title">
-            <JourneyScene className="hero-scene" />
+            <Artwork name="garden" className="hero-scene" eager />
             <div className="hero-yuki">
-              <Yuki state={yuki.state} size={112} halo={false} />
+              <Yuki pose="reading" size={270} halo={false} />
             </div>
             <div className="hero-content">
               <span className="hero-label">
@@ -249,11 +250,9 @@ export function HomeScreen() {
             >
               Un momento para practicar
             </SectionTitle>
-            <div className="practice-grid">
+            <div className="practice-grid home-practice-grid">
               <Link to="/repaso" className="mirabi-card practice-card">
-                <span className="icon-tile">
-                  <AppIcon name="review" size={25} />
-                </span>
+                <Artwork name="cards" size={104} className="practice-art" />
                 <h3>Refuerza lo aprendido</h3>
                 <p>
                   {pendingReviews.length > 0
@@ -267,16 +266,20 @@ export function HomeScreen() {
                   <AppIcon name="next" size={18} />
                 </span>
               </Link>
-              <Link to="/caracteres" className="mirabi-card practice-card">
-                <span className="icon-tile sakura">
-                  <AppIcon name="characters" size={25} />
-                </span>
-                <h3>Dale forma al japonés</h3>
-                <p>Hiragana, katakana y kanji. Descubre cada trazo.</p>
+              <Link to="/caracteres/hiragana" className="mirabi-card practice-card">
+                <ScriptArtwork sample="あ" />
+                <h3>Hiragana</h3>
+                <p>Aprende los sonidos básicos del japonés.</p>
                 <span className="practice-action">
-                  Explorar caracteres
+                  Explorar hiragana
                   <AppIcon name="next" size={18} />
                 </span>
+              </Link>
+              <Link to="/caracteres/katakana" className="mirabi-card practice-card">
+                <ScriptArtwork sample="ア" />
+                <h3>Katakana</h3>
+                <p>Reconoce y practica los sonidos modernos.</p>
+                <span className="practice-action">Explorar katakana <AppIcon name="next" size={18} /></span>
               </Link>
             </div>
           </div>
@@ -417,8 +420,9 @@ export function HomeScreen() {
             </p>
           </MirabiCard>
           <div className="yuki-note">
-            <Yuki state={yuki.state} size={58} halo={false} />
+            <Yuki state={yuki.state} size={104} halo={false} />
             <div>
+              <strong>Tu compañera Yuki</strong>
               <p>{yuki.text}</p>
               <small>{motivation.encouragement}</small>
             </div>
@@ -439,7 +443,7 @@ export function HomeScreen() {
                 onClick={() => navigate('/misiones')}
               >
                 <div className="flex items-start justify-between gap-3">
-                  <AppIcon name="flag" size={24} />
+                  <Artwork name="medal" size={80} />
                   <span className="reward-label">
                     +{activeMission.definition.rewardSakura} Sakura
                   </span>
