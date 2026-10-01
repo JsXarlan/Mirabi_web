@@ -161,7 +161,7 @@ function AppHeader() {
   return (
     <header className="app-header">
       <Link to="/" className="mobile-brand" aria-label="Mirabi, inicio">
-        <MirabiBrand />
+        <MirabiBrand compact />
       </Link>
       <div className="header-context">
         <span>Tu espacio de aprendizaje</span>

@@ -1,18 +1,39 @@
-import { Yuki } from './Yuki'
+import logoLight from '../assets/brand/mirabi-logo-light.svg'
+import logoDark from '../assets/brand/mirabi-logo-dark.svg'
+import brandIcon from '../assets/brand/mirabi-icon.svg'
 
 export function MirabiBrand({ compact = false }: { compact?: boolean }) {
   return (
-    <span className="mirabi-brand">
-      <span className="brand-mark" aria-hidden="true">
-        <Yuki size={38} halo={false} />
-      </span>
-      {!compact && (
-        <span>
-          <span className="brand-name">
-            mirabi<span className="brand-dot">.</span>
-          </span>
-          <span className="brand-caption">未来 + 学び</span>
-        </span>
+    <span
+      className={'mirabi-brand' + (compact ? ' mirabi-brand--compact' : '')}
+      role="img"
+      aria-label="Mirabi"
+    >
+      {compact ? (
+        <img
+          src={brandIcon}
+          className="brand-symbol"
+          width={512}
+          height={512}
+          alt=""
+        />
+      ) : (
+        <>
+          <img
+            src={logoLight}
+            className="brand-logo brand-logo--light"
+            width={1876}
+            height={466}
+            alt=""
+          />
+          <img
+            src={logoDark}
+            className="brand-logo brand-logo--dark"
+            width={1876}
+            height={466}
+            alt=""
+          />
+        </>
       )}
     </span>
   )
