@@ -101,16 +101,17 @@ export function WordFlashcardScreen() {
       hint="Tocá la tarjeta para dar vuelta"
     >
       <div className="flex flex-1 flex-col items-center justify-center gap-6">
-        {/*
-          div con role="button", no <button>: revelada, la tarjeta contiene el
-          AudioButton, y un boton no puede anidar otro boton en HTML valido.
-        */}
+        {/* La acción de audio queda como control hermano para que no se anide en esta tarjeta. */}
         <div
           role="button"
           tabIndex={0}
+          aria-expanded={revealed}
           onClick={() => setRevealed((value) => !value)}
           onKeyDown={(event) => {
-            if (event.key === 'Enter' || event.key === ' ') setRevealed((value) => !value)
+            if (event.key === 'Enter' || event.key === ' ') {
+              event.preventDefault()
+              setRevealed((value) => !value)
+            }
           }}
           className="flex min-h-[220px] w-full max-w-sm cursor-pointer flex-col items-center justify-center gap-3 rounded-[22px] border-2 border-[var(--outline)] bg-[var(--surface)] p-6 text-center transition active:scale-[0.98]"
         >
@@ -131,12 +132,10 @@ export function WordFlashcardScreen() {
                   <p className="mt-1 text-xs">{word.exampleSentence.meaning}</p>
                 </div>
               )}
-              <div onClick={(event) => event.stopPropagation()}>
-                <AudioButton text={word.audioText ?? word.kana} compact />
-              </div>
             </div>
           )}
         </div>
+        {revealed && <AudioButton text={word.audioText ?? word.kana} compact />}
       </div>
 
       {revealed && (

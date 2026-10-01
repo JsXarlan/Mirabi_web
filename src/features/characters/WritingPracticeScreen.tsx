@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 
+import '@fontsource/yuji-syuku/400.css'
+
 import type { KanaGroup } from '../../core/content/types'
 import { kanjiByGrade, loadKanaStrokeCatalog, loadKanjiStrokeCatalog } from '../../core/content/loader'
 import { validateKanaStrokeCatalog, validateKanjiStrokeCatalog } from '../../core/content/validate'

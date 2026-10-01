@@ -1,7 +1,7 @@
 {
     "schemaVersion": 1,
-    "version": "1.0.0",
-    "checksum": "words-1.0.0-n192-k65",
+    "version": "1.0.1",
+    "checksum": "words-1.0.1-n192-k65",
     "words": [
         {
             "id": "word-yama",
@@ -10,7 +10,7 @@
             "kana": "やま",
             "romaji": "yama",
             "meanings": [
-                "montana"
+                "montaña"
             ],
             "script": "HIRAGANA",
             "learningItemType": "VOCABULARY",
@@ -105,7 +105,7 @@
             "kana": "にほん",
             "romaji": "nihon",
             "meanings": [
-                "Japon"
+                "Japón"
             ],
             "script": "HIRAGANA",
             "learningItemType": "VOCABULARY",
@@ -255,7 +255,7 @@
             "kana": "さようなら",
             "romaji": "sayounara",
             "meanings": [
-                "adios"
+                "adiós"
             ],
             "script": "HIRAGANA",
             "learningItemType": "VOCABULARY",
@@ -377,7 +377,7 @@
             "kana": "おはよう",
             "romaji": "ohayou",
             "meanings": [
-                "buenos dias"
+                "buenos días"
             ],
             "script": "HIRAGANA",
             "learningItemType": "VOCABULARY",
@@ -464,7 +464,7 @@
             "kana": "すみません",
             "romaji": "sumimasen",
             "meanings": [
-                "perdon, disculpe"
+                "perdón, disculpe"
             ],
             "script": "HIRAGANA",
             "learningItemType": "VOCABULARY",
@@ -587,14 +587,14 @@
             "kana": "です",
             "romaji": "desu",
             "meanings": [
-                "ser, estar (forma cortes)"
+                "ser, estar (forma cortés)"
             ],
             "script": "HIRAGANA",
             "learningItemType": "VOCABULARY",
             "partOfSpeech": null,
             "jlptLevel": null,
             "tags": [
-                "gramatica"
+                "gramática"
             ],
             "kanaCharacterIds": [
                 "kana-hiragana-de",
@@ -644,7 +644,7 @@
             "kana": "はは",
             "romaji": "haha",
             "meanings": [
-                "madre, mia"
+                "madre, mía"
             ],
             "script": "HIRAGANA",
             "learningItemType": "VOCABULARY",
@@ -672,7 +672,7 @@
             "kana": "おとうさん",
             "romaji": "otousan",
             "meanings": [
-                "papa, formal"
+                "papá, formal"
             ],
             "script": "HIRAGANA",
             "learningItemType": "VOCABULARY",
@@ -704,7 +704,7 @@
             "kana": "おかあさん",
             "romaji": "okaasan",
             "meanings": [
-                "mama, formal"
+                "mamá, formal"
             ],
             "script": "HIRAGANA",
             "learningItemType": "VOCABULARY",
@@ -736,7 +736,7 @@
             "kana": "あに",
             "romaji": "ani",
             "meanings": [
-                "hermano mayor, mio"
+                "hermano mayor, mío"
             ],
             "script": "HIRAGANA",
             "learningItemType": "VOCABULARY",
@@ -796,7 +796,7 @@
             "kana": "あね",
             "romaji": "ane",
             "meanings": [
-                "hermana mayor, mia"
+                "hermana mayor, mía"
             ],
             "script": "HIRAGANA",
             "learningItemType": "VOCABULARY",
@@ -1163,7 +1163,7 @@
             "kana": "とり",
             "romaji": "tori",
             "meanings": [
-                "pajaro"
+                "pájaro"
             ],
             "script": "HIRAGANA",
             "learningItemType": "VOCABULARY",
@@ -1365,7 +1365,7 @@
             "kana": "たべます",
             "romaji": "tabemasu",
             "meanings": [
-                "como, comer (cortes)"
+                "como, comer (cortés)"
             ],
             "script": "HIRAGANA",
             "learningItemType": "VOCABULARY",
@@ -1397,7 +1397,7 @@
             "kana": "のみます",
             "romaji": "nomimasu",
             "meanings": [
-                "bebo, beber (cortes)"
+                "bebo, beber (cortés)"
             ],
             "script": "HIRAGANA",
             "learningItemType": "VOCABULARY",
@@ -1486,7 +1486,7 @@
             "kana": "おちゃ",
             "romaji": "ocha",
             "meanings": [
-                "te"
+                "té"
             ],
             "script": "HIRAGANA",
             "learningItemType": "VOCABULARY",
@@ -1665,7 +1665,7 @@
             "kana": "さけ",
             "romaji": "sake",
             "meanings": [
-                "salmon"
+                "salmón"
             ],
             "script": "HIRAGANA",
             "learningItemType": "VOCABULARY",
@@ -1988,7 +1988,7 @@
             "kana": "でんわ",
             "romaji": "denwa",
             "meanings": [
-                "telefono"
+                "teléfono"
             ],
             "script": "HIRAGANA",
             "learningItemType": "VOCABULARY",
@@ -2023,7 +2023,7 @@
             "kana": "えんぴつ",
             "romaji": "enpitsu",
             "meanings": [
-                "lapiz"
+                "lápiz"
             ],
             "script": "HIRAGANA",
             "learningItemType": "VOCABULARY",
@@ -2271,7 +2271,7 @@
             "kana": "えき",
             "romaji": "eki",
             "meanings": [
-                "estacion"
+                "estación"
             ],
             "script": "HIRAGANA",
             "learningItemType": "VOCABULARY",
@@ -2360,7 +2360,7 @@
             "kana": "へや",
             "romaji": "heya",
             "meanings": [
-                "habitacion"
+                "habitación"
             ],
             "script": "HIRAGANA",
             "learningItemType": "VOCABULARY",
@@ -2567,7 +2567,7 @@
             "kana": "あさ",
             "romaji": "asa",
             "meanings": [
-                "manana"
+                "mañana"
             ],
             "script": "HIRAGANA",
             "learningItemType": "VOCABULARY",
@@ -2594,7 +2594,7 @@
             "kana": "けさ",
             "romaji": "kesa",
             "meanings": [
-                "esta manana"
+                "esta mañana"
             ],
             "script": "HIRAGANA",
             "learningItemType": "VOCABULARY",
@@ -2621,7 +2621,7 @@
             "kana": "らいねん",
             "romaji": "rainen",
             "meanings": [
-                "proximo ano"
+                "próximo año"
             ],
             "script": "HIRAGANA",
             "learningItemType": "VOCABULARY",
@@ -2692,7 +2692,7 @@
             "jlptLevel": null,
             "tags": [
                 "verbos",
-                "gramatica"
+                "gramática"
             ],
             "kanaCharacterIds": [
                 "kana-hiragana-a",
@@ -2722,7 +2722,7 @@
             "jlptLevel": null,
             "tags": [
                 "verbos",
-                "gramatica"
+                "gramática"
             ],
             "kanaCharacterIds": [
                 "kana-hiragana-i",
@@ -2864,7 +2864,7 @@
             "kana": "ちいさい",
             "romaji": "chiisai",
             "meanings": [
-                "pequeno"
+                "pequeño"
             ],
             "script": "HIRAGANA",
             "learningItemType": "VOCABULARY",
@@ -2922,7 +2922,7 @@
             "kana": "げんき",
             "romaji": "genki",
             "meanings": [
-                "con salud, con animo"
+                "con salud, con ánimo"
             ],
             "script": "HIRAGANA",
             "learningItemType": "VOCABULARY",
@@ -3126,7 +3126,7 @@
             "kana": "ここ",
             "romaji": "koko",
             "meanings": [
-                "aqui"
+                "aquí"
             ],
             "script": "HIRAGANA",
             "learningItemType": "VOCABULARY",
@@ -3152,7 +3152,7 @@
             "kana": "そこ",
             "romaji": "soko",
             "meanings": [
-                "alli"
+                "allí"
             ],
             "script": "HIRAGANA",
             "learningItemType": "VOCABULARY",
@@ -3236,7 +3236,7 @@
             "kana": "いくら",
             "romaji": "ikura",
             "meanings": [
-                "cuanto, precio"
+                "cuánto, precio"
             ],
             "script": "HIRAGANA",
             "learningItemType": "VOCABULARY",
@@ -3265,7 +3265,7 @@
             "kana": "はい",
             "romaji": "hai",
             "meanings": [
-                "si"
+                "sí"
             ],
             "script": "HIRAGANA",
             "learningItemType": "VOCABULARY",
@@ -3326,7 +3326,7 @@
             "partOfSpeech": null,
             "jlptLevel": null,
             "tags": [
-                "numeros"
+                "números"
             ],
             "kanaCharacterIds": [
                 "kana-hiragana-ro",
@@ -3353,8 +3353,8 @@
             "partOfSpeech": null,
             "jlptLevel": null,
             "tags": [
-                "numeros",
-                "gramatica"
+                "números",
+                "gramática"
             ],
             "kanaCharacterIds": [
                 "kana-hiragana-fu",
@@ -3385,8 +3385,8 @@
             "partOfSpeech": null,
             "jlptLevel": null,
             "tags": [
-                "numeros",
-                "gramatica"
+                "números",
+                "gramática"
             ],
             "kanaCharacterIds": [
                 "kana-hiragana-hi",
@@ -3417,8 +3417,8 @@
             "partOfSpeech": null,
             "jlptLevel": null,
             "tags": [
-                "numeros",
-                "gramatica"
+                "números",
+                "gramática"
             ],
             "kanaCharacterIds": [
                 "kana-hiragana-hi",
@@ -3448,8 +3448,8 @@
             "partOfSpeech": null,
             "jlptLevel": null,
             "tags": [
-                "numeros",
-                "gramatica"
+                "números",
+                "gramática"
             ],
             "kanaCharacterIds": [
                 "kana-hiragana-fu",
@@ -3479,7 +3479,7 @@
             "partOfSpeech": null,
             "jlptLevel": null,
             "tags": [
-                "numeros",
+                "números",
                 "dinero"
             ],
             "kanaCharacterIds": [
@@ -3502,15 +3502,15 @@
             "kana": "さい",
             "romaji": "sai",
             "meanings": [
-                "anos, edad"
+                "años, edad"
             ],
             "script": "HIRAGANA",
             "learningItemType": "VOCABULARY",
             "partOfSpeech": null,
             "jlptLevel": null,
             "tags": [
-                "numeros",
-                "gramatica"
+                "números",
+                "gramática"
             ],
             "kanaCharacterIds": [
                 "kana-hiragana-sa",
@@ -3537,7 +3537,7 @@
             "partOfSpeech": null,
             "jlptLevel": null,
             "tags": [
-                "posicion"
+                "posición"
             ],
             "kanaCharacterIds": [
                 "kana-hiragana-u",
@@ -3649,7 +3649,7 @@
             "partOfSpeech": null,
             "jlptLevel": null,
             "tags": [
-                "prestamo"
+                "préstamo"
             ],
             "kanaCharacterIds": [
                 "kana-hiragana-pu",
@@ -3677,7 +3677,7 @@
             "jlptLevel": null,
             "tags": [
                 "objetos",
-                "prestamo"
+                "préstamo"
             ],
             "kanaCharacterIds": [
                 "kana-hiragana-po",
@@ -3706,7 +3706,7 @@
             "partOfSpeech": null,
             "jlptLevel": null,
             "tags": [
-                "gramatica",
+                "gramática",
                 "frase"
             ],
             "kanaCharacterIds": [
@@ -3729,7 +3729,7 @@
             "kana": "いきます",
             "romaji": "ikimasu",
             "meanings": [
-                "voy, ir (cortes)"
+                "voy, ir (cortés)"
             ],
             "script": "HIRAGANA",
             "learningItemType": "VOCABULARY",
@@ -3911,7 +3911,7 @@
             "partOfSpeech": null,
             "jlptLevel": null,
             "tags": [
-                "prestamo",
+                "préstamo",
                 "cultura"
             ],
             "kanaCharacterIds": [
@@ -3933,14 +3933,14 @@
             "kana": "テレビ",
             "romaji": "terebi",
             "meanings": [
-                "television"
+                "televisión"
             ],
             "script": "KATAKANA",
             "learningItemType": "VOCABULARY",
             "partOfSpeech": null,
             "jlptLevel": null,
             "tags": [
-                "prestamo"
+                "préstamo"
             ],
             "kanaCharacterIds": [
                 "kana-katakana-te",
@@ -3961,14 +3961,14 @@
             "kana": "カメラ",
             "romaji": "kamera",
             "meanings": [
-                "camara"
+                "cámara"
             ],
             "script": "KATAKANA",
             "learningItemType": "VOCABULARY",
             "partOfSpeech": null,
             "jlptLevel": null,
             "tags": [
-                "prestamo"
+                "préstamo"
             ],
             "kanaCharacterIds": [
                 "kana-katakana-ka",
@@ -3996,7 +3996,7 @@
             "partOfSpeech": null,
             "jlptLevel": null,
             "tags": [
-                "prestamo"
+                "préstamo"
             ],
             "kanaCharacterIds": [
                 "kana-katakana-ka",
@@ -4024,7 +4024,7 @@
             "partOfSpeech": null,
             "jlptLevel": null,
             "tags": [
-                "prestamo",
+                "préstamo",
                 "objetos"
             ],
             "kanaCharacterIds": [
@@ -4053,7 +4053,7 @@
             "partOfSpeech": null,
             "jlptLevel": null,
             "tags": [
-                "prestamo",
+                "préstamo",
                 "objetos"
             ],
             "kanaCharacterIds": [
@@ -4074,14 +4074,14 @@
             "kana": "ペン",
             "romaji": "pen",
             "meanings": [
-                "boligrafo"
+                "bolígrafo"
             ],
             "script": "KATAKANA",
             "learningItemType": "VOCABULARY",
             "partOfSpeech": null,
             "jlptLevel": null,
             "tags": [
-                "prestamo",
+                "préstamo",
                 "objetos"
             ],
             "kanaCharacterIds": [
@@ -4109,7 +4109,7 @@
             "partOfSpeech": null,
             "jlptLevel": null,
             "tags": [
-                "prestamo",
+                "préstamo",
                 "objetos"
             ],
             "kanaCharacterIds": [
@@ -4138,7 +4138,7 @@
             "partOfSpeech": null,
             "jlptLevel": null,
             "tags": [
-                "prestamo",
+                "préstamo",
                 "objetos"
             ],
             "kanaCharacterIds": [
@@ -4168,7 +4168,7 @@
             "partOfSpeech": null,
             "jlptLevel": null,
             "tags": [
-                "prestamo",
+                "préstamo",
                 "objetos"
             ],
             "kanaCharacterIds": [
@@ -4189,14 +4189,14 @@
             "kana": "ソファ",
             "romaji": "sofa",
             "meanings": [
-                "sofa"
+                "sofá"
             ],
             "script": "KATAKANA",
             "learningItemType": "VOCABULARY",
             "partOfSpeech": null,
             "jlptLevel": null,
             "tags": [
-                "prestamo",
+                "préstamo",
                 "objetos"
             ],
             "kanaCharacterIds": [
@@ -4224,7 +4224,7 @@
             "partOfSpeech": null,
             "jlptLevel": null,
             "tags": [
-                "prestamo",
+                "préstamo",
                 "objetos"
             ],
             "kanaCharacterIds": [
@@ -4252,7 +4252,7 @@
             "partOfSpeech": null,
             "jlptLevel": null,
             "tags": [
-                "prestamo"
+                "préstamo"
             ],
             "kanaCharacterIds": [
                 "kana-katakana-bu",
@@ -4273,14 +4273,14 @@
             "kana": "サイズ",
             "romaji": "saizu",
             "meanings": [
-                "tamano"
+                "tamaño"
             ],
             "script": "KATAKANA",
             "learningItemType": "VOCABULARY",
             "partOfSpeech": null,
             "jlptLevel": null,
             "tags": [
-                "prestamo"
+                "préstamo"
             ],
             "kanaCharacterIds": [
                 "kana-katakana-sa",
@@ -4308,7 +4308,7 @@
             "partOfSpeech": null,
             "jlptLevel": null,
             "tags": [
-                "prestamo"
+                "préstamo"
             ],
             "kanaCharacterIds": [
                 "kana-katakana-se",
@@ -4336,7 +4336,7 @@
             "partOfSpeech": null,
             "jlptLevel": null,
             "tags": [
-                "prestamo"
+                "préstamo"
             ],
             "kanaCharacterIds": [
                 "kana-katakana-hi",
@@ -4364,7 +4364,7 @@
             "partOfSpeech": null,
             "jlptLevel": null,
             "tags": [
-                "prestamo",
+                "préstamo",
                 "objetos"
             ],
             "kanaCharacterIds": [
@@ -4386,14 +4386,14 @@
             "kana": "ポスト",
             "romaji": "posuto",
             "meanings": [
-                "buzon"
+                "buzón"
             ],
             "script": "KATAKANA",
             "learningItemType": "VOCABULARY",
             "partOfSpeech": null,
             "jlptLevel": null,
             "tags": [
-                "prestamo",
+                "préstamo",
                 "objetos"
             ],
             "kanaCharacterIds": [
@@ -4415,14 +4415,14 @@
             "kana": "ズボン",
             "romaji": "zubon",
             "meanings": [
-                "pantalon"
+                "pantalón"
             ],
             "script": "KATAKANA",
             "learningItemType": "VOCABULARY",
             "partOfSpeech": null,
             "jlptLevel": null,
             "tags": [
-                "prestamo",
+                "préstamo",
                 "ropa"
             ],
             "kanaCharacterIds": [
@@ -4451,7 +4451,7 @@
             "partOfSpeech": null,
             "jlptLevel": null,
             "tags": [
-                "prestamo",
+                "préstamo",
                 "ropa"
             ],
             "kanaCharacterIds": [
@@ -4480,7 +4480,7 @@
             "partOfSpeech": null,
             "jlptLevel": null,
             "tags": [
-                "prestamo"
+                "préstamo"
             ],
             "kanaCharacterIds": [
                 "kana-katakana-u",
@@ -4501,14 +4501,14 @@
             "kana": "コーヒー",
             "romaji": "koohii",
             "meanings": [
-                "cafe"
+                "café"
             ],
             "script": "KATAKANA",
             "learningItemType": "VOCABULARY",
             "partOfSpeech": null,
             "jlptLevel": null,
             "tags": [
-                "prestamo",
+                "préstamo",
                 "comida"
             ],
             "kanaCharacterIds": [
@@ -4537,7 +4537,7 @@
             "partOfSpeech": null,
             "jlptLevel": null,
             "tags": [
-                "prestamo",
+                "préstamo",
                 "comida"
             ],
             "kanaCharacterIds": [
@@ -4566,7 +4566,7 @@
             "partOfSpeech": null,
             "jlptLevel": null,
             "tags": [
-                "prestamo",
+                "préstamo",
                 "comida"
             ],
             "kanaCharacterIds": [
@@ -4587,14 +4587,14 @@
             "kana": "ハム",
             "romaji": "hamu",
             "meanings": [
-                "jamon"
+                "jamón"
             ],
             "script": "KATAKANA",
             "learningItemType": "VOCABULARY",
             "partOfSpeech": null,
             "jlptLevel": null,
             "tags": [
-                "prestamo",
+                "préstamo",
                 "comida"
             ],
             "kanaCharacterIds": [
@@ -4622,7 +4622,7 @@
             "partOfSpeech": null,
             "jlptLevel": null,
             "tags": [
-                "prestamo",
+                "préstamo",
                 "comida"
             ],
             "kanaCharacterIds": [
@@ -4652,7 +4652,7 @@
             "partOfSpeech": null,
             "jlptLevel": null,
             "tags": [
-                "prestamo",
+                "préstamo",
                 "comida"
             ],
             "kanaCharacterIds": [
@@ -4681,7 +4681,7 @@
             "partOfSpeech": null,
             "jlptLevel": null,
             "tags": [
-                "prestamo",
+                "préstamo",
                 "comida"
             ],
             "kanaCharacterIds": [
@@ -4709,7 +4709,7 @@
             "partOfSpeech": null,
             "jlptLevel": null,
             "tags": [
-                "prestamo",
+                "préstamo",
                 "comida"
             ],
             "kanaCharacterIds": [
@@ -4738,7 +4738,7 @@
             "partOfSpeech": null,
             "jlptLevel": null,
             "tags": [
-                "prestamo",
+                "préstamo",
                 "comida"
             ],
             "kanaCharacterIds": [
@@ -4768,7 +4768,7 @@
             "partOfSpeech": null,
             "jlptLevel": null,
             "tags": [
-                "prestamo",
+                "préstamo",
                 "comida"
             ],
             "kanaCharacterIds": [
@@ -4797,7 +4797,7 @@
             "partOfSpeech": null,
             "jlptLevel": null,
             "tags": [
-                "prestamo",
+                "préstamo",
                 "comida"
             ],
             "kanaCharacterIds": [
@@ -4826,7 +4826,7 @@
             "partOfSpeech": null,
             "jlptLevel": null,
             "tags": [
-                "prestamo",
+                "préstamo",
                 "comida"
             ],
             "kanaCharacterIds": [
@@ -4847,14 +4847,14 @@
             "kana": "ツナ",
             "romaji": "tsuna",
             "meanings": [
-                "atun"
+                "atún"
             ],
             "script": "KATAKANA",
             "learningItemType": "VOCABULARY",
             "partOfSpeech": null,
             "jlptLevel": null,
             "tags": [
-                "prestamo",
+                "préstamo",
                 "comida"
             ],
             "kanaCharacterIds": [
@@ -4882,7 +4882,7 @@
             "partOfSpeech": null,
             "jlptLevel": null,
             "tags": [
-                "prestamo",
+                "préstamo",
                 "comida"
             ],
             "kanaCharacterIds": [
@@ -4930,14 +4930,14 @@
             "kana": "レモン",
             "romaji": "remon",
             "meanings": [
-                "limon"
+                "limón"
             ],
             "script": "KATAKANA",
             "learningItemType": "VOCABULARY",
             "partOfSpeech": null,
             "jlptLevel": null,
             "tags": [
-                "prestamo",
+                "préstamo",
                 "comida"
             ],
             "kanaCharacterIds": [
@@ -4966,7 +4966,7 @@
             "partOfSpeech": null,
             "jlptLevel": null,
             "tags": [
-                "prestamo",
+                "préstamo",
                 "comida"
             ],
             "kanaCharacterIds": [
@@ -4994,7 +4994,7 @@
             "partOfSpeech": null,
             "jlptLevel": null,
             "tags": [
-                "prestamo",
+                "préstamo",
                 "comida"
             ],
             "kanaCharacterIds": [
@@ -5024,7 +5024,7 @@
             "partOfSpeech": null,
             "jlptLevel": null,
             "tags": [
-                "prestamo",
+                "préstamo",
                 "lugares"
             ],
             "kanaCharacterIds": [
@@ -5054,7 +5054,7 @@
             "partOfSpeech": null,
             "jlptLevel": null,
             "tags": [
-                "prestamo",
+                "préstamo",
                 "lugares"
             ],
             "kanaCharacterIds": [
@@ -5082,7 +5082,7 @@
             "partOfSpeech": null,
             "jlptLevel": null,
             "tags": [
-                "prestamo",
+                "préstamo",
                 "lugares"
             ],
             "kanaCharacterIds": [
@@ -5110,7 +5110,7 @@
             "partOfSpeech": null,
             "jlptLevel": null,
             "tags": [
-                "prestamo",
+                "préstamo",
                 "lugares"
             ],
             "kanaCharacterIds": [
@@ -5132,14 +5132,14 @@
             "kana": "バス",
             "romaji": "basu",
             "meanings": [
-                "autobus"
+                "autobús"
             ],
             "script": "KATAKANA",
             "learningItemType": "VOCABULARY",
             "partOfSpeech": null,
             "jlptLevel": null,
             "tags": [
-                "prestamo",
+                "préstamo",
                 "transporte"
             ],
             "kanaCharacterIds": [
@@ -5167,7 +5167,7 @@
             "partOfSpeech": null,
             "jlptLevel": null,
             "tags": [
-                "prestamo",
+                "préstamo",
                 "escuela"
             ],
             "kanaCharacterIds": [
@@ -5196,7 +5196,7 @@
             "partOfSpeech": null,
             "jlptLevel": null,
             "tags": [
-                "prestamo",
+                "préstamo",
                 "deporte"
             ],
             "kanaCharacterIds": [
@@ -5225,7 +5225,7 @@
             "partOfSpeech": null,
             "jlptLevel": null,
             "tags": [
-                "prestamo",
+                "préstamo",
                 "deporte"
             ],
             "kanaCharacterIds": [
@@ -5254,7 +5254,7 @@
             "partOfSpeech": null,
             "jlptLevel": null,
             "tags": [
-                "prestamo",
+                "préstamo",
                 "deporte"
             ],
             "kanaCharacterIds": [
@@ -5283,8 +5283,8 @@
             "partOfSpeech": null,
             "jlptLevel": null,
             "tags": [
-                "prestamo",
-                "musica"
+                "préstamo",
+                "música"
             ],
             "kanaCharacterIds": [
                 "kana-katakana-da",
@@ -5312,8 +5312,8 @@
             "partOfSpeech": null,
             "jlptLevel": null,
             "tags": [
-                "prestamo",
-                "musica"
+                "préstamo",
+                "música"
             ],
             "kanaCharacterIds": [
                 "kana-katakana-pi",
@@ -5341,8 +5341,8 @@
             "partOfSpeech": null,
             "jlptLevel": null,
             "tags": [
-                "prestamo",
-                "musica"
+                "préstamo",
+                "música"
             ],
             "kanaCharacterIds": [
                 "kana-katakana-gi",
@@ -5370,7 +5370,7 @@
             "partOfSpeech": null,
             "jlptLevel": null,
             "tags": [
-                "prestamo"
+                "préstamo"
             ],
             "kanaCharacterIds": [
                 "kana-katakana-ge",
@@ -5398,7 +5398,7 @@
             "partOfSpeech": null,
             "jlptLevel": null,
             "tags": [
-                "prestamo"
+                "préstamo"
             ],
             "kanaCharacterIds": [
                 "kana-katakana-gu",
@@ -5427,7 +5427,7 @@
             "partOfSpeech": null,
             "jlptLevel": null,
             "tags": [
-                "prestamo"
+                "préstamo"
             ],
             "kanaCharacterIds": [
                 "kana-katakana-zo",
@@ -5455,7 +5455,7 @@
             "partOfSpeech": null,
             "jlptLevel": null,
             "tags": [
-                "prestamo",
+                "préstamo",
                 "animales"
             ],
             "kanaCharacterIds": [
@@ -5510,8 +5510,8 @@
             "partOfSpeech": null,
             "jlptLevel": null,
             "tags": [
-                "prestamo",
-                "numeros"
+                "préstamo",
+                "números"
             ],
             "kanaCharacterIds": [
                 "kana-katakana-ze",
@@ -5538,7 +5538,7 @@
             "partOfSpeech": null,
             "jlptLevel": null,
             "tags": [
-                "prestamo",
+                "préstamo",
                 "naturaleza"
             ],
             "kanaCharacterIds": [
@@ -5568,7 +5568,7 @@
             "partOfSpeech": null,
             "jlptLevel": null,
             "tags": [
-                "prestamo",
+                "préstamo",
                 "cultura"
             ],
             "kanaCharacterIds": [
@@ -5598,7 +5598,7 @@
             "partOfSpeech": null,
             "jlptLevel": null,
             "tags": [
-                "prestamo",
+                "préstamo",
                 "lugares"
             ],
             "kanaCharacterIds": [
@@ -5628,7 +5628,7 @@
             "partOfSpeech": null,
             "jlptLevel": null,
             "tags": [
-                "prestamo",
+                "préstamo",
                 "objetos"
             ],
             "kanaCharacterIds": [

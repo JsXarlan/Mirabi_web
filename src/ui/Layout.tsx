@@ -36,6 +36,48 @@ const PAGE_DESCRIPTIONS: Record<string, string> = {
   '/premium': 'Un poco más de comodidad en tu camino.',
 }
 
+function pageLabelForPath(pathname: string) {
+  const exactLabels: Record<string, string> = {
+    '/': 'Inicio',
+    '/curso': 'Curso',
+    '/caracteres': 'Caracteres',
+    '/caracteres/kanji': 'Kanji',
+    '/caracteres/kanji/practica': 'Práctica de kanji',
+    '/caracteres/kanji/confundibles': 'Kanji confundibles',
+    '/caracteres/kanji/radicales': 'Radicales kanji',
+    '/caracteres/kanji/lectura': 'Lectura de kanji',
+    '/caracteres/kanji/jukugo': 'Compuestos kanji',
+    '/palabras': 'Vocabulario',
+    '/palabras/estudio': 'Tarjetas de vocabulario',
+    '/palabras/practica': 'Práctica de vocabulario',
+    '/repaso': 'Repaso',
+    '/repaso/sesion': 'Sesión de repaso',
+    '/conversaciones': 'Conversaciones',
+    '/analisis': 'Puntos débiles',
+    '/misiones': 'Misiones',
+    '/perfil': 'Perfil',
+    '/ajustes': 'Ajustes',
+    '/premium': 'Mirabi Plus',
+    '/tienda': 'Tienda Sakura',
+  }
+  if (exactLabels[pathname]) return exactLabels[pathname]
+  if (pathname.startsWith('/curso/unidad/')) return 'Unidad del curso'
+  if (pathname.startsWith('/leccion/')) return 'Lección'
+  if (pathname.startsWith('/conversaciones/')) return 'Conversación'
+  if (pathname.startsWith('/examen/')) return 'Examen del mundo'
+
+  const characterMatch = pathname.match(/^\/caracteres\/([^/]+)(?:\/(practica|escritura))?$/)
+  if (characterMatch) {
+    const script = characterMatch[1]
+    const mode = characterMatch[2]
+    const name = script === 'hiragana' ? 'hiragana' : script === 'katakana' ? 'katakana' : script
+    if (mode === 'practica') return `Práctica de ${name}`
+    if (mode === 'escritura') return `Escritura de ${name}`
+    return name === 'hiragana' || name === 'katakana' ? name[0].toUpperCase() + name.slice(1) : 'Caracteres'
+  }
+  return [...NAV_ITEMS, ...PRACTICE_ITEMS].find((item) => item.to === pathname)?.label ?? 'Aprendizaje'
+}
+
 function NavigationLink({
   item,
   mobile = false,
@@ -156,9 +198,7 @@ function AppHeader() {
   const streakDays = useMirabiStore((state) => state.streakDays)
   const lastActive = useMirabiStore((state) => state.lastActivityEpochDay)
   const streak = streakStatus(streakDays, lastActive, epochDayOf(Date.now()))
-  const pageLabel =
-    [...NAV_ITEMS, ...PRACTICE_ITEMS].find((item) => item.to === pathname)
-      ?.label ?? 'Mi aprendizaje'
+  const pageLabel = pageLabelForPath(pathname)
   return (
     <header className="app-header">
       <Link to="/" className="mobile-brand" aria-label="Mirabi, inicio">
@@ -217,7 +257,13 @@ export function Screen({
   const mainRef = useRef<HTMLElement>(null)
   const { pathname } = useLocation()
   useEffect(() => {
-    mainRef.current?.focus({ preventScroll: true })
+    const heading = mainRef.current?.querySelector('h1')
+    if (heading) {
+      if (!heading.hasAttribute('tabindex')) heading.setAttribute('tabindex', '-1')
+      heading.focus({ preventScroll: true })
+    } else {
+      mainRef.current?.focus({ preventScroll: true })
+    }
   }, [pathname])
   return (
     <div className="app-shell">
@@ -282,10 +328,16 @@ export function SessionScreen({
 }) {
   const navigate = useNavigate()
   const { pathname } = useLocation()
+  const titleRef = useRef<HTMLHeadingElement>(null)
   const sessionArt = pathname.startsWith('/conversaciones') ? 'tea'
     : pathname.startsWith('/palabras') || pathname.startsWith('/repaso') ? 'cards'
       : pathname.includes('kanji') ? 'brush' : 'scroll'
   const clamped = Math.min(1, Math.max(0, progress))
+
+  useEffect(() => {
+    titleRef.current?.focus({ preventScroll: true })
+  }, [pathname])
+
   return (
     <main className="session-layout" id="main-content">
       <div className="session-brand">
@@ -304,7 +356,13 @@ export function SessionScreen({
           </button>
           <div className="session-progress">
             <div className="session-progress-label">
-              <h1 className="text-sm font-semibold">{title}</h1>
+              <h1
+                ref={titleRef}
+                tabIndex={-1}
+                className="text-sm font-semibold"
+              >
+                {title}
+              </h1>
               <strong>{Math.round(clamped * 100)}%</strong>
             </div>
             <MirabiProgressBar

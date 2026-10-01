@@ -144,6 +144,7 @@ export function WritingCanvas({
           ref={canvasRef}
           width={SIZE}
           height={SIZE}
+          aria-label={`Área de dibujo para el kana ${card.symbol}`}
           className="text-[var(--on-surface)] absolute inset-0 touch-none rounded-[16px] border-2 border-[var(--outline)]"
           onPointerDown={onPointerDown}
           onPointerMove={onPointerMove}
@@ -152,6 +153,7 @@ export function WritingCanvas({
         />
         {card.pair && (
           <div
+            role="img"
             className="absolute -right-3 -bottom-3 flex items-center justify-center rounded-[12px] border-2 border-[var(--outline)] bg-[var(--surface)]"
             style={{ width: PAIR_SIZE, height: PAIR_SIZE }}
             aria-label={`Tambien se traza el kana chico ${card.pair.symbol}`}

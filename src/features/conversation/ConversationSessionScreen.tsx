@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import { hasKana, resolveRomaji, toRomaji } from '../../core/domain/romaji'
@@ -30,6 +30,8 @@ export function ConversationSessionScreen() {
   const answerExercise = useMirabiStore((state) => state.answerExercise)
   const completeConversation = useMirabiStore((state) => state.completeConversation)
   const masteryOf = useMirabiStore((state) => state.masteryOf)
+  const optionsRef = useRef<HTMLDivElement>(null)
+  const firstOptionRef = useRef<HTMLButtonElement>(null)
 
   const conversation = useMemo(() => {
     if (!pack || !courseMap) return null
@@ -49,6 +51,14 @@ export function ConversationSessionScreen() {
   const step = conversation?.steps[currentIndex]
   const answered = isCorrect !== null
   const isLastStep = conversation ? currentIndex === conversation.steps.length - 1 : false
+
+  useEffect(() => {
+    if (answered) {
+      optionsRef.current?.focus({ preventScroll: true })
+    } else if (currentIndex > 0) {
+      firstOptionRef.current?.focus({ preventScroll: true })
+    }
+  }, [answered, currentIndex])
 
   const choose = useCallback(
     (option: string) => {
@@ -160,7 +170,13 @@ export function ConversationSessionScreen() {
         </div>
 
         <p className="mb-2 text-xs font-semibold text-[var(--on-surface-variant)]">Tu respuesta</p>
-        <div className="flex flex-col gap-2.5" role="radiogroup" aria-label="Tu respuesta">
+        <div
+          ref={optionsRef}
+          tabIndex={-1}
+          className="flex flex-col gap-2.5"
+          role="group"
+          aria-label="Tu respuesta"
+        >
           {step.options.map((option, index) => {
             const selected = answer === option.text
             const revealCorrect = answered && option.text === step.correctAnswer
@@ -171,9 +187,9 @@ export function ConversationSessionScreen() {
             return (
               <button
                 key={option.id}
+                ref={index === 0 ? firstOptionRef : undefined}
                 type="button"
-                role="radio"
-                aria-checked={selected}
+                aria-pressed={selected}
                 disabled={answered}
                 onClick={() => choose(option.text)}
                 className={[

@@ -118,21 +118,27 @@ export function wordsByScript(
   return catalog.words.filter((word) => word.script === script)
 }
 
-/**
- * Busca por lo que la persona puede llegar a escribir: el japones, la lectura,
- * el romaji o el significado. Sin normalizar acentos a proposito, porque el
- * contenido se escribe sin ellos.
- */
+/** Quita diacríticos para que se encuentre el contenido con o sin tildes. */
+export function normalizeSearchText(value: string): string {
+  return value
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .normalize('NFC')
+    .toLocaleLowerCase()
+    .trim()
+}
+
+/** Busca por japonés, lectura, romaji o significado, sin exigir tildes. */
 export function findWords(catalog: WordCatalog, query: string): VocabularyWord[] {
-  const needle = query.trim().toLowerCase()
+  const needle = normalizeSearchText(query)
   if (!needle) return catalog.words
 
   return catalog.words.filter(
     (word) =>
       word.lemma.includes(needle) ||
       word.kana.includes(needle) ||
-      word.romaji.toLowerCase().includes(needle) ||
-      word.meanings.some((meaning) => meaning.toLowerCase().includes(needle)),
+      normalizeSearchText(word.romaji).includes(needle) ||
+      word.meanings.some((meaning) => normalizeSearchText(meaning).includes(needle)),
   )
 }
 
@@ -151,19 +157,21 @@ export function findKanji(
   /** Romaji derivado por lectura; KANJIDIC2 no lo trae. Ver buildKanjiIndex. */
   romajiById: Map<string, string> | null = null,
 ): KanjiCharacter[] {
-  const needle = query.trim().toLowerCase()
+  const needle = normalizeSearchText(query)
   if (!needle) return catalog.kanji
 
   return catalog.kanji.filter(
     (item) =>
       item.symbol.includes(needle) ||
-      item.meanings.some((meaning) => meaning.toLowerCase().includes(needle)) ||
+      item.meanings.some((meaning) => normalizeSearchText(meaning).includes(needle)) ||
       [...item.onyomi, ...item.kunyomi].some(
         (reading) =>
           cleanReading(reading.kana).includes(needle) ||
-          (reading.romaji?.toLowerCase().includes(needle) ?? false),
+          (reading.romaji ? normalizeSearchText(reading.romaji).includes(needle) : false),
       ) ||
-      (romajiById?.get(item.id)?.includes(needle) ?? false),
+      (romajiById?.get(item.id)
+        ? normalizeSearchText(romajiById.get(item.id)!).includes(needle)
+        : false),
   )
 }
 

@@ -167,7 +167,8 @@
   border-radius: 6px;
 }
 #main-content:focus {
-  outline: none;
+  outline: 3px solid var(--primary);
+  outline-offset: -3px;
 }
 .pb-nav {
   padding-bottom: calc(6rem + env(safe-area-inset-bottom));
@@ -464,7 +465,7 @@
   gap: 4px;
   padding: 10px 2px 8px;
   min-height: 68px;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 600;
   color: var(--on-surface-variant);
 }
@@ -1524,7 +1525,7 @@
     font-size: 12px;
   }
   .header-actions .icon-button {
-    width: 36px;
+    width: 44px;
     height: 44px;
     border: 0;
     background: transparent;

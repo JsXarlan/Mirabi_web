@@ -153,6 +153,9 @@ export function ShopScreen() {
       <p className="mt-5 text-center text-xs text-[var(--on-surface-variant)]">
         La Sakura nunca compra respuestas, progreso ni desbloqueo de unidades.
       </p>
+      <p className="mt-2 text-center text-xs text-[var(--on-surface-variant)]">
+        En esta versión, las compras se simulan y no generan cobros.
+      </p>
       <MirabiButton
         className="mt-4"
         variant="ghost"

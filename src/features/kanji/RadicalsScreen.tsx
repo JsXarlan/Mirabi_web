@@ -2,8 +2,9 @@ import { useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import type { KanjiCharacter } from '../../core/content/types'
+import { normalizeSearchText } from '../../core/content/loader'
 import { useMirabiStore } from '../../core/store/useMirabiStore'
-import { MirabiCard, MirabiEmpty, MirabiLoading, SectionTitle } from '../../ui/components'
+import { MirabiCard, MirabiEmpty, MirabiLoading, MirabiSearchField, SectionTitle } from '../../ui/components'
 import { Screen } from '../../ui/Layout'
 import { MASTERY_LABEL, MASTERY_STYLE } from '../characters/masteryStyle'
 import { KanjiSheet } from './KanjiScreen'
@@ -27,6 +28,7 @@ export function RadicalsScreen() {
 
   const [activeRadical, setActiveRadical] = useState<number | null>(null)
   const [selected, setSelected] = useState<KanjiCharacter | null>(null)
+  const [query, setQuery] = useState('')
 
   const groups = useMemo(() => {
     if (!kanji) return []
@@ -47,6 +49,21 @@ export function RadicalsScreen() {
     }
     return [...byNumber.values()].sort((a, b) => a.number - b.number)
   }, [kanji])
+
+  const filteredGroups = useMemo(() => {
+    const needle = normalizeSearchText(query)
+    if (!needle) return groups
+
+    return groups.filter((group) => {
+      const radicalText = `${group.number} ${group.symbol} ${group.meaning ?? ''}`
+      return (
+        normalizeSearchText(radicalText).includes(needle) ||
+        group.kanji.some((item) =>
+          normalizeSearchText(`${item.symbol} ${item.meanings.join(' ')}`).includes(needle),
+        )
+      )
+    })
+  }, [groups, query])
 
   if (!kanji) {
     return (
@@ -75,19 +92,40 @@ export function RadicalsScreen() {
         groups.length === 0 ? (
           <MirabiEmpty title="Sin radicales" message="El catálogo de kanji todavía no tiene radicales cargados." />
         ) : (
-          <div className="flex flex-col gap-2">
-            {groups.map((group) => (
-              <MirabiCard key={group.number} className="flex items-center gap-4 p-4" onClick={() => setActiveRadical(group.number)}>
-                <span className="font-jp flex h-12 w-12 shrink-0 items-center justify-center rounded-[14px] bg-[var(--surface-variant)] text-2xl">
-                  {group.symbol}
-                </span>
-                <div className="min-w-0 flex-1">
-                  <p className="text-sm font-bold">{group.meaning ?? `Radical nº${group.number}`}</p>
-                  <p className="text-xs text-[var(--on-surface-variant)]">{group.kanji.length} kanji</p>
+          <>
+            <MirabiSearchField
+              className="mb-4"
+              label="Buscar radical"
+              placeholder="Número, símbolo, significado o kanji"
+              value={query}
+              onChange={setQuery}
+            />
+            {filteredGroups.length === 0 ? (
+              <MirabiEmpty
+                title="No encontramos radicales"
+                message="Prueba con otro número, símbolo, significado o kanji."
+              />
+            ) : (
+              <>
+                <p className="mb-3 text-xs text-[var(--on-surface-variant)]" aria-live="polite">
+                  {filteredGroups.length} {filteredGroups.length === 1 ? 'radical' : 'radicales'}
+                </p>
+                <div className="flex flex-col gap-2">
+                  {filteredGroups.map((group) => (
+                    <MirabiCard key={group.number} className="flex items-center gap-4 p-4" onClick={() => setActiveRadical(group.number)}>
+                      <span className="font-jp flex h-12 w-12 shrink-0 items-center justify-center rounded-[14px] bg-[var(--surface-variant)] text-2xl">
+                        {group.symbol}
+                      </span>
+                      <div className="min-w-0 flex-1">
+                        <p className="text-sm font-bold">{group.meaning ?? `Radical nº${group.number}`}</p>
+                        <p className="text-xs text-[var(--on-surface-variant)]">{group.kanji.length} kanji</p>
+                      </div>
+                    </MirabiCard>
+                  ))}
                 </div>
-              </MirabiCard>
-            ))}
-          </div>
+              </>
+            )}
+          </>
         )
       ) : (
         <>

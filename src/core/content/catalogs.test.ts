@@ -188,8 +188,14 @@ describe('palabras', () => {
     const porSignificado = findWords(wordCatalog, 'agua')
     expect(porSignificado.map((word) => word.id)).toContain('word-mizu')
 
+    const porSignificadoSinTilde = findWords(wordCatalog, 'montana')
+    expect(porSignificadoSinTilde.map((word) => word.id)).toContain('word-yama')
+
     const porKana = findWords(wordCatalog, 'やま')
     expect(porKana.map((word) => word.id)).toContain('word-yama')
+
+    const porKanaConDakuten = findWords(wordCatalog, 'みず')
+    expect(porKanaConDakuten.map((word) => word.id)).toContain('word-mizu')
 
     // Sin consulta se devuelve todo, que es lo que espera una lista al abrirse.
     expect(findWords(wordCatalog, '  ')).toHaveLength(wordCatalog.words.length)
@@ -312,6 +318,7 @@ describe('kanji', () => {
     expect(findKanji(kanjiCatalog, '山').map((item) => item.id)).toContain('kanji-5c71')
     expect(findKanji(kanjiCatalog, 'agua').map((item) => item.id)).toContain('kanji-6c34')
     expect(findKanji(kanjiCatalog, 'やま').map((item) => item.id)).toContain('kanji-5c71')
+    expect(findKanji(kanjiCatalog, 'arbol').map((item) => item.id)).toContain('kanji-6728')
   })
 
   it('se busca también por romaji, que KANJIDIC2 no trae y la app deriva', () => {

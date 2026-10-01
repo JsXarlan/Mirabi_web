@@ -696,14 +696,12 @@ export function SettingsScreen() {
           <SectionTitle id="backup">Copia de seguridad</SectionTitle>
           <MirabiCard className="mb-5 p-5">
             <p className="text-sm font-semibold">
-              {isAnonymous
-                ? 'Copia manual, además de la sincronización automática'
-                : 'Copia manual'}
+              Copia de seguridad manual
             </p>
             <p className="mt-1 text-xs text-[var(--on-surface-variant)]">
               {isAnonymous
-                ? 'Tu progreso ya se sincroniza solo, pero sin una cuenta esa sincronización se pierde si limpias los datos del navegador. Creá una cuenta arriba, o guarda un fichero de vez en cuando como respaldo extra.'
-                : 'Guarda un fichero de vez en cuando como respaldo extra, además de la sincronización automática de tu cuenta.'}
+                ? 'Tu progreso se guarda en este navegador. Sin una cuenta, podrías perderlo si borras sus datos o cambias de dispositivo. Crea una cuenta para sincronizarlo; también puedes exportar un archivo como respaldo.'
+                : 'Tu progreso se sincroniza con tu cuenta. Exporta un archivo como respaldo adicional.'}
             </p>
             <div className="mt-3 flex gap-2">
               <MirabiButton variant="secondary" onClick={downloadBackup}>

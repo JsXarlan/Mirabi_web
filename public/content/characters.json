@@ -1,7 +1,7 @@
 {
     "schemaVersion": 1,
-    "version": "1.0.0",
-    "checksum": "characters-1.0.0-n151",
+    "version": "1.0.1",
+    "checksum": "characters-1.0.1-n151",
     "characters": [
         {
             "id": "kana-hiragana-a",
@@ -15,7 +15,7 @@
                 {
                     "text": "あさ",
                     "romaji": "asa",
-                    "meaning": "manana"
+                    "meaning": "mañana"
                 }
             ]
         },
@@ -63,7 +63,7 @@
                 {
                     "text": "えき",
                     "romaji": "eki",
-                    "meaning": "estacion"
+                    "meaning": "estación"
                 }
             ]
         },
@@ -79,7 +79,7 @@
                 {
                     "text": "おはよう",
                     "romaji": "ohayou",
-                    "meaning": "buenos dias"
+                    "meaning": "buenos días"
                 }
             ]
         },
@@ -143,7 +143,7 @@
                 {
                     "text": "けさ",
                     "romaji": "kesa",
-                    "meaning": "esta manana"
+                    "meaning": "esta mañana"
                 }
             ]
         },
@@ -159,7 +159,7 @@
                 {
                     "text": "ここ",
                     "romaji": "koko",
-                    "meaning": "aqui"
+                    "meaning": "aquí"
                 }
             ]
         },
@@ -175,7 +175,7 @@
                 {
                     "text": "さけ",
                     "romaji": "sake",
-                    "meaning": "salmon"
+                    "meaning": "salmón"
                 }
             ]
         },
@@ -207,7 +207,7 @@
                 {
                     "text": "です",
                     "romaji": "desu",
-                    "meaning": "ser/estar cortes"
+                    "meaning": "ser/estar cortés"
                 }
             ]
         },
@@ -239,7 +239,7 @@
                 {
                     "text": "そこ",
                     "romaji": "soko",
-                    "meaning": "alli"
+                    "meaning": "allí"
                 }
             ]
         },
@@ -351,7 +351,7 @@
                 {
                     "text": "にほん",
                     "romaji": "nihon",
-                    "meaning": "Japon"
+                    "meaning": "Japón"
                 }
             ]
         },
@@ -463,7 +463,7 @@
                 {
                     "text": "へや",
                     "romaji": "heya",
-                    "meaning": "habitacion"
+                    "meaning": "habitación"
                 }
             ]
         },
@@ -575,7 +575,7 @@
                 {
                     "text": "やま",
                     "romaji": "yama",
-                    "meaning": "montana"
+                    "meaning": "montaña"
                 }
             ]
         },
@@ -623,7 +623,7 @@
                 {
                     "text": "らいねん",
                     "romaji": "rainen",
-                    "meaning": "proximo ano"
+                    "meaning": "próximo año"
                 }
             ]
         },
@@ -735,7 +735,7 @@
                 {
                     "text": "にほん",
                     "romaji": "nihon",
-                    "meaning": "Japon"
+                    "meaning": "Japón"
                 }
             ]
         },
@@ -959,7 +959,7 @@
                 {
                     "text": "でんわ",
                     "romaji": "denwa",
-                    "meaning": "telefono"
+                    "meaning": "teléfono"
                 }
             ]
         },
@@ -1119,7 +1119,7 @@
                 {
                     "text": "ぺん",
                     "romaji": "pen",
-                    "meaning": "boligrafo"
+                    "meaning": "bolígrafo"
                 }
             ]
         },
@@ -1359,7 +1359,7 @@
                 {
                     "text": "コーヒー",
                     "romaji": "koohii",
-                    "meaning": "cafe"
+                    "meaning": "café"
                 }
             ]
         },
@@ -1375,7 +1375,7 @@
                 {
                     "text": "サイズ",
                     "romaji": "saizu",
-                    "meaning": "tamano"
+                    "meaning": "tamaño"
                 }
             ]
         },
@@ -1439,7 +1439,7 @@
                 {
                     "text": "ソファ",
                     "romaji": "sofa",
-                    "meaning": "sofa"
+                    "meaning": "sofá"
                 }
             ]
         },
@@ -1487,7 +1487,7 @@
                 {
                     "text": "ツナ",
                     "romaji": "tsuna",
-                    "meaning": "atun"
+                    "meaning": "atún"
                 }
             ]
         },
@@ -1615,7 +1615,7 @@
                 {
                     "text": "ハム",
                     "romaji": "hamu",
-                    "meaning": "jamon"
+                    "meaning": "jamón"
                 }
             ]
         },
@@ -1663,7 +1663,7 @@
                 {
                     "text": "ヘヤ",
                     "romaji": "heya",
-                    "meaning": "habitacion"
+                    "meaning": "habitación"
                 }
             ]
         },
@@ -1775,7 +1775,7 @@
                 {
                     "text": "ヤマ",
                     "romaji": "yama",
-                    "meaning": "montana"
+                    "meaning": "montaña"
                 }
             ]
         },
@@ -1871,7 +1871,7 @@
                 {
                     "text": "レモン",
                     "romaji": "remon",
-                    "meaning": "limon"
+                    "meaning": "limón"
                 }
             ]
         },
@@ -1919,7 +1919,7 @@
                 {
                     "text": "ヲ",
                     "romaji": "wo",
-                    "meaning": "particula katakana"
+                    "meaning": "partícula katakana"
                 }
             ]
         },
@@ -2063,7 +2063,7 @@
                 {
                     "text": "ズボン",
                     "romaji": "zubon",
-                    "meaning": "pantalon"
+                    "meaning": "pantalón"
                 }
             ]
         },
@@ -2319,7 +2319,7 @@
                 {
                     "text": "ペン",
                     "romaji": "pen",
-                    "meaning": "boligrafo"
+                    "meaning": "bolígrafo"
                 }
             ]
         },
@@ -2335,7 +2335,7 @@
                 {
                     "text": "ポスト",
                     "romaji": "posuto",
-                    "meaning": "buzon"
+                    "meaning": "buzón"
                 }
             ]
         },
@@ -2415,7 +2415,7 @@
                 {
                     "text": "コーヒー",
                     "romaji": "koohii",
-                    "meaning": "cafe"
+                    "meaning": "café"
                 }
             ]
         }

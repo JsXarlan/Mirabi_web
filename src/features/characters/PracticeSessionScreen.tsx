@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import type { ReactNode } from 'react'
 
 import type { ContentExercise } from '../../core/content/types'
@@ -9,6 +9,7 @@ import { useDigitKeys, useEnterKey } from '../../ui/keys'
 import { SessionScreen } from '../../ui/Layout'
 import { Yuki } from '../../ui/Yuki'
 import { AudioButton, PronunciationButton } from '../lesson/ExerciseView'
+import { FeedbackBar } from '../lesson/FeedbackBar'
 
 /**
  * Motor de sesion de practica rapida, extraido de CharacterPracticeScreen.
@@ -58,6 +59,8 @@ export function PracticeSessionScreen({
   onCompletedCta: () => void
 }) {
   const answerExercise = useMirabiStore((state) => state.answerExercise)
+  const optionsRef = useRef<HTMLDivElement>(null)
+  const firstOptionRef = useRef<HTMLButtonElement>(null)
 
   const [currentIndex, setCurrentIndex] = useState(0)
   const [answer, setAnswer] = useState<string | null>(null)
@@ -67,6 +70,14 @@ export function PracticeSessionScreen({
   const card = cards[currentIndex]
   const answered = answer !== null
   const isLastStep = currentIndex === cards.length - 1
+
+  useEffect(() => {
+    if (answered) {
+      optionsRef.current?.focus({ preventScroll: true })
+    } else if (currentIndex > 0) {
+      firstOptionRef.current?.focus({ preventScroll: true })
+    }
+  }, [answered, currentIndex])
 
   const choose = useCallback(
     (option: string) => {
@@ -154,7 +165,9 @@ export function PracticeSessionScreen({
    * paso de texto libre en vez de opcion multiple, seguiria de acuerdo con lo
    * que answerExercise registra como acierto.
    */
-  const isCorrect = answered && answer!.trim() === card.exercise.correctAnswer?.trim()
+  const isCorrect = answered
+    ? answer!.trim() === card.exercise.correctAnswer?.trim()
+    : null
 
   return (
     <SessionScreen
@@ -174,7 +187,13 @@ export function PracticeSessionScreen({
         )}
       </div>
 
-      <div className="mt-8 grid grid-cols-2 gap-2.5" role="radiogroup" aria-label={optionsLabel}>
+      <div
+        ref={optionsRef}
+        tabIndex={-1}
+        className="mt-8 grid grid-cols-2 gap-2.5"
+        role="group"
+        aria-label={optionsLabel}
+      >
         {card.exercise.options.map((option, index) => {
           const selected = answer === option.text
           const revealCorrect = answered && option.text === card.exercise.correctAnswer
@@ -182,9 +201,9 @@ export function PracticeSessionScreen({
           return (
             <button
               key={option.id}
+              ref={index === 0 ? firstOptionRef : undefined}
               type="button"
-              role="radio"
-              aria-checked={selected}
+              aria-pressed={selected}
               disabled={answered}
               onClick={() => choose(option.text)}
               className={[
@@ -207,6 +226,8 @@ export function PracticeSessionScreen({
           )
         })}
       </div>
+
+      <FeedbackBar exercise={card.exercise} answer={answer ?? ''} isCorrect={isCorrect} />
 
       <MirabiButton className="mt-4" disabled={!answered} onClick={advance}>
         {isLastStep ? 'Terminar' : 'Continuar'}
